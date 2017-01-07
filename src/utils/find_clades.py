@@ -24,7 +24,7 @@ class Mono(object):
         self.letters = dict()
 	self.outFile = outFile
 	self.show = dict()
-    def print_result(self, treeName, keyword, mrca, lst, tree, ofile):
+    def print_result(self, treeName, keyword, mrca, lst, tree, ofile, mult):
         ln = "_".join([str(l) for l in lst]) if type(lst) == ListType else lst
         letter = self.letters[ln]
         name="%s (%s)" %(ln,letter) if letter is not None and letter!="" else ln
@@ -36,7 +36,7 @@ class Mono(object):
 		mrca.label = ""
 	outputTree = treeName.replace(" ", "_") + ".out"
 	#tree.write(path=outputTree, schema="newick", suppress_rooting=True)
-        ofile.write("%s\t%s\t%s\t%s\n" % (treeName, keyword, support, name))
+        ofile.write("%s\t%s\t%s\t%s\n" % (treeName, keyword, support * mult, name))
     
     def is_mono(self,tree, clade):
         mrca = tree.mrca(taxa=clade)
@@ -58,49 +58,49 @@ class Mono(object):
             # If a child is all True (taxa of interst), it does not preclude monophyletic
         return True, mrca
                 
-    def check_mono(self,tree, treeName, clade, name, complete, ofile):
+    def check_mono(self,tree, treeName, clade, name, complete, ofile, mult):
         #print complete
         m, mrca = self.is_mono(tree, clade)
             #print m
         if m:
             if complete:
-                self.print_result(treeName, "IS_MONO", mrca, name, tree, ofile)
+                self.print_result(treeName, "IS_MONO", mrca, name, tree, ofile, mult)
             else:
-                self.print_result(treeName, "IS_MONO_INCOMPLETE", mrca, name, tree, ofile)
+                self.print_result(treeName, "IS_MONO_INCOMPLETE", mrca, name, tree, ofile, mult)
             return
         c, mrca = self.can_mono(tree, clade)
         if c:        
             if complete:
-                self.print_result(treeName, "CAN_MONO", mrca, name, tree, ofile)
+                self.print_result(treeName, "CAN_MONO", mrca, name, tree, ofile, mult)
             else:
-                self.print_result(treeName, "CAN_MONO_INCOMPLETE", mrca, name, tree, ofile)
+                self.print_result(treeName, "CAN_MONO_INCOMPLETE", mrca, name, tree, ofile, mult)
             return
 
-        self.print_result(treeName, "NOT_MONO", mrca, name, tree, ofile)
+        self.print_result(treeName, "NOT_MONO", mrca, name, tree, ofile, mult)
 
-    def analyze_clade(self,name, clade, comps, tree, treeName):
+    def analyze_clade(self,name, clade, comps, tree, treeName, mult):
 	ofile = open(self.outFile,'a+')
         taxa = get_present_taxa(tree, clade)
 	taxaLabel = {t.label for t in taxa }
         if comps:
             for comp in comps:
                 if not set(self.allclades[comp]) & taxaLabel:
-                    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile)
+                    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult)
                     return
         #print len(taxa), len(clade)
         if len(taxa) < 2:
-            self.print_result(treeName, "NO_CLADE", None, name, tree, ofile)
+            self.print_result(treeName, "NO_CLADE", None, name, tree, ofile, mult)
         else:
-            self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile)
+            self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile, mult)
 	ofile.close()
-    def analyze(self, tree, treeName):
+    def analyze(self, tree, treeName, mult):
         for k, v in self.allclades.items():
 	    if self.show[k] == 1:
 	    	if k in self.clade_comps:
         		clade_comp = self.clade_comps[k]
 	    	else:
         		clade_comp = None
-            	self.analyze_clade(k, v, clade_comp, tree, treeName)
+            	self.analyze_clade(k, v, clade_comp, tree, treeName, mult)
 
     def read_clades(self,filename):
         for line in open(filename):
@@ -150,6 +150,7 @@ def main(*arg):
 	namesFile = arg[0]
 	cladesFile = arg[1]
 	outFile = arg[2]
+	mult = arg[3]
 	taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
 	mono = Mono(taxa, outFile)
 	mono.read_clades(cladesFile)
@@ -163,7 +164,7 @@ def main(*arg):
 
 		for i, tree in enumerate(trees):
         		treeName = "%s_%s" % (fileName, i)
-	        	mono.analyze(tree, treeName)
+	        	mono.analyze(tree, treeName, mult)
 
 if __name__ == '__main__':
     namesFile = sys.argv[1]
@@ -183,6 +184,6 @@ if __name__ == '__main__':
         
         for i, tree in enumerate(trees):
             treeName = "%s_%s" % (fileName, i)
-            mono.analyze(tree, treeName)
+            mono.analyze(tree, treeName, 1.)
 
 

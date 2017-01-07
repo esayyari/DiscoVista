@@ -81,7 +81,7 @@ In important branches file, you could define other important branches of the exp
 ## The structure of data for different analyses
 
 * For discordance analysis on species trees you need this structure
-    **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Where __path__ is the path that all the species trees inferred with different methods are. Put each estimated species tree inferred with different methods under different directories. The name of this directory is in this structure **model\_condition-data\_sequence\_type**. Please only use **"-"** to separate the model condition from the data sequence type. 
+    **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Where __path__ is the path that all the species trees inferred with different methods are. Put each estimated species tree inferred with different methods under different directories. The name of this directory is in this structure **model\_condition-data\_sequence\_type**. Please only use **"-"** to separate the model condition from the data sequence type. Please run this analysis on each model condition separately. 
 * For discordance analysis on gene trees you need this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. 
 * For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type.
 * For occupancy analysis use this structure **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. 

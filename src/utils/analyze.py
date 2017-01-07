@@ -94,9 +94,12 @@ class Analyze(object):
 
 		searchFiles = " ".join(glob.glob(opt.searchrooted))
 		searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
-
-		find_clades.main(opt.names, opt.clades, outFile, searchFiles) 
-		find_clades.main(opt.names, opt.clades, outFilethr, searchFilesthr)
+		if (opt.threshold)<= 1.:
+			multiplier = 100.
+		else:
+			multiplier = 1.
+		find_clades.main(opt.names, opt.clades, outFile, searchFiles, multiplier) 
+		find_clades.main(opt.names, opt.clades, outFilethr, searchFilesthr, multiplier)
 
 		f = open(outFile,'r')
 		outRes = outFile + ".res"
