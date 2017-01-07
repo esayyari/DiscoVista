@@ -23,7 +23,7 @@ if (is.null(optTmp$path)){
 } else {
   WS_HOME = optTmp$path
 }
-reader = paste(WS_HOME,"/DiscoVista/src/R/reader.R", sep="")
+reader = paste(WS_HOME,"/insects/code/R/reader.R", sep="")
 source(reader)
 
 currOpt = setOptions(optTmp)
@@ -31,6 +31,13 @@ opt = currOpt
 setwd(opt$out)
 
 print(getwd())
+#WS_HOME = "/Users/Erfan/Documents/Research/"
+#clade = "/Users/Erfan/Documents/Research/insects/code/clade-defs.txt"
+#ST=TRUE
+#input = "/Users/Erfan/Documents/Research/insects/code/test/species/"
+#out = input
+#setwd(out)
+#print(getwd())
 
 
 mode = opt$mode
@@ -39,7 +46,7 @@ if (opt$mode == 0 || opt$mode == 1 ) {
   ST = opt$ST
   cl=read.csv(opt$clade,header=T,sep="\t")
   names(cl)<-c("V1","V2","V3",names(cl)[4:length(cl)])
-  depict = paste(WS_HOME,"/DiscoVista/src/R/main_depict_clades.R", sep="")
+  depict = paste(WS_HOME,"/insects/code/R/main_depict_clades.R", sep="")
   source(depict)
   clade.order=c()
   for (x in levels(cl$V3)) {
@@ -68,13 +75,13 @@ if (opt$mode == 0 || opt$mode == 1 ) {
     dev.off()
   }
 } else if (opt$mode == 2) {
-  gcplot = paste(opt$WS_HOME,"/DiscoVista/src/R/plot.gc.R", sep="")
+  gcplot = paste(opt$WS_HOME,"/insects/code/R/plot.gc.R", sep="")
   source(gcplot)
 } else if (opt$mode == 3) {
-  occupancy = paste(opt$WS_HOME,"/DiscoVista/src/R/occupancy.R", sep="")
+  occupancy = paste(opt$WS_HOME,"/insects/code/R/occupancy.R", sep="")
   source(occupancy)
 } else if (opt$mode == 4) {
-  branchStat = paste(opt$WS_HOME,"/DiscoVista/src/R/branchStat.R", sep="")
+  branchStat = paste(opt$WS_HOME,"/insects/code/R/branchStat.R", sep="")
   source(branchStat)
 }
 
