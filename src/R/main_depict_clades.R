@@ -266,7 +266,7 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(15,13),raw.a
 		pdf(paste(ds,"block-shades","pdf",sep="."),width=figuresizes[1],height=figuresizes[2]) 
                 p1 <- qplot(ID,CLADE,data=db2,fill=BOOT,geom="tile",xlab="",ylab="")+
 		      scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE)+
-		      scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#DDEEFF","#c84060"),values=c(1,.99,0,-1))+ 
+		      scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#DDEEFF","#c84060"),values=c(100,99,0,-100))+ 
 		      theme_bw() + theme(axis.text.x = element_text(size=10,angle = 90,hjust=1),axis.text.y = element_text(hjust=1))#+theme(legend.position="bottom")
 		print(p1)
 		dev.off()
