@@ -56,7 +56,7 @@ Options:
 
 There are some files that you need to run analyses. 
 
-1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. You need to separate them with a tab. 
+1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Please use tab as the seperator. 
 2. You would pass the rooting definition file to the utility using **-r ROOT**. Let's say that you have an **outgroup** clade. On the lines of this file, the set of species in the order of speciation events time are listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroup which are the second most distant species to the ingroup species, and so on. 
 3. You would pass the clade definition file to the utility using **-c CLADE**. There is an example of this file available under the DiscoVista GitHub repository. Also, there is another tool to generate this clade definition file in this repository under DiscoVista/src/utils/generate_clade-defs.py. 
 
