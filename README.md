@@ -42,8 +42,8 @@ Options:
   -a ANNOTATION, --annotation=ANNOTATION 	The annotation file
   -c CLADES, --clades=CLADES				The path to the clades definition file
   -m MODE, --mode=MODE  					Determines which analysis to be done.
-  											To summerize species tree use 0. To summereize 
-  											gene trees use 1 . For GC stat analysis use 2. 
+  											To do discordance analysis on species tree use 0. To do discordance analysis on 
+  											gene trees use 1. For GC stat analysis use 2. 
   											For occupancy analysis use 3. doing MLBS vs 
   											branch length analysis use 4.
   -p PATH, --path=PATH  					Path to the gene directory or species tree
@@ -80,3 +80,9 @@ In important branches file you could define other important branches of the expe
 
 ## The structure of data for different analyses
 
+* For discordance analysis on species trees you need this structure
+	**path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Where __path__ is the path that all the species trees infered with different methods are. Put each estimated species tree infered with different methods under different directories. The name of this directory is in this structure **model\_condition-data\_sequence\_type**. Please only use **"-"** to seperate the model condition from the data sequence type. 
+* For discordance analysis on gene trees you need this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Please only use **"-"** to seperate the gene ID, model condition, and data sequence type. 
+* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type.
+* For occupancy analysis use this structure **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. 
+* For branch support vs branch length analysis put gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**. In estimated gene trees files concatenate all the estimated trees. 
