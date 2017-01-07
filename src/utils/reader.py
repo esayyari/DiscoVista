@@ -3,11 +3,12 @@ import os
 from optparse import OptionParser
 class Opt(object):
 	def __init__(self, parser):
-		(path, root, clades, names, threshold, mode, style, annotation, modelCond) = self.parseArgs(parser)
+		(path, root, clades, threshold, mode, style, annotation, modelCond) = self.parseArgs(parser)
+		tmpPath = os.path.dirname(annotation)
+		self.names = tmpPath + "/names.txt"
 		self.path = path
 		self.root = root
 		self.clades = clades
-		self.names = names
 		self.threshold = threshold
 		self.mode = mode
 		self.style = style
@@ -18,6 +19,7 @@ class Opt(object):
 		self.searchthr = searchthr
 		self.searchrooted = searchrooted
 		self.searchthrrooted = searchthrrooted
+		createNames(annotation, self.names)
 
 	def parseArgs(self, parser):
 
@@ -38,7 +40,6 @@ class Opt(object):
 			parser.print_help()
 			sys.exit("Please enther path to the species names file")
 
-		names = options.names
 
 		if not options.clades:
 			parser.print_help()
@@ -64,11 +65,7 @@ class Opt(object):
 			parser.print_help()
 			sys.exit("Please check the path to the rooting definitions")
 
-		names = os.path.abspath(names)
 
-		if not os.path.isfile(names):
-			parser.print_help()
-			sys.exit("Please check the names file")
 		clades = os.path.abspath(clades)
 		if not os.path.isfile(clades):
 			parser.print_help()
@@ -128,5 +125,15 @@ class Opt(object):
 			searchrooted = path + '/*/*-estimated_gene_trees.tree.rerooted'
 			searchthrrooted = None
 		return (search, searchthr, searchrooted, searchthrrooted)
+	def createNames(annotation, names):
+		f = open(names, 'w')
+		g = open(annotation, 'r')
+		for line in g:
+			line = line.replace("\n","")
+			r = line.split("\t")
+			taxon = r[0].replace("_"," ")
+			string = taxon + "\n"
+			f.write(string)
+		f.close()
 			
 	
