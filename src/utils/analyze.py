@@ -27,7 +27,7 @@ class Analyze(object):
 		currPath = os.path.dirname(os.path.abspath(__file__))
                 WS_HOME = os.environ['WS_HOME']
                 command = 'Rscript'
-                path2script = WS_HOME  + "/insects/code/R/depict_clades.R"
+                path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
                 args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
                 stderrFile = opt.path + "/error.log"
                 cmd = [command, path2script] + args
@@ -50,7 +50,7 @@ class Analyze(object):
 		currPath = os.path.dirname(os.path.abspath(__file__))
                 WS_HOME = os.environ['WS_HOME']
                 command = 'Rscript'
-                path2script = WS_HOME  + "/insects/code/R/depict_clades.R"
+                path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 		if (opt.modelCond is None):
 	                args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
 		else:
@@ -94,12 +94,12 @@ class Analyze(object):
 
 		searchFiles = " ".join(glob.glob(opt.searchrooted))
 		searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
-		if (opt.threshold)<= 1.:
+		if float(opt.threshold)<= 1.:
 			multiplier = 100.
 		else:
 			multiplier = 1.
-		find_clades.main(opt.names, opt.clades, outFile, searchFiles, multiplier) 
-		find_clades.main(opt.names, opt.clades, outFilethr, searchFilesthr, multiplier)
+		find_clades.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
+		find_clades.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
 		f = open(outFile,'r')
 		outRes = outFile + ".res"
@@ -152,7 +152,7 @@ class Analyze(object):
 		currPath = os.path.dirname(os.path.abspath(__file__))
 		WS_HOME = os.environ['WS_HOME']
 		command = 'Rscript'
-		path2script = WS_HOME  + "/insects/code/R/depict_clades.R"
+		path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
 		stderrFile = opt.path + "/error.log"
 		cmd = [command, path2script] + args
@@ -180,7 +180,7 @@ class Analyze(object):
 		currPath = os.path.dirname(os.path.abspath(__file__))
                 WS_HOME = os.environ['WS_HOME']
                 command = 'Rscript'
-                path2script = WS_HOME  + "/insects/code/R/depict_clades.R"
+                path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
                 args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
                 stderrFile = opt.path + "/error.log"
                 cmd = [command, path2script] + args

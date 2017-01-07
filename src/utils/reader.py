@@ -19,7 +19,7 @@ class Opt(object):
 		self.searchthr = searchthr
 		self.searchrooted = searchrooted
 		self.searchthrrooted = searchthrrooted
-		createNames(annotation, self.names)
+		self.createNames(annotation, self.names)
 
 	def parseArgs(self, parser):
 
@@ -97,7 +97,7 @@ class Opt(object):
 		style = options.style
 		modelCond = options.modelCond
 
-		return (path, root, clades, names, threshold, mode, style, annotation, modelCond)
+		return (path, root, clades, threshold, mode, style, annotation, modelCond)
 	def searchFiles(self, mode, path, thresh):
 		if mode == 0:
 			search = path + '/*/' + 'estimated_species_tree.tree'
@@ -125,7 +125,7 @@ class Opt(object):
 			searchrooted = path + '/*/*-estimated_gene_trees.tree.rerooted'
 			searchthrrooted = None
 		return (search, searchthr, searchrooted, searchthrrooted)
-	def createNames(annotation, names):
+	def createNames(self, annotation, names):
 		f = open(names, 'w')
 		g = open(annotation, 'r')
 		for line in g:

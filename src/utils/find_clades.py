@@ -30,13 +30,13 @@ class Mono(object):
         name="%s (%s)" %(ln,letter) if letter is not None and letter!="" else ln
 	support = None
 	if mrca is not None and hasattr(mrca,'label'):
-		support = mrca.label
+		support = str(float(mrca.label) * mult)
 		#mrca.label = "%s[%s]" %(ln,mrca.label) if mrca.label is not None else ln
 	elif hasattr(mrca,'label'):
 		mrca.label = ""
 	outputTree = treeName.replace(" ", "_") + ".out"
 	#tree.write(path=outputTree, schema="newick", suppress_rooting=True)
-        ofile.write("%s\t%s\t%s\t%s\n" % (treeName, keyword, support * mult, name))
+        ofile.write("%s\t%s\t%s\t%s\n" % (treeName, keyword, support , name))
     
     def is_mono(self,tree, clade):
         mrca = tree.mrca(taxa=clade)
@@ -150,11 +150,12 @@ def main(*arg):
 	namesFile = arg[0]
 	cladesFile = arg[1]
 	outFile = arg[2]
-	mult = arg[3]
+	mult = float(arg[3])
+	print mult
 	taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
 	mono = Mono(taxa, outFile)
 	mono.read_clades(cladesFile)
-	for fileName in arg[3:][0].split(' '):
+	for fileName in arg[4:][0].split(' '):
         	trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-rooted")
 	        labelsSet = set(t.label for t in trees.taxon_namespace)
         	namemismatch = labelsSet - taxa
