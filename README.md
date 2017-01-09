@@ -84,7 +84,8 @@ In important branches file, you could define other important branches of the exp
 Throughout this tutorial, we assume that you are using bash, and your current directory is **WS\_HOME/DiscoVista/**. The rooting definitions are listed in rooting.txt, the annotation file is annotation.txt, and the clade definition file is clade-definition.txt (as described [above](#somefiles)).  
 
 ### 1. Discordance analysis on species trees
-To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
+To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn. The rerooted trees will be stored under the same directory as the gene trees with the same name and with file extension **rerooted**.
+ 
 
 * Species trees should be stored following this structure **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Here __path__ points to the directory that species trees are located. Put each estimated species tree inferred with different methods under different directories. The name of these directories should follow **model\_condition-data\_sequence\_type**. For example, if you have different filtering strategies for your nucleotide acid sequences and then the gene trees are inferred using [RAxML](http://sco.h-its.org/exelixis/web/software/raxml/index.html), you might put the species tree with name estimated\_species\_tree.tree, under RAxML\_highly\_filtered-NA.  Please only use **"-"** to separate the model condition from the data sequence type.
 
@@ -103,7 +104,7 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 
 ### 2. Discordance analysis on gene trees
 
-To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
+To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn. The rerooted trees will be stored under the same directory as the gene trees with the file extension **rerooted**.
 
 * Gene trees should be stored using this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for the different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
 
@@ -118,7 +119,7 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 
 
 ### 3. GC content analysis
-* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species. 
+* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species. This might not be true for third codon, which suggests removing the third codon position might help gene tree inferences.
 * For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the following command in bash:
 
 ~~~bash
@@ -126,8 +127,8 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 ~~~
 
 ### 4. Occupancy analysis
-* To see the occupancy of different species or clades in different genes you would use the following commands. 
-* First for this analysis use this structure to have the sequence alignments, **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. Then you would use this command:
+* To see the occupancy of different species or clades in different genes you would use this analysis. 
+* For this analysis use this structure to have the sequence alignments, **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. Then you would use this command:
  
  ~~~bash
  ./discoVista.py -p $path -m 3 -a annotation.txt 
@@ -139,8 +140,8 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
  ./discoVista.py -p $path -m 3 -a annotation.txt -x FNA-noFiltered
  ~~~
 ### 5. Branch support vs branch length analysis
-* This analysis shows the correlation between the average of average and maximum gene MLBS values versus the average of average gene branch lengths for tracking the long branch attraction and the effects of different inference methods on MLBS. 
-* First organize gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
+* This analysis shows the correlation between the average of average gene MLBS values and average of average and maximum gene branch lengths for analyzing the long branch attraction and the effects of different inference methods on reliability of gene trees. 
+* First, organize gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
 
 ~~~bash
 ./discoVista -p $path -m 4 -a annotation.txt -r root.txt
