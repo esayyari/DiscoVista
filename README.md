@@ -43,9 +43,9 @@ Options:
   -c CLADES, --clades=CLADES                The path to the clades definition file
   -m MODE, --mode=MODE                      Determines which analysis to be done.
                                               To do discordance analysis on species tree use 0. To do discordance analysis on 
-                                              gene trees use 1. For GC stat analysis use 2. 
-                                              For occupancy analysis use 3. doing MLBS vs 
-                                              branch length analysis use 4.
+                                              gene trees use 1. For GC stat analysis use -m 2. 
+                                              For occupancy analysis use -m 3. doing MLBS vs 
+                                              branch length analysis use -m 4.
   -p PATH, --path=PATH                      Path to the gene directory or species tree
   -r ROOT, --rooting=ROOT                    The rooting file
   -s STYLE, --style=STYLE                    The color style file
@@ -56,7 +56,7 @@ Options:
 
 There are some files that you need to run analyses. <a name="somefiles"></a>
 
-1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Please use tab as the seperator. 
+1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Please use tab as the separator. 
 2. You would pass the rooting definition file to the utility using **-r ROOT**. Let's say that you have an **outgroup** clade. On the lines of this file, the set of species in the order of speciation events time are listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroup which are the second most distant species to the ingroup species, and so on. 
 3. You would pass the clade definition file to the utility using **-c CLADE**. There is an example of this file available under the DiscoVista GitHub repository. Also, there is another tool to generate this clade definition file in this repository under DiscoVista/src/utils/generate_clade-defs.py. 
 
@@ -79,12 +79,12 @@ generate_clade-defs.py [annotation file] [outputfile] [important branches file]
 In important branches file, you could define other important branches of the expected tree. Let's say that we have two clades **A**, and **B**, and you are interested in the branch that separates **AB** from others. Then you would define it with **A+B** in this file.
 
 ## How to run DiscoVista
-Throughout this tutorial we asuume that you are using bash, and your current directory is **WS\_HOME/DiscoVista/**. The rooting definitions are listed in rooting.txt, the annotation file is annotation.txt, and the clade definition file is clade-definition.txt (as described [above](#somefiles)).  
+Throughout this tutorial, we assume that you are using bash, and your current directory is **WS\_HOME/DiscoVista/**. The rooting definitions are listed in rooting.txt, the annotation file is annotation.txt, and the clade definition file is clade-definition.txt (as described [above](#somefiles)).  
 
-## Discordance analysis on species trees
-To perfomr discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
+### 1. Discordance analysis on species trees
+To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
 
-* Species trees should be stored following this structure **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Here __path__ points to the directory that species trees are located. Put each estimated species tree inferred with different methods under different directories. The name of these directories should follow **model\_condition-data\_sequence\_type**. For example if you have different filtering strategies for your nucleotide acid sequences and then the gene trees are infered using [RAxML](http://sco.h-its.org/exelixis/web/software/raxml/index.html), you might put the species tree with name estimated\_species\_tree.tree, under RAxML\_highly\_filtered-NA.  Please only use **"-"** to separate the model condition from the data sequence type.
+* Species trees should be stored following this structure **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Here __path__ points to the directory that species trees are located. Put each estimated species tree inferred with different methods under different directories. The name of these directories should follow **model\_condition-data\_sequence\_type**. For example, if you have different filtering strategies for your nucleotide acid sequences and then the gene trees are inferred using [RAxML](http://sco.h-its.org/exelixis/web/software/raxml/index.html), you might put the species tree with name estimated\_species\_tree.tree, under RAxML\_highly\_filtered-NA.  Please only use **"-"** to separate the model condition from the data sequence type.
 
 * Let's assume that the MLBS values are drawn on branches of the species tree available at path \$path, and there are 3 model conditions, RAxML\_highly\_filtered-NA, RAxML\_med\_filtered-NA, and RAxML\_highly\_filtered-NA. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
 
@@ -92,18 +92,18 @@ To perfomr discordance analysis on gene trees, you need rooted gene trees with t
 ./discoVista.py -m 0 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 75  
 ~~~
 
-* If you are using local posterior probabilites instead of MLBS, and let's assume that the branches above the threshold of 0.95 considered as highly supported branches, then you would use the software with:
+* If you are using local posterior probabilities instead of MLBS, and let's assume that the branches above the threshold of 0.95 considered as highly supported branches, then you would use the software with:
 
 ~~~bash
 ./discoVista.py -m 0 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 0.95
 ~~~
 
 
-## Discordance analysis on gene trees
+### 2. Discordance analysis on gene trees
 
-To perfomr discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
+To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
 
-* Gene trees should be stored using this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
+* Gene trees should be stored using this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for the different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
 
 * Note that you would do this analysis for each model condition separately. 
 
@@ -115,15 +115,15 @@ To perfomr discordance analysis on gene trees, you need rooted gene trees with t
 
 
 
-## GC content analysis
-* GC content analysis shows the ratio of GC content (to number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species. 
-* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the folloing command in bash:
+### 3. GC content analysis
+* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species. 
+* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the following command in bash:
 
 ~~~bash
 ./discoVista.py -p $path -m 2 -a annotation.txt
 ~~~
 
-## Occupancy analsysi
+### 4. Occupancy analysis
 * To see the occupancy of different species or clades in different genes you would use the following commands. 
 * First for this analysis use this structure to have the sequence alignments, **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. Then you would use this command:
  
@@ -136,9 +136,9 @@ To perfomr discordance analysis on gene trees, you need rooted gene trees with t
  ~~~bash
  ./discoVista.py -p $path -m 3 -a annotation.txt -x FNA-noFiltered
  ~~~
-## Branch support vs branch length analysis
-* This analysis shows the corellation between average of average and maximum gene MLBS values versus average of average gene branch lengths for tracking the long branch attraction, and the effects of different inference methods on MLBS. 
-* First put gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
+### 5. Branch support vs branch length analysis
+* This analysis shows the correlation between the average of average and maximum gene MLBS values versus the average of average gene branch lengths for tracking the long branch attraction and the effects of different inference methods on MLBS. 
+* First organize gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
 
 ~~~bash
 ./discoVista -p $path -m 4 -a annotation.txt -r root.txt

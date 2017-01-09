@@ -30,7 +30,8 @@ class Mono(object):
         name="%s (%s)" %(ln,letter) if letter is not None and letter!="" else ln
 	support = None
 	if mrca is not None and hasattr(mrca,'label'):
-		support = str(float(mrca.label) * mult)
+		if mrca.label is not None:
+			support = str(float(mrca.label) * mult)
 		#mrca.label = "%s[%s]" %(ln,mrca.label) if mrca.label is not None else ln
 	elif hasattr(mrca,'label'):
 		mrca.label = ""

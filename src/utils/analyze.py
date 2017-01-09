@@ -84,13 +84,13 @@ class Analyze(object):
 		    os.makedirs(finegrained)
 		searchFiles = " ".join(glob.glob(opt.search))
 
-		for tree in searchFiles.split(" "):
-			tools.reroot(tree, opt.root, opt.annotation)
-			tools.remove_edges_from_tree(tree, opt.threshold)
+		#for tree in searchFiles.split(" "):
+		#	tools.reroot(tree, opt.root, opt.annotation)
+		#	tools.remove_edges_from_tree(tree, opt.threshold)
 		
 		searchFilesthr = " ".join(glob.glob(opt.searchthr))
-		for tree in searchFilesthr.split(" "):
-			tools.reroot(tree, opt.root, opt.annotation)
+		#for tree in searchFilesthr.split(" "):
+		#	tools.reroot(tree, opt.root, opt.annotation)
 
 		searchFiles = " ".join(glob.glob(opt.searchrooted))
 		searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
@@ -98,6 +98,7 @@ class Analyze(object):
 			multiplier = 100.
 		else:
 			multiplier = 1.
+		print multiplier
 		find_clades.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
 		find_clades.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
