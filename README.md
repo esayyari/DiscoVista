@@ -84,12 +84,12 @@ In important branches file, you could define other important branches of the exp
 Throughout this tutorial, we assume that you are using bash, and your current directory is **WS\_HOME/DiscoVista/**. The rooting definitions are listed in rooting.txt, the annotation file is annotation.txt, and the clade definition file is clade-definition.txt (as described [above](#somefiles)).  
 
 ### 1. Discordance analysis on species trees
-To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn. The rerooted trees will be stored under the same directory as the gene trees with the same name and with file extension **rerooted**.
+To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn and rerooting was correct. The rerooted trees will be stored under the same directory as the gene trees with the same name and with file extension **rerooted**.
  
 
 * Species trees should be stored following this structure **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Here __path__ points to the directory that species trees are located. Put each estimated species tree inferred with different methods under different directories. The name of these directories should follow **model\_condition-data\_sequence\_type**. For example, if you have different filtering strategies for your nucleotide acid sequences and then the gene trees are inferred using [RAxML](http://sco.h-its.org/exelixis/web/software/raxml/index.html), you might put the species tree with name estimated\_species\_tree.tree, under RAxML\_highly\_filtered-NA.  Please only use **"-"** to separate the model condition from the data sequence type.
 
-* Let's assume that the MLBS values are drawn on branches of the species tree available at path \$path, and there are 3 model conditions, RAxML\_highly\_filtered-NA, RAxML\_med\_filtered-NA, and RAxML\_highly\_filtered-NA. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
+* Let's assume that the MLBS values are drawn on branches of the species tree available at path **\<path\>**, and there are 3 model conditions, RAxML\_highly\_filtered-NA, RAxML\_med\_filtered-NA, and RAxML\_highly\_filtered-NA. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
 
 ~~~bash
 ./discoVista.py -m 0 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 75  
@@ -104,13 +104,13 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 
 ### 2. Discordance analysis on gene trees
 
-To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn. The rerooted trees will be stored under the same directory as the gene trees with the file extension **rerooted**.
+To perform discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in Newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn and rerooting was correct. The rerooted trees will be stored under the same directory as the gene trees with the file extension **rerooted**.
 
 * Gene trees should be stored using this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for the different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
 
-* Note that you would do this analysis for each model condition separately. 
+* Note that you should do this analysis for each model condition separately. 
 
-* Let's assume that the MLBS values are drawn on branches of the gene trees of model condition RAxML\_highly\_filtered-NA available at path \$path. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
+* Let's assume that the MLBS values are drawn on branches of the gene trees of model condition RAxML\_highly\_filtered-NA available at path **path**. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
 
 ~~~bash
 ./discoVista.py -m 1 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 75  
@@ -119,7 +119,7 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 
 
 ### 3. GC content analysis
-* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species. This might not be true for third codon, which suggests removing the third codon position might help gene tree inferences.
+* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species for each codon position separately. This might not be true for third codon, which suggests removing the third codon position might help gene tree inferences.
 * For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the following command in bash:
 
 ~~~bash
