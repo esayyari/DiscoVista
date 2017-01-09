@@ -69,7 +69,7 @@ Clade definition file has different columns. The column names are: __Clade Name_
 * __Clade Definition__ is the list of species or other clades in this clade. You would use **+** or **-** signs to define them.
 * __Section Letter__ Name that will define the order of clades. If there is no ordering between clades leave it blank. 
 * __Components__ The list of important species or clades that defines the clade. If one of these species or clades is missed, the clade will be considered as missing.
-* __Show__ This is a 0/1 variable. If this is 1 that clade will be considered for the analyses, otherwise this clade will not be considered. 
+* __Show__ This is a 0/1 variable. If this is 1, that clade will be considered for the analyses, otherwise this clade will not be considered for anlaysis. 
 * __Comments__ comments about the clade.
 
 Also, there is the python code **generate_clade-defs.py** that could be used to generate the clade definition file from the annotation file. You would use it using the command:
