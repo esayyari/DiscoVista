@@ -32,29 +32,31 @@ pip install dendropy --user
 
 ##How DiscoVista works
 
-The main file to run the analysis is __discoVista.py__. To use this utility in bash you would use: 
+The main utility to run these analyses is __discoVista.py__. To use this utility in bash you would use: 
 
 ~~~
 Usage: discoVista.py [options]
 
 Options:
   -h, --help                                Show this help message and exit
-  -a ANNOTATION, --annotation=ANNOTATION     The annotation file
+  -a ANNOTATION, --annotation=ANNOTATION    The annotation file
   -c CLADES, --clades=CLADES                The path to the clades definition file
   -m MODE, --mode=MODE                      Determines which analysis to be done.
-                                              To do discordance analysis on species tree use 0. To do discordance analysis on 
-                                              gene trees use 1. For GC stat analysis use -m 2. 
-                                              For occupancy analysis use -m 3. doing MLBS vs 
-                                              branch length analysis use -m 4.
-  -p PATH, --path=PATH                      Path to the gene directory or species tree
-  -r ROOT, --rooting=ROOT                    The rooting file
-  -s STYLE, --style=STYLE                    The color style file
-  -t THRESH, --threshold=THRESH                The bootstrap threshold
-  -x MODELCOND, --modelCond=MODELCOND        The model condition that the occupancy map 
-                                              will be plotted for
+                                            To do discordance analysis on species tree use 0. 
+                                            To do discordance analysis on gene trees use 1. 
+                                            For GC stat analysis use -m 2. For occupancy 
+                                            analysis use -m 3. doing MLBS vs 
+                                            branch length analysis use -m 4.
+  -p PATH, --path=PATH                      Path to the data directory 
+  -r ROOT, --rooting=ROOT                   The rooting file
+  -s STYLE, --style=STYLE                   The color style file 
+  											(it doesn't work for this version)
+  -t THRESH, --threshold=THRESH             The bootstrap threshold
+  -x MODELCOND, --modelCond=MODELCOND       The model condition that the occupancy map 
+                                            will be plotted for
 ~~~ 
 
-There are some files that you need to run analyses. <a name="somefiles"></a>
+There are some files that you need to run these analyses. <a name="somefiles"></a>
 
 1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Please use tab as the separator. 
 2. You would pass the rooting definition file to the utility using **-r ROOT**. Let's say that you have an **outgroup** clade. On the lines of this file, the set of species in the order of speciation events time are listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroup which are the second most distant species to the ingroup species, and so on. 
