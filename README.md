@@ -103,7 +103,7 @@ To perfomr discordance analysis on gene trees, you need rooted gene trees with t
 
 To perfomr discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
 
-* Gene trees should be stored following this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
+* Gene trees should be stored using this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
 
 * Note that you would do this analysis for each model condition separately. 
 
@@ -116,11 +116,31 @@ To perfomr discordance analysis on gene trees, you need rooted gene trees with t
 
 
 ## GC content analysis
-* GC content analysis shows the ratio of GC content (to number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For stationary assumption in sequence evolution models, we expect that these ratios be close to identical across all species. 
-* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering
+* GC content analysis shows the ratio of GC content (to number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species. 
+* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the folloing command in bash:
+
+~~~bash
+./discoVista.py -p $path -m 2 -a annotation.txt
+~~~
 
 ## Occupancy analsysi
-* For occupancy analysis use this structure **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on.
+* To see the occupancy of different species or clades in different genes you would use the following commands. 
+* First for this analysis use this structure to have the sequence alignments, **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. Then you would use this command:
  
+ ~~~bash
+ ./discoVista.py -p $path -m 3 -a annotation.txt 
+ ~~~
+ 
+ If you want to have a tile graph that describes the occupancy of species for only one model condition you would use the option **-x DST-model\_condition**. For example, if you are interested in the occupancy map of your data and you used FNA as your DST in your directory names, and the model condition is noFiltered, then you can use this command: 
+ 
+ ~~~bash
+ ./discoVista.py -p $path -m 3 -a annotation.txt -x FNA-noFiltered
+ ~~~
 ## Branch support vs branch length analysis
-* For branch support vs branch length analysis put gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**. In estimated gene trees files concatenate all the estimated trees. 
+* This analysis shows the corellation between average of average and maximum gene MLBS values versus average of average gene branch lengths for tracking the long branch attraction, and the effects of different inference methods on MLBS. 
+* First put gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
+
+~~~bash
+./discoVista -p $path -m 4 -a annotation.txt -r root.txt
+~~~
+

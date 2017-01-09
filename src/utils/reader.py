@@ -29,50 +29,6 @@ class Opt(object):
 			sys.exit("please enter the path to the gene directory")
 
 		path = options.path
-
-		if not options.root:
-			parser.print_help()
-			sys.exit("Please enter the path to the rooting definitions")
-
-		root = options.root
-
-		if not options.root:
-			parser.print_help()
-			sys.exit("Please enther path to the species names file")
-
-
-		if not options.clades:
-			parser.print_help()
-			sys.exit("Please enter the path to clade definitions")
-
-		clades = options.clades
-
-		if not options.thresh:
-			parser.print_help()
-			sys.exit("Please enter the bootstrapping threshold")
-
-		threshold = options.thresh
-
-		path = os.path.expanduser(os.path.expandvars(path))
-		path = os.path.abspath(path)
-		if not os.path.exists(path):
-			parser.print_help()
-			sys.exit("please check the path to the gene direcotry")
-	
-		root = os.path.abspath(root)
-
-		if not os.path.isfile(root):
-			parser.print_help()
-			sys.exit("Please check the path to the rooting definitions")
-
-
-		clades = os.path.abspath(clades)
-		if not os.path.isfile(clades):
-			parser.print_help()
-			sys.exit("Please check the path to the rooting definitions")
-
-		if float(threshold)<=1.0:
-			threshold = float(threshold)
 		if not options.mode:
 			parser.print_help()
 			sys.exit("Please enter the mode. Do you want to summerize the species tree (0), or the gene trees (1)")
@@ -80,19 +36,64 @@ class Opt(object):
 		mode = int(options.mode)
 		if mode != 0 and mode != 1 and mode !=2 and mode != 3 and mode != 4:
 			parser.print_help()
-			sys.exit("To summerize species tree use 0, and to ummerize gene trees use 1. To do GC-stat analysis use 2. To do occupancy analysis use 3. To do branchInfo analysis.")
+			sys.exit("To summerize species tree use 0, and to ummerize gene trees use 1. To do GC-stat analysis use 2. To do occupancy analysis use 3. To do branchInfo analysis please use 4.")
+		if mode == 0 or mode == 1 or mode == 4:
+			if not options.root:
+				parser.print_help()
+				sys.exit("Please enter the path to the rooting definitions")
+
+			root = options.root
+			root = os.path.abspath(root)
+
+			if not os.path.isfile(root):
+				parser.print_help()
+				sys.exit("Please check the path to the rooting definitions")
+
+		else:
+			root = ""
+
+		if mode == 0 or mode == 1:
+			if not options.clades:
+				parser.print_help()
+				sys.exit("Please enter the path to clade definitions")
+
+			clades = options.clades
+			clades = os.path.abspath(clades)
+			if not os.path.isfile(clades):
+				parser.print_help()
+				sys.exit("Please check the path to the rooting definitions")
+	
+			if not options.thresh:
+				parser.print_help()
+				sys.exit("Please enter the bootstrapping threshold")
+
+			threshold = options.thresh
+
+			if float(threshold)<=1.0:
+				threshold = float(threshold)
+			if not options.annotation:
+				parser.print_help()
+				sys.exit("Please enter the annotation file")
+
+		else:
+			clades = ""
+			threshold = -1
 
 		if not options.annotation:
 			parser.print_help()
-			sys.exit("Please enter the annotation file")
-
+			sys.exit("Please enter the annotation file")	
 		annotation = options.annotation
-
-		annotation = os.path.expanduser(os.path.expandvars(annotation))
 		annotation = os.path.abspath(annotation)
 		if not os.path.isfile(annotation):
 			parser.print_help()
 			sys.exit("Please check the annotation file")
+
+		path = os.path.expanduser(os.path.expandvars(path))
+		path = os.path.abspath(path)
+		if not os.path.exists(path):
+			parser.print_help()
+			sys.exit("please check the path to the gene direcotry")
+		
 
 		style = options.style
 		modelCond = options.modelCond

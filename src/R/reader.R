@@ -17,13 +17,13 @@ setOptions <- function(opt) {
       ST1 = FALSE
     }
   }
-  if (is.null(opt$clade)){
+  if ((mode1 == 0 || mode1 == 1) && is.null(opt$clade)){
     print_help(opt_parser)
     stop("Please specify the path to the clade definitions.", call.=FALSE)
   } else {
     clade1 = opt$clade
   }
-  if (is.null(opt$annotation)){
+  if ((mode1 == 0 || mode1 == 1 || mode1 == 4) && is.null(opt$annotation)){
     print_help(opt_parser)
     stop("Please specify the path to the annotation file.", call.=FALSE)
   } else {
