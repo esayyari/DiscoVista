@@ -54,7 +54,7 @@ Options:
                                               will be plotted for
 ~~~ 
 
-There are some files that you need to run analyses. 
+There are some files that you need to run analyses. <a name="somefiles"></a>
 
 1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Please use tab as the seperator. 
 2. You would pass the rooting definition file to the utility using **-r ROOT**. Let's say that you have an **outgroup** clade. On the lines of this file, the set of species in the order of speciation events time are listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroup which are the second most distant species to the ingroup species, and so on. 
@@ -78,11 +78,49 @@ generate_clade-defs.py [annotation file] [outputfile] [important branches file]
 
 In important branches file, you could define other important branches of the expected tree. Let's say that we have two clades **A**, and **B**, and you are interested in the branch that separates **AB** from others. Then you would define it with **A+B** in this file.
 
-## The structure of data for different analyses
+## How to run DiscoVista
+Throughout this tutorial we asuume that you are using bash, and your current directory is **WS\_HOME/DiscoVista/**. The rooting definitions are listed in rooting.txt, the annotation file is annotation.txt, and the clade definition file is clade-definition.txt (as described [above](#somefiles)).  
 
-* For discordance analysis on species trees you need this structure
-    **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Where __path__ is the path that all the species trees inferred with different methods are. Put each estimated species tree inferred with different methods under different directories. The name of this directory is in this structure **model\_condition-data\_sequence\_type**. Please only use **"-"** to separate the model condition from the data sequence type. Please run this analysis on each model condition separately. 
-* For discordance analysis on gene trees you need this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. 
-* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type.
-* For occupancy analysis use this structure **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. 
+## Discordance analysis on species trees
+To perfomr discordance analysis on gene trees, you need rooted gene trees with the MLBS values  [local posterior probabilities] (https://github.com/smirarab/ASTRAL) draw on the branches and represented in newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
+
+* Species trees should be stored following this structure **path/MODEL\_CONDITION-DST/estimated\_species\_tree.tree**. Here __path__ points to the directory that species trees are located. Put each estimated species tree inferred with different methods under different directories. The name of these directories should follow **model\_condition-data\_sequence\_type**. For example if you have different filtering strategies for your nucleotide acid sequences and then the gene trees are infered using [RAxML](http://sco.h-its.org/exelixis/web/software/raxml/index.html), you might put the species tree with name estimated\_species\_tree.tree, under RAxML\_highly\_filtered-NA.  Please only use **"-"** to separate the model condition from the data sequence type.
+
+* Let's assume that the MLBS values are drawn on branches of the species tree available at path \$path, and there are 3 model conditions, RAxML\_highly\_filtered-NA, RAxML\_med\_filtered-NA, and RAxML\_highly\_filtered-NA. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
+
+~~~bash
+./discoVista.py -m 0 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 75  
+~~~
+
+* If you are using local posterior probabilites instead of MLBS, and let's assume that the branches above the threshold of 0.95 considered as highly supported branches, then you would use the software with:
+
+~~~bash
+./discoVista.py -m 0 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 0.95
+~~~
+
+
+## Discordance analysis on gene trees
+
+To perfomr discordance analysis on gene trees, you need rooted gene trees with the MLBS values draw on the branches and represented in newick format as node labels. For drawing MLBS on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). 
+
+* Gene trees should be stored following this structure **path/GENE\_ID/GENE\_ID-MODEL\_CONDITION-DST/estimated\_gene\_trees.tree**. Here __path__ points to the directory that gene trees are located. Please only use **"-"** to separate the gene ID, model condition, and data sequence type. Put each estimated gene tree inferred with different methods for different gene under different directories. The name of these directories should follow **GENE\_ID-model\_condition-data\_sequence\_type**. 
+
+* Note that you would do this analysis for each model condition separately. 
+
+* Let's assume that the MLBS values are drawn on branches of the gene trees of model condition RAxML\_highly\_filtered-NA available at path \$path. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
+
+~~~bash
+./discoVista.py -m 1 -a annotation.txt -c clades-def.txt -p $path -r rootingDef.txt -t 75  
+~~~
+
+
+
+## GC content analysis
+* GC content analysis shows the ratio of GC content (to number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For stationary assumption in sequence evolution models, we expect that these ratios be close to identical across all species. 
+* For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering
+
+## Occupancy analsysi
+* For occupancy analysis use this structure **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on.
+ 
+## Branch support vs branch length analysis
 * For branch support vs branch length analysis put gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**. In estimated gene trees files concatenate all the estimated trees. 
