@@ -146,3 +146,5 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 ./discoVista -p $path -m 4 -a annotation.txt -r root.txt
 ~~~
 
+## Bug Reports
+Please contact esayyari@ucsd.edu.
