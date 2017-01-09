@@ -78,7 +78,7 @@ generate_clade-defs.py [annotation file] [outputfile] [important branches file]
 
 In important branches file, you could define other important branches of the expected tree. Let's say that we have two clades **A**, and **B**, and you are interested in the branch that separates **AB** from others. Then you would define it with **A+B** in this file.
 
-## How to run DiscoVista
+## How to use DiscoVista
 Throughout this tutorial, we assume that you are using bash, and your current directory is **WS\_HOME/DiscoVista/**. The rooting definitions are listed in rooting.txt, the annotation file is annotation.txt, and the clade definition file is clade-definition.txt (as described [above](#somefiles)).  
 
 ### 1. Discordance analysis on species trees
