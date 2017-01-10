@@ -50,7 +50,7 @@ Options:
   -p PATH, --path=PATH                      Path to the data directory 
   -r ROOT, --rooting=ROOT                   The rooting file
   -s STYLE, --style=STYLE                   The color style file 
-  											(it doesn't work for this version)
+                                              (it doesn't work for this version)
   -t THRESH, --threshold=THRESH             The bootstrap threshold
   -x MODELCOND, --modelCond=MODELCOND       The model condition that the occupancy map 
                                             will be plotted for
@@ -69,7 +69,7 @@ Clade definition file has different columns. The column names are: __Clade Name_
 * __Clade Definition__ is the list of species or other clades in this clade. You would use **+** or **-** signs to define them.
 * __Section Letter__ Name that will define the order of clades. If there is no ordering between clades leave it blank. 
 * __Components__ The list of important species or clades that defines the clade. If one of these species or clades is missed, the clade will be considered as missing.
-* __Show__ This is a 0/1 variable. If this is 1, that clade will be considered for the analyses, otherwise this clade will not be considered for anlaysis. 
+* __Show__ This is a 0/1 variable. If this is 1, that clade will be considered for the analyses, otherwise, this clade will not be considered for analysis. 
 * __Comments__ comments about the clade.
 
 Also, there is the python code **generate_clade-defs.py** that could be used to generate the clade definition file from the annotation file. You would use it using the command:
@@ -119,7 +119,7 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 
 
 ### 3. GC content analysis
-* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species for each codon position separately. This might not be true for third codon, which suggests removing the third codon position might help gene tree inferences.
+* GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species for each codon position separately. This might not be true for the third codon, which suggests removing the third codon position might help gene tree inferences.
 * For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the following command in bash:
 
 ~~~bash
@@ -140,7 +140,7 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
  ./discoVista.py -p $path -m 3 -a annotation.txt -x FNA-noFiltered
  ~~~
 ### 5. Branch support vs branch length analysis
-* This analysis shows the correlation between the average of average gene MLBS values and average of average and maximum gene branch lengths for analyzing the long branch attraction and the effects of different inference methods on reliability of gene trees. 
+* This analysis shows the correlation between the average of average gene MLBS values and average of average and maximum gene branch lengths for analyzing the long branch attraction and the effects of different inference methods on the reliability of gene trees. 
 * First, organize gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
 
 ~~~bash
