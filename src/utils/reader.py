@@ -119,7 +119,7 @@ class Opt(object):
             search = path + '/*/*-alignment-*.fasta'
             searchthr = None
             searchrooted = None
-                        searchthrrooted = None
+            searchthrrooted = None
         elif mode == 4:
             search = path + '/*/*-estimated_gene_trees.tree'
             searchthr = None

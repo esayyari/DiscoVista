@@ -25,50 +25,50 @@ class Analyze(object):
         tools.concatenateFiles(outFile, search)    
         print "Concatenated GC stats are written to %s" % (outFile)
         currPath = os.path.dirname(os.path.abspath(__file__))
-                WS_HOME = os.environ['WS_HOME']
-                command = 'Rscript'
-                path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-                args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
-                stderrFile = opt.path + "/error.log"
-                cmd = [command, path2script] + args
-                print "printing outputs and errors on " + stderrFile
-                print cmd
+	WS_HOME = os.environ['WS_HOME']
+	command = 'Rscript'
+	path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
+	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
+	stderrFile = opt.path + "/error.log"
+	cmd = [command, path2script] + args
+	print "printing outputs and errors on " + stderrFile
+	print cmd
         fi = open(stderrFile,'w')
-                fi.close()
-                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                stdout, stderr = proc.communicate()
-        #       x = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
-                err = open(stderrFile,'a')
-                err.write(stdout)
-                err.write(stderr)
-                err.close()
+	fi.close()
+	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout, stderr = proc.communicate()
+#       x = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
+	err = open(stderrFile,'a')
+	err.write(stdout)
+	err.write(stderr)
+	err.close()
     def occupancyAnalysis(self):
         opt = self.opt
         outFile = opt.path + "/occupancy.csv"
         tools.occupancy(opt.search, outFile)
         print "All the occupancy stats have written on file %s" % (outFile)  
         currPath = os.path.dirname(os.path.abspath(__file__))
-                WS_HOME = os.environ['WS_HOME']
-                command = 'Rscript'
-                path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
+	WS_HOME = os.environ['WS_HOME']
+	command = 'Rscript'
+	path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
         if (opt.modelCond is None):
-                    args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
+	    args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
         else:
             args = ["-p",  WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-x", opt.modelCond ]
-                stderrFile = opt.path + "/error.log"
-                cmd = [command, path2script] + args
-                print "printing outputs and errors on " + stderrFile
-                print cmd
+	stderrFile = opt.path + "/error.log"
+	cmd = [command, path2script] + args
+	print "printing outputs and errors on " + stderrFile
+	print cmd
         fi = open(stderrFile,'w')
         fi.close()
     
-                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                stdout, stderr = proc.communicate()
+	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout, stderr = proc.communicate()
         #       x = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
-                err = open(stderrFile,'a')
-                err.write(stdout)
-                err.write(stderr)
-                err.close()
+	err = open(stderrFile,'a')
+	err.write(stdout)
+	err.write(stderr)
+	err.close()
 
     def treesAnalyses(self):
         opt = self.opt
@@ -160,7 +160,7 @@ class Analyze(object):
         print "printing outputs and errors on " + stderrFile
         print cmd
         fi = open(stderrFile,'w')
-                fi.close()
+	fi.close()
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = proc.communicate()
     #    x = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
@@ -171,31 +171,31 @@ class Analyze(object):
     def geneTreeBranchInfo(self):
         opt = self.opt
         searchFiles = " ".join(glob.glob(opt.search))
-                for tree in searchFiles.split(" "):
-                        tools.reroot(tree, opt.root, opt.annotation)
+	for tree in searchFiles.split(" "):
+          	tools.reroot(tree, opt.root, opt.annotation)
         treeName = glob.glob(opt.searchrooted)
         outFile = opt.path + "/branchStats.csv"
         outFile2 = opt.path + "/branchSupport.csv"
         tools.branchInfo(treeName, outFile, outFile2)    
         print "The branch Length and support values are written on file %s" % (outFile)
         currPath = os.path.dirname(os.path.abspath(__file__))
-                WS_HOME = os.environ['WS_HOME']
-                command = 'Rscript'
-                path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-                args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
-                stderrFile = opt.path + "/error.log"
-                cmd = [command, path2script] + args
-                print "printing outputs and errors on " + stderrFile
-                print cmd
+	WS_HOME = os.environ['WS_HOME']
+	command = 'Rscript'
+	path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
+	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
+	stderrFile = opt.path + "/error.log"
+	cmd = [command, path2script] + args
+	print "printing outputs and errors on " + stderrFile
+	print cmd
         fi = open(stderrFile,'w')
-                fi.close()
-                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                stdout, stderr = proc.communicate()
+	fi.close()
+	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout, stderr = proc.communicate()
         #       x = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
-                err = open(stderrFile,'a')
-                err.write(stdout)
-                err.write(stderr)
-                err.close()
+	err = open(stderrFile,'a')
+	err.write(stdout)
+	err.write(stderr)
+	err.close()
     def analyze(self):
         if self.opt.mode == 0 or self.opt.mode == 1:
             self.treesAnalyses()
