@@ -57,7 +57,7 @@ if __name__ == "__main__":
     node = 0
     for line in g:
         line = "/".join(sorted(line.split(",")))
-        
+
         if line in bipart:
             continue
         else:

@@ -62,7 +62,7 @@ class Opt(object):
             if not os.path.isfile(clades):
                 parser.print_help()
                 sys.exit("Please check the path to the rooting definitions")
-    
+
             if not options.thresh:
                 parser.print_help()
                 sys.exit("Please enter the bootstrapping threshold")
@@ -81,7 +81,7 @@ class Opt(object):
 
         if not options.annotation:
             parser.print_help()
-            sys.exit("Please enter the annotation file")    
+            sys.exit("Please enter the annotation file")	
         annotation = options.annotation
         annotation = os.path.abspath(annotation)
         if not os.path.isfile(annotation):
@@ -93,7 +93,7 @@ class Opt(object):
         if not os.path.exists(path):
             parser.print_help()
             sys.exit("please check the path to the gene direcotry")
-        
+
 
         style = options.style
         modelCond = options.modelCond
@@ -136,5 +136,5 @@ class Opt(object):
             string = taxon + "\n"
             f.write(string)
         f.close()
-            
-    
+
+

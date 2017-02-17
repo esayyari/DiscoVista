@@ -82,13 +82,13 @@ def root (rootgroup, tree, c):
     return root
 
 def readRoots(rootFile):
-        f = open(rootFile,'r')
-        ROOT = list()
-        for line in f:
-                line = line.replace("\n","")
-                tmpRoot =  line.split(" ")
-                ROOT.append(tmpRoot)
-        return ROOT
+    f = open(rootFile,'r')
+    ROOT = list()
+    for line in f:
+        line = line.replace("\n","")
+        tmpRoot =  line.split(" ")
+        ROOT.append(tmpRoot)
+    return ROOT
 
 
 def reroot(*arg):
@@ -114,52 +114,52 @@ def reroot(*arg):
     print "writing results to " + resultsFile
     trees.write(path=resultsFile,schema='newick',suppress_rooting=True,suppress_leaf_node_labels=False, unquoted_underscores=True)
 def branchSupports(tree, DS, model, g ):
-    
+
     supp = list()
     for n in tree.postorder_node_iter():
         if n.is_leaf():
             continue
-            elif (n.label is not None):            
+        elif (n.label is not None):            
             supp.append(float(n.label))
             string = DS + " " + model + " " + n.label + "\n"
             g.write(string)
     return supp
 
-    
-def simplifyfasta(filename):
-        tmpfile = filename + ".tmp"
-        g = open(tmpfile, 'w')
-        f = open(filename, 'r')
-        for line in f:
-                line = line.rstrip('\n')
-                r = re.sub('>(.*)', '@>\\1@', line)
-                g.write(r)
-        g.close()
-        g = open(tmpfile, 'r')
-        for line in g:
-                line = re.sub('@','\n',line)
-                line = re.sub('^\n','',line)
-                return line
-def occupancy(search, outFile): 
-        searchFiles = glob.glob(search)
-    g = open(outFile, 'w')
-        for fname in searchFiles:
-                fname = os.path.abspath(fname)
-                base = os.path.basename(fname)
-                ID = os.path.basename(os.path.dirname(fname))
-                splitBase = base.split("-")
-                DS = splitBase[0]
-                mode = ("-".join(splitBase[2:])).replace(".fasta","")
 
-                output = simplifyfasta(fname)
-                for line in output.split("\n"):
-                        if re.match(">", line) is not  None:
-                                taxon = re.sub(">","",line)
-                                continue
-                        else:
-                                newLine = re.sub("[N-]","",line)
-                                string = DS + " " + ID + " " + mode + " " + taxon + " " + str(len(newLine))+"\n"
-                                g.write(string)
+def simplifyfasta(filename):
+    tmpfile = filename + ".tmp"
+    g = open(tmpfile, 'w')
+    f = open(filename, 'r')
+    for line in f:
+        line = line.rstrip('\n')
+        r = re.sub('>(.*)', '@>\\1@', line)
+        g.write(r)
+    g.close()
+    g = open(tmpfile, 'r')
+    for line in g:
+        line = re.sub('@','\n',line)
+        line = re.sub('^\n','',line)
+        return line
+def occupancy(search, outFile): 
+    searchFiles = glob.glob(search)
+    g = open(outFile, 'w')
+    for fname in searchFiles:
+        fname = os.path.abspath(fname)
+        base = os.path.basename(fname)
+        ID = os.path.basename(os.path.dirname(fname))
+        splitBase = base.split("-")
+        DS = splitBase[0]
+        mode = ("-".join(splitBase[2:])).replace(".fasta","")
+
+        output = simplifyfasta(fname)
+        for line in output.split("\n"):
+            if re.match(">", line) is not  None:
+                taxon = re.sub(">","",line)
+                continue
+            else:
+                newLine = re.sub("[N-]","",line)
+                string = DS + " " + ID + " " + mode + " " + taxon + " " + str(len(newLine))+"\n"
+                g.write(string)
 hdir=os.path.dirname(os.path.realpath(__file__))
 
 def mean(data):
@@ -197,34 +197,34 @@ def leafToLeafDistances(tree):
     for idx1, taxon1 in enumerate(tree.taxon_namespace):
         if taxon1 not in listTaxon:
             continue
-            for taxon2 in tree.taxon_namespace:
+        for taxon2 in tree.taxon_namespace:
             if taxon2 not in listTaxon:
                 continue
-                mrca = pdm.mrca(taxon1, taxon2)
-                weighted_patristic_distance = pdm.patristic_distance(taxon1, taxon2)
+            mrca = pdm.mrca(taxon1, taxon2)
+            weighted_patristic_distance = pdm.patristic_distance(taxon1, taxon2)
             brLen.append(weighted_patristic_distance)
     return brLen
 
 def branchInfo(treeName, outFile, outFile2):
-        c={}
-        f = open(outFile, 'w')
+    c={}
+    f = open(outFile, 'w')
 
     f.write("DS model_condition geneID medrootToLeafBrLen avgrootToLeafBrLen maxrootToLeafBrLen stdrootToLeafBrLen medtaxonToTaxonBrLen avgtaxonToTaxonBrLen maxtaxonToTaxonBrLen stdtaxonToTaxonBrLen medBrSupp avgBrSupp stdBrSupp\n")
     g = open(outFile2, 'w')
-           for gene in treeName:
+    for gene in treeName:
         r = os.path.basename(gene).split("-")
         mode = os.path.basename(os.path.dirname(gene))
-            DS = r[0]
-            trees = dendropy.TreeList.get_from_path(gene, 'newick',rooting="force-rooted", preserve_underscores=True)
-            for i,tree in enumerate(trees):
-                    disrt = [n.distance_from_root() for n in tree.leaf_node_iter()]
+        DS = r[0]
+        trees = dendropy.TreeList.get_from_path(gene, 'newick',rooting="force-rooted", preserve_underscores=True)
+        for i,tree in enumerate(trees):
+            disrt = [n.distance_from_root() for n in tree.leaf_node_iter()]
             brLen = leafToLeafDistances(tree)
-            supp = branchSupports(tree, DS, mode, g)            
-                    med = median(sorted(disrt))
+            supp = branchSupports(tree, DS, mode, g)			
+            med = median(sorted(disrt))
             maxbrlen = max(disrt)
-                    avg = mean(disrt)
-                    std = pstdev(disrt)
-            
+            avg = mean(disrt)
+            std = pstdev(disrt)
+
             med2 = median(sorted(brLen))
             maxbrlen2 = max(brLen)
             avg2 = mean(brLen)
@@ -232,8 +232,8 @@ def branchInfo(treeName, outFile, outFile2):
             avgsupp = mean(supp)
             medsupp = median(sorted(supp))
             stdsupp = pstdev(supp)
-                    string = DS + " " + mode + " " + str(i+1) + " " + str(med) + " " + str(avg) + " " + str(maxbrlen) + " " + str(std) + " " + str(med2) + " " + \
-                str(avg2) + " " + str(maxbrlen2) + " " + str(std2) + " " + str(medsupp) + " " + str(avgsupp) + " " + str(stdsupp) + "\n"
+            string = DS + " " + mode + " " + str(i+1) + " " + str(med) + " " + str(avg) + " " + str(maxbrlen) + " " + str(std) + " " + str(med2) + " " + \
+                    str(avg2) + " " + str(maxbrlen2) + " " + str(std2) + " " + str(medsupp) + " " + str(avgsupp) + " " + str(stdsupp) + "\n"
             f.write(string)
-        f.close()
+    f.close()
     g.close()

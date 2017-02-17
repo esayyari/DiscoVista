@@ -5,17 +5,17 @@ import os
 import itertools
 import string
 def iter_all_strings():
-        size = 1
-        while True:
-                for s in itertools.product(string.ascii_uppercase, repeat = size):
-                        yield "".join(s)
-                size += 1
-                print size
+    size = 1
+    while True:
+        for s in itertools.product(string.ascii_uppercase, repeat = size):
+            yield "".join(s)
+        size += 1
+        print size
 
 gen = iter_all_strings()
 def label_gen():
-        for s in gen:
-                return s
+    for s in gen:
+        return s
 
 
 if ("--help" in sys.argv) or ("-?" in sys.argv) or len(sys.argv) < 3 or ("-h" in sys.argv):
@@ -70,12 +70,12 @@ with open(destfile, 'w') as dest_file:
                 string  = clade + "\t" + "\"" + taxa[0] + "+\"\"" + ("\"\"+\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t\t1\t\n"
             else:
                 string = clade + "\t" + "\"" + taxa[0] + "\"\"\"" + "\tNone\t\t0\t\n"
-            
+
             dest_file.write(string)
         else:
             taxa = clades[clade]
-                        tmp = {t for t in taxa}
-                        allTaxa = allTaxa | tmp
+            tmp = {t for t in taxa}
+            allTaxa = allTaxa | tmp
             continue
 
     taxa = list(allTaxa)
@@ -83,12 +83,12 @@ with open(destfile, 'w') as dest_file:
     dest_file.write(string)
     taxa = clades["Outgroup"] 
     if len(taxa)>1:
-        string    = "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "-\"\"" + ("\"\"-\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t\t1\t\n" 
+        string	= "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "-\"\"" + ("\"\"-\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t\t1\t\n" 
     else:
         string = "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "\"\"\"" + "\tNone\t\t1\t\n"
     dest_file.write(string)
     for clade in impClades:
-            taxa = impClades[clade]
+        taxa = impClades[clade]
         if len(taxa)>1:
             string  = clade + "\t" + "\"" + taxa[0] + "+\"\"" + ("\"\"+\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t" + "\"" + taxa[0] + "+\"\"" + ("\"\"+\"\"").join(taxa[1:]) + "\"\"\"" +  "\t1\t\n"
         else:
