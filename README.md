@@ -144,7 +144,7 @@ To perform discordance analysis on gene trees, you need rooted gene trees with t
 * First, organize gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
 
 ~~~bash
-./discoVista -p $path -m 4 -a annotation.txt -r root.txt
+./discoVista.py -p $path -m 4 -a annotation.txt -r rootingDef.txt
 ~~~
 
 ## Bug Reports
