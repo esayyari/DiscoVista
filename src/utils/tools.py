@@ -14,6 +14,8 @@ def remove_edges_from_tree(*arg):
 
     treeName = arg[0]
     t = 75 if len(arg) < 2 else float(arg[1])
+    if (t>1):
+	t = int(t)
     resultsFile="%s.%s" % (treeName,t) if len(arg) < 4 or arg[3]=="-" else arg[2]
     #print "outputting to", resultsFile
     strip_internal=True if len(arg) > 4 and ( arg[3]=="-strip-internal" or arg[3]=="-strip-both" ) else False

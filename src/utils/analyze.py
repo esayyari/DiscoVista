@@ -82,11 +82,10 @@ class Analyze(object):
         finegrained = opt.path + "/finegrained"	
         if not os.path.exists(finegrained):
             os.makedirs(finegrained)
-        searchFiles = " ".join(glob.glob(opt.search))
-
-        for tree in searchFiles.split(" "):
-            tools.reroot(tree, opt.root, opt.annotation)
-            tools.remove_edges_from_tree(tree, opt.threshold)
+	searchFiles = " ".join(glob.glob(opt.search))
+	for tree in searchFiles.split(" "):
+           tools.reroot(tree, opt.root, opt.annotation)
+           tools.remove_edges_from_tree(tree, opt.threshold)
 
         searchFilesthr = " ".join(glob.glob(opt.searchthr))
         for tree in searchFilesthr.split(" "):
