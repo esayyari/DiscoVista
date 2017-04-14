@@ -33,6 +33,7 @@ def remove_edges_from_tree(*arg):
         edges = set(tree.edges(filt))
         print >>sys.stderr, len(edges), "edges will be removed"
         for e in edges:
+	    print e.label
             e.collapse()
         if strip_internal:
             for n in tree.internal_nodes():
