@@ -1,19 +1,24 @@
 #!/usr/bin/env python
-'''
-Created on Jun 3, 2011
-
-@author: smirarab
-'''
 import dendropy
 import sys
 import re
 from types import ListType
 
-
+#is_compatible_with_bipartition(bipartition, is_bipartitions_updated=False)
 def get_present_taxa(tree, labels):
     return [x.taxon for x in [tree.find_node_with_taxon_label(label) for label in labels]
             if x is not None]
-
+def get_support_from_bipartition(tree, clade):
+	clade = set(clade)
+	for nd in tree.postorder_node_iter():
+		l = set(nd.leaf_nodes())
+		lc = set(tree.leaf_nodes()) - l
+		if clade  == l or clade == lc:
+			if nd.label is not None:
+				return str(float(nd.label) * mult)
+			else:
+				return "None"
+	return "None"
 class Mono(object):
 
     def __init__(self,taxa, outFile):
@@ -24,85 +29,73 @@ class Mono(object):
         self.letters = dict()
         self.outFile = outFile
         self.show = dict()
-    def print_result(self, treeName, keyword, mrca, lst, tree, ofile, mult):
+    def print_result(self, treeName, keyword, bipartition, lst, tree, ofile, mult, clade):
         ln = "_".join([str(l) for l in lst]) if type(lst) == ListType else lst
         letter = self.letters[ln]
         name="%s (%s)" %(ln,letter) if letter is not None and letter!="" else ln
-        support = "None"
-        if mrca is not None and hasattr(mrca,'label'):
-            if mrca.label is not None:
-                support = str(float(mrca.label) * mult)
-        elif hasattr(mrca,'label'):
-            mrca.label = ""
-	print(mrca)	
-        #mrca.label = "%s[%s]" %(ln,mrca.label) if mrca.label is not None else ln
+	if keyword == "IS_MONO" or keyword == "IS_MONO_INCOMPLETE":
+		
+	        support = get_support_from_bipartition(tree, clade)
+	else:
+		support = "None"
         outputTree = treeName.replace(" ", "_") + ".out"
         #tree.write(path=outputTree, schema="newick", suppress_rooting=True)
         ofile.write("%s\t%s\t%s\t%s\n" % (treeName, keyword, support , name))
-
-    def is_mono(self,tree, clade):
-        mrca = tree.mrca(taxa=clade)
-
-        for x in mrca.leaf_nodes():
-            if x.taxon not in clade:
-                return False, mrca
-        return True, mrca
+    def is_mono(self, tree, clade, allBiparts):
+	taxon_namespace = tree.taxon_namespace 
+	bipartition = taxon_namespace.taxa_bipartition(taxa=clade)
+	allBiparts = set(allBiparts)
+	return (bipartition in allBiparts), bipartition
     def can_mono(self, tree, clade):
-        mrca = tree.mrca(taxa=clade)
-        for child in mrca.child_nodes():
-            childLeaves = [x.taxon for x in child.leaf_iter()]
-            intersect = [(x in clade) for x in childLeaves]
-            # If a child of the mrca has both True and False (i.e. taxa of interest 
-            # and others), it cannot be made monophyletic
-            if (True in intersect) and (False in intersect):
-                return False, mrca
-            # If a child is all False (not taxa of interest), it is irrelevant.
-            # If a child is all True (taxa of interst), it does not preclude monophyletic
-        return True, mrca
+	
+	bipartition = dendropy.TaxonNamespace.Taxontaxa_bipartition(taxa=clade)
+	canMono = tree.is_compatible_with_bipartition(bipartition, is_bipartitions_updated=False)
+        return canMono, bipartition
 
-    def check_mono(self,tree, treeName, clade, name, complete, ofile, mult):
+    def check_mono(self,tree, treeName, clade, name, complete, ofile, mult, allBiparts):
         #print complete
-        m, mrca = self.is_mono(tree, clade)
+        m, bipartition = self.is_mono(tree, clade, allBiparts)
             #print m
         if m:
             if complete:
-                self.print_result(treeName, "IS_MONO", mrca, name, tree, ofile, mult)
+                self.print_result(treeName, "IS_MONO", bipartition, name, tree, ofile, mult, clade)
             else:
-                self.print_result(treeName, "IS_MONO_INCOMPLETE", mrca, name, tree, ofile, mult)
+                self.print_result(treeName, "IS_MONO_INCOMPLETE", bipartition, name, tree, ofile, mult, clade)
             return
-        c, mrca = self.can_mono(tree, clade)
+        c, bipartition = self.can_mono(tree, clade)
         if c:        
             if complete:
-                self.print_result(treeName, "CAN_MONO", mrca, name, tree, ofile, mult)
+                self.print_result(treeName, "CAN_MONO", bipartition, name, tree, ofile, mult, clade)
             else:
-                self.print_result(treeName, "CAN_MONO_INCOMPLETE", mrca, name, tree, ofile, mult)
+                self.print_result(treeName, "CAN_MONO_INCOMPLETE", bipartition, name, tree, ofile, mult, clade)
             return
 
-        self.print_result(treeName, "NOT_MONO", mrca, name, tree, ofile, mult)
+        self.print_result(treeName, "NOT_MONO", bipartition, name, tree, ofile, mult, clade )
 
-    def analyze_clade(self,name, clade, comps, tree, treeName, mult):
+    def analyze_clade(self,name, clade, comps, tree, treeName, mult, allBiparts):
         ofile = open(self.outFile,'a+')
         taxa = get_present_taxa(tree, clade)
         taxaLabel = {t.label for t in taxa }
         if comps:
             for comp in comps:
                 if not set(self.allclades[comp]) & taxaLabel:
-                    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult)
+                    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
                     return
         #print len(taxa), len(clade)
         if len(taxa) < 2:
-            self.print_result(treeName, "NO_CLADE", None, name, tree, ofile, mult)
+            self.print_result(treeName, "NO_CLADE", None, name, tree, ofile, mult, clade)
         else:
-            self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile, mult)
+            self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile, mult, allBiparts)
         ofile.close()
     def analyze(self, tree, treeName, mult):
+	allBiparts = tree.encode_bipartitions()
         for k, v in self.allclades.items():
             if self.show[k] == 1:
                 if k in self.clade_comps:
                     clade_comp = self.clade_comps[k]
                 else:
                     clade_comp = None
-                self.analyze_clade(k, v, clade_comp, tree, treeName, mult)
+                self.analyze_clade(k, v, clade_comp, tree, treeName, mult, allBiparts)
 
     def read_clades(self,filename):
         for line in open(filename):

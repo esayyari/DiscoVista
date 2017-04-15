@@ -42,7 +42,7 @@ class Mono(object):
 
     def is_mono(self,tree, clade):
         mrca = tree.mrca(taxa=clade)
-
+	print clade
         for x in mrca.leaf_nodes():
             if x.taxon not in clade:
                 return False, mrca
