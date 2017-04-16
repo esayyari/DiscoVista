@@ -9,16 +9,11 @@ def get_present_taxa(tree, labels):
     return [x.taxon for x in [tree.find_node_with_taxon_label(label) for label in labels]
             if x is not None]
 def get_support_from_bipartition(tree, clade):
+	bipartition = tree.taxon_namespace.taxa_bipartition(taxa=clade, is_mutable = False)
+	bipartition.is_mutable = False
 	clade = set(clade)
-	for nd in tree.postorder_node_iter():
-		l = set(nd.leaf_nodes())
-		lc = set(tree.leaf_nodes()) - l
-		if clade  == l or clade == lc:
-			if nd.label is not None:
-				return str(float(nd.label) * mult)
-			else:
-				return "None"
-	return "None"
+	e = tree.bipartition_edge_map[bipartition]
+	return e.label
 class Mono(object):
 
     def __init__(self,taxa, outFile):
@@ -44,11 +39,12 @@ class Mono(object):
     def is_mono(self, tree, clade, allBiparts):
 	taxon_namespace = tree.taxon_namespace 
 	bipartition = taxon_namespace.taxa_bipartition(taxa=clade)
+	bipartition = bipartition.compile_split_bitmask()
 	allBiparts = set(allBiparts)
 	return (bipartition in allBiparts), bipartition
     def can_mono(self, tree, clade):
 	
-	bipartition = dendropy.TaxonNamespace.Taxontaxa_bipartition(taxa=clade)
+	bipartition = tree.taxon_namespace.taxa_bipartition(taxa=clade)
 	canMono = tree.is_compatible_with_bipartition(bipartition, is_bipartitions_updated=False)
         return canMono, bipartition
 
@@ -63,7 +59,7 @@ class Mono(object):
                 self.print_result(treeName, "IS_MONO_INCOMPLETE", bipartition, name, tree, ofile, mult, clade)
             return
         c, bipartition = self.can_mono(tree, clade)
-        if c:        
+        if c and not m:        
             if complete:
                 self.print_result(treeName, "CAN_MONO", bipartition, name, tree, ofile, mult, clade)
             else:
@@ -88,7 +84,10 @@ class Mono(object):
             self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile, mult, allBiparts)
         ofile.close()
     def analyze(self, tree, treeName, mult):
-	allBiparts = tree.encode_bipartitions()
+	for nd in tree.postorder_node_iter():
+		nd.edge.label = nd.label
+	tree_tmp = tree.clone(depth=1)
+	allBiparts = [ t.compile_split_bitmask() for t in tree_tmp.encode_bipartitions(is_bipartitions_mutable = True) ]
         for k, v in self.allclades.items():
             if self.show[k] == 1:
                 if k in self.clade_comps:
@@ -171,7 +170,7 @@ if __name__ == '__main__':
     mono.read_clades(cladesFile)
     for fileName in sys.argv[4:]:
         print fileName    
-        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-rooted")
+        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted")
         labelsSet = set(t.label for t in trees.taxon_namespace)
         namemismatch = labelsSet - taxa
         if namemismatch:

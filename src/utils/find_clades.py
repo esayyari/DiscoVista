@@ -34,7 +34,6 @@ class Mono(object):
                 support = str(float(mrca.label) * mult)
         elif hasattr(mrca,'label'):
             mrca.label = ""
-	print(mrca)	
         #mrca.label = "%s[%s]" %(ln,mrca.label) if mrca.label is not None else ln
         outputTree = treeName.replace(" ", "_") + ".out"
         #tree.write(path=outputTree, schema="newick", suppress_rooting=True)
@@ -42,7 +41,6 @@ class Mono(object):
 
     def is_mono(self,tree, clade):
         mrca = tree.mrca(taxa=clade)
-	print clade
         for x in mrca.leaf_nodes():
             if x.taxon not in clade:
                 return False, mrca
