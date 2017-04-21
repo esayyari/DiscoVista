@@ -114,7 +114,7 @@ read.data <- function (file.all=paste(input, "/clades.txt.res", sep=""), file.hs
   levels(countes.melted$Classification) <- rename.c
   lo = levels(countes.melted$Classification)
   countes.melted$Classification <- factor(countes.melted$Classification)
-  countes.melted <- melt(recast(countes.melted, Classification ~ CLADE ~ DS, fill = NA_real_,fun.aggregate=sum))
+  countes.melted <- melt(recast(countes.melted[complete.cases(countes.melted),], Classification ~ CLADE ~ DS, fill = NA_real_,fun.aggregate=sum))
   countes.melted <- subset(countes.melted, countes.melted$value != 0)
   countes.melted$Classification <- factor(countes.melted$Classification,levels=lo)
   # order clades based on support
