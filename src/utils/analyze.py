@@ -3,7 +3,7 @@ import glob
 import re
 import tools
 import subprocess
-import find_clades2
+import find_clades
 import gc_stats
 import tools
 class Analyze(object): 
@@ -98,8 +98,8 @@ class Analyze(object):
         else:
             multiplier = 1.
         print multiplier
-        find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
-        find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
+        find_clades.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
+        find_clades.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
         f = open(outFile,'r')
         outRes = outFile + ".res"
