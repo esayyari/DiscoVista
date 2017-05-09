@@ -45,6 +45,7 @@ class Analyze(object):
     def occupancyAnalysis(self):
         opt = self.opt
         outFile = opt.path + "/occupancy.csv"
+	print opt.search
         tools.occupancy(opt.search, outFile)
         print "All the occupancy stats have written on file %s" % (outFile)  
         currPath = os.path.dirname(os.path.abspath(__file__))

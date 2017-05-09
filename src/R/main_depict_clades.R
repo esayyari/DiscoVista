@@ -210,7 +210,7 @@ metahistograms2<- function (d.boot) {
   print(p1)
   dev.off()	
 }
-metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(6,20),raw.all){
+metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(6,12),raw.all){
   print(levels(y$DS))
   # Draw the block driagram
   for ( ds in levels(y$DS)) {
