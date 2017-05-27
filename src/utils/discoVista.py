@@ -40,6 +40,12 @@ if "__main__" == __name__:
                       help="The bootstrap threshold")
     parser.add_option("-x", "--modelCond", dest="modelCond", default = None,
                       help="The model condition that the occupancy map will be plotted for")
+    parser.add_option("-y", dest="newModel", default = None,
+		      help="The new order for model conditions")
+    parser.add_option("-w", dest="newOrder", default = None,
+		      help="The new order for clades")
+    parser.add_option("-k", "--missing", dest="missing", default = 0,
+		      help="The missing data handling flag. If this flag set to one, clades with partially missing taxa are considered as complete.")
     opt = Opt(parser)
 
     analyzer = Analyze(opt)

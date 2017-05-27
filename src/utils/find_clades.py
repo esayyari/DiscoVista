@@ -87,7 +87,6 @@ class Mono(object):
                 if not set(self.allclades[comp]) & taxaLabel:
                     self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult)
                     return
-        #print len(taxa), len(clade)
         if len(taxa) < 2:
             self.print_result(treeName, "NO_CLADE", None, name, tree, ofile, mult)
         else:
@@ -127,7 +126,8 @@ class Mono(object):
             clade = list(clade)
 
             if len(r)>=4:
-                components=r[3].strip().split("+") if r[3] != "" else []
+		
+                components=r[3].strip().split("+") if r[3] != "" and r[3] != "None" else []
             else:
                 components=[]
             if len(r)>=5:
@@ -151,7 +151,6 @@ def main(*arg):
     cladesFile = arg[1]
     outFile = arg[2]
     mult = float(arg[3])
-    print mult
     taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
     mono = Mono(taxa, outFile)
     mono.read_clades(cladesFile)

@@ -13,7 +13,7 @@ def get_support_from_bipartition(tree, clade):
 	bipartition.is_mutable = False
 	clade = set(clade)
 	e = tree.bipartition_edge_map[bipartition]
-	return e.label
+	return (e.label,e.length)
 class Mono(object):
 
     def __init__(self,taxa, outFile):
@@ -29,13 +29,13 @@ class Mono(object):
         letter = self.letters[ln]
         name="%s (%s)" %(ln,letter) if letter is not None and letter!="" else ln
 	if keyword == "IS_MONO" or keyword == "IS_MONO_INCOMPLETE":
-		
-	        support = get_support_from_bipartition(tree, clade)
+	        (support, length) = get_support_from_bipartition(tree, clade)
 	else:
 		support = "None"
+		length = "None"
         outputTree = treeName.replace(" ", "_") + ".out"
         #tree.write(path=outputTree, schema="newick", suppress_rooting=True)
-        ofile.write("%s\t%s\t%s\t%s\n" % (treeName, keyword, support , name))
+        ofile.write("%s\t%s\t%s\t%s\t%s\n" % (treeName, keyword, support , name, length))
     def is_mono(self, tree, clade, allBiparts):
 	taxon_namespace = tree.taxon_namespace 
 	bipartition = taxon_namespace.taxa_bipartition(taxa=clade)

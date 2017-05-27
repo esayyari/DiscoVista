@@ -3,7 +3,7 @@ import os
 from optparse import OptionParser
 class Opt(object):
     def __init__(self, parser):
-        (path, root, clades, threshold, mode, style, annotation, modelCond) = self.parseArgs(parser)
+        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing) = self.parseArgs(parser)
         tmpPath = os.path.dirname(annotation)
         self.names = tmpPath + "/names.txt"
         self.path = path
@@ -14,6 +14,9 @@ class Opt(object):
         self.style = style
         self.annotation = annotation
         self.modelCond = modelCond
+	self.newOrder = newOrder
+	self.newModel = newModel
+	self.missing = missing
         (search, searchthr, searchrooted, searchthrrooted) = self.searchFiles(mode, self.path, threshold)
         self.search = search
         self.searchthr = searchthr
@@ -51,6 +54,10 @@ class Opt(object):
 
         else:
             root = ""
+	if options.missing is None:
+		missing = 0
+	else:
+		missing = options.missing
 
         if mode == 0 or mode == 1:
             if not options.clades:
@@ -94,11 +101,12 @@ class Opt(object):
             parser.print_help()
             sys.exit("please check the path to the gene direcotry")
 
-
+	newModel = options.newModel
+	newOrder = options.newOrder
         style = options.style
         modelCond = options.modelCond
 
-        return (path, root, clades, threshold, mode, style, annotation, modelCond)
+        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing)
     def searchFiles(self, mode, path, thresh):
         if mode == 0:
             search = path + '/*/' + 'estimated_species_tree.tree'
@@ -111,7 +119,7 @@ class Opt(object):
             searchrooted = path + '/*/*/' + 'estimated_gene_trees.tree' + '.rerooted'
             searchthrrooted = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh) + '.rerooted'
         elif mode == 2:
-            search = path + '/*/*-alignment-noFilter.fasta'
+            search = path + '/*/*/*-alignment-noFilter.fasta'
             searchthr = None
             searchrooted = None
             searchthrrooted = None
