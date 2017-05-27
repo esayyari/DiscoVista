@@ -37,11 +37,20 @@ setOptions <- function(opt) {
     input = opt$inputPath
     input1 = input
   }
+  if (is.null(opt$missing)) {
+  	MS = FALSE
+  } else {
+  	if(opt$missing == 1) {
+  		MS = TRUE
+  	} else {
+		MS = FALSE
+  	}
+ }
+  opt$missing = MS
   out1 = opt$inputPath
   opt$out = out1
   opt$mode = mode1
   opt$ST = ST1
   opt$WS_HOME = WS_HOME
-  
   return(opt)
 }

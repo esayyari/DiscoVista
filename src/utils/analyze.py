@@ -3,7 +3,7 @@ import glob
 import re
 import tools
 import subprocess
-import find_clades
+import find_clades2
 import gc_stats
 import tools
 class Analyze(object): 
@@ -99,8 +99,8 @@ class Analyze(object):
         else:
             multiplier = 1.
         print multiplier
-        find_clades.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
-        find_clades.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
+        find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
+        find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
         f = open(outFile,'r')
         outRes = outFile + ".res"
@@ -109,7 +109,7 @@ class Analyze(object):
         outResthr = outFilethr + ".res"
 
         oResThr = open(outResthr, 'w')
-        oRes.write("ID\tDS\tMONO\tBOOT\tCLADE\n")
+        oRes.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
 
         for line in f:
             linet = line.replace("\n","")
@@ -127,10 +127,11 @@ class Analyze(object):
             MONO = listLine[1]
             BOOT = listLine[2]
             CLADE = re.sub("\s+\(.*","", listLine[3])
-            oRes.write( "%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE))
+	    BRANCHLEN = listLine[4]
+            oRes.write( "%s\t%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE, BRANCHLEN))
         f.close()
         oRes.close()
-        oResThr.write("ID\tDS\tMONO\tBOOT\tCLADE\n")
+        oResThr.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
         f = open(outFilethr,'r')
         for line in f:
             linet = line.replace("\n","")
@@ -148,13 +149,22 @@ class Analyze(object):
             MONO = listLine[1]
             BOOT = listLine[2]
             CLADE = re.sub("\s+\(.*","",listLine[3])
-            oResThr.write( "%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE))
+	    BRANCHLEN = listLine[3]
+            oResThr.write( "%s\t%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE, BRANCHLEN))
         oResThr.close()
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
+	if opt.newModel is not None and opt.newOrder is not None:
+	        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)), 
+			"-m", str(opt.missing)]
+	elif opt.newModel is not None and opt.newOrder is None:
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
+	elif opt.newModel is None and opt.newOrder is not None:
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
+	else:
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-m", str(opt.missing)]
         stderrFile = opt.path + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
@@ -182,7 +192,15 @@ class Analyze(object):
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
+	if opt.newModel is not None and opt.newOrder is not None:
+		
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
+        elif opt.newModel is not None and opt.newOrder is None:
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel)]
+        elif opt.newModel is None and opt.newOrder is not None:
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder)]
+        else:
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
         stderrFile = opt.path + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile

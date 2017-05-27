@@ -8,6 +8,8 @@ clades<-read.csv(opt$annotation,sep='\t',header=F)
 names(clades) <- c("Names","Clade")
 dir.create('figures/')
 oc <- read.csv('occupancy.csv',header=F,sep=' ')
+oc$V5 <- as.numeric(as.character(oc$V5))
+oc <- oc[oc$V5 != 0, ]
 names(oc)<-c("Seq","GENE_ID","model_condition", "Taxon","Len")
 maxG = length(levels(oc$GENE_ID))
 
@@ -67,7 +69,7 @@ if (! is.null(opt$modelCond)) {
 }
 
 
-
+write.csv(tc, file="figures/occupancy-final.csv", row.names = FALSE, sep="\t")
 pdf('figures/occupancy.pdf',width=23.8, height=11.4,compress=F)
 p1 <- qplot(data=tc,
       x=reorder(Taxon,occupancy/maxG,FUN=median),y=occupancy/maxG,geom=c("line"),
@@ -78,7 +80,7 @@ p1 <- qplot(data=tc,
   ylab('Occupancy')+xlab('Taxon')+scale_color_brewer(name="",palette = "Paired")
 print(p1)
 dev.off()
-
+write.csv(tc_clades4, file="figures/occupancy-clades-final.csv", row.names = FALSE, sep="\t")
 pdf('figures/occupancy_clades.pdf',width=23.8, height=11.4,compress=F)
 p1 <- qplot(data=tc_clades4,reorder(Clade,clade_occupancy),clade_occupancy,
       geom="line",color=ID,group=ID)+theme_bw()+theme(legend.position = "bottom",

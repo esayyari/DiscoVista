@@ -10,19 +10,35 @@ if (ST) {
                     "Compatible (Weak Rejection)"="#d95f02", 
                     "Strong Rejection"="#e7298a", 
                     "Missing"="#66a61e")
-  rename.c <- list(
-    "Strong Support"="IS_MONO-IS_MONO",
-    "Weak Support"="IS_MONO-CAN_MONO",
-    "Compatible (Weak Rejection)"="CAN_MONO-CAN_MONO", 
-    "Compatible (Weak Rejection)"="NOT_MONO-CAN_MONO", 
-    "Strong Rejection"="NOT_MONO-NOT_MONO",
-    "Missing"="IS_MONO_INCOMPLETE-CAN_MONO",
-    "Missing"= "IS_MONO_INCOMPLETE-IS_MONO_INCOMPLETE",
-    "Missing"="NOT_MONO-CAN_MONO_INCOMPLETE", 
-    "Missing"="NO_CLADE-NO_CLADE",
-    "Missing"="CAN_MONO_INCOMPLETE-CAN_MONO_INCOMPLETE", 
-    "Missing"="IS_MONO_INCOMPLETE-CAN_MONO_INCOMPLETE",
-    "Missing"="COMP_MISSING-COMP_MISSING")
+  if (MS) {
+  	rename.c <- list(
+    	"Strong Support"="IS_MONO-IS_MONO",
+    	"Weak Support"="IS_MONO-CAN_MONO",
+    	"Compatible (Weak Rejection)"="CAN_MONO-CAN_MONO", 
+    	"Compatible (Weak Rejection)"="NOT_MONO-CAN_MONO", 
+    	"Strong Rejection"="NOT_MONO-NOT_MONO",
+    	"Weak Support"="IS_MONO_INCOMPLETE-CAN_MONO",
+    	"Strong Support"= "IS_MONO_INCOMPLETE-IS_MONO_INCOMPLETE",
+    	"Compatible (Weak Rejection)"="NOT_MONO-CAN_MONO_INCOMPLETE", 
+    	"Missing"="NO_CLADE-NO_CLADE",
+    	"Compatible (Weak Rejection)"="CAN_MONO_INCOMPLETE-CAN_MONO_INCOMPLETE", 
+    	"Weak Support"="IS_MONO_INCOMPLETE-CAN_MONO_INCOMPLETE",
+    	"Missing"="COMP_MISSING-COMP_MISSING")
+   } else {
+	rename.c <- list(
+    	"Strong Support"="IS_MONO-IS_MONO",
+	"Weak Support"="IS_MONO-CAN_MONO",
+    	"Compatible (Weak Rejection)"="CAN_MONO-CAN_MONO",
+    	"Compatible (Weak Rejection)"="NOT_MONO-CAN_MONO",
+    	"Strong Rejection"="NOT_MONO-NOT_MONO",
+    	"Missing"="IS_MONO_INCOMPLETE-CAN_MONO",
+    	"Missing"= "IS_MONO_INCOMPLETE-IS_MONO_INCOMPLETE",
+    	"Missing"="NOT_MONO-CAN_MONO_INCOMPLETE",
+    	"Missing"="NO_CLADE-NO_CLADE",
+    	"Missing"="CAN_MONO_INCOMPLETE-CAN_MONO_INCOMPLETE",
+    	"Missing"="IS_MONO_INCOMPLETE-CAN_MONO_INCOMPLETE",
+    	"Missing"="COMP_MISSING-COMP_MISSING")
+   }
 } else {
   clade.colors <- c("Strongly Supported/Complete"=rgb(50, 160, 45, max = 255), 
                     "Strongly Supported/Incomplete"=rgb(178, 223, 138, max = 255),
@@ -68,28 +84,23 @@ if (ST) {
 
 cols <- c( "ID" , "CLADE", "BOOT")
 #Read Raw files
-read.data <- function (file.all=paste(input, "/clades.txt.res", sep=""), file.hs=paste(input, "clades.hs.txt.res", sep=""), clade.order = NULL, techs.order = NULL) {
+ read.data <- function (file.all=paste(input, "/clades.txt.res", sep=""), file.hs=paste(input, "clades.hs.txt.res", sep=""), clade.order = NULL, new.clades = NULL, new.models = NULL, techs.order = NULL) {
   raw.all = read.csv(file.all,sep="\t", header=T)
   raw.highsupport = read.csv(file.hs,sep="\t", header=T)
   if (! is.null(techs.order)) {
     print("tech renaming...")
     raw.all$ID=factor(raw.all$ID,levels=techs.order)
     raw.highsupport$ID=factor(raw.highsupport$ID,levels=techs.order)
-    print (nrow(raw.all))
-    print (nrow(raw.highsupport))
+    #print (nrow(raw.all))
+    #print (nrow(raw.highsupport))
     print("techs renamed!")
   }
   if (! is.null(clade.order)) {
     print("choosing clades...")
-    print(levels(raw.all$CLADE))
-    print(clade.order)
     raw.all = raw.all[which (raw.all$CLADE %in% clade.order),]
     raw.highsupport = raw.highsupport[which (raw.highsupport$CLADE %in% clade.order),]
-    print (nrow(raw.all))
-    print (nrow(raw.highsupport))
     print("clades chosen!")
   }
-  
   if (! is.numeric(raw.all$BOOT)){
     raw.all$BOOT <- as.numeric(levels(raw.all$BOOT))[raw.all$BOOT]		
   }
@@ -104,10 +115,10 @@ read.data <- function (file.all=paste(input, "/clades.txt.res", sep=""), file.hs
   names(merged)[4]<-"MONO"
   names(merged)[6]<-"MONO.75"
   print ("merging finished!")
-  print (nrow(merged))
+  #print (nrow(merged))
   # Create counts table
   clade.counts=recast(merged,MONO+MONO.75~CLADE~DS,id.var=c("DS", "CLADE", "MONO", "BOOT", "MONO.75"),fill = NA_real_,fun.aggregate=length)
-  print (clade.counts)
+  #print (clade.counts)
   #d.c=d.c/sum(d.c[,1,1])
   countes.melted <- melt(clade.counts)
   names(countes.melted)[1] <- "Classification"
@@ -136,6 +147,57 @@ read.data <- function (file.all=paste(input, "/clades.txt.res", sep=""), file.hs
   y$Classification = factor(y$Classification)
   y.colors <- array(clade.colors[levels(y$Classification)])
   y$CLADE <- factor(y$CLADE, levels=rev(clade.order))
+
+  if (! is.null(new.clades)) {
+    print("reordering clades")
+    old.orders <- as.character(as.vector(t(new.clades)[,1]))
+    modified.orders <- as.character(as.vector(t(new.clades)[,2]))
+
+    
+    raw.all$CLADE <- factor(raw.all$CLADE, levels = old.orders)
+    raw.highsupport$CLADE <- factor(raw.highsupport$CLADE, levels = old.orders)
+    y$CLADE <- factor(y$CLADE, levels = old.orders)  
+    countes.melted$CLADE <- factor(countes.melted$CLADE, levels = old.orders)  
+   for (i in 1:length(levels(raw.all$CLADE))) {
+        levels(raw.all$CLADE)[levels(raw.all$CLADE) == old.orders[i]] <- modified.orders[i]
+        levels(y$CLADE)[levels(y$CLADE) == old.orders[i]] <- modified.orders[i]
+
+        levels(countes.melted$CLADE)[levels(countes.melted$CLADE) == old.orders[i]] <- modified.orders[i]
+        levels(raw.highsupport$CLADE)[levels(countes.melted$CLADE) == old.orders[i]] <- modified.orders[i]
+    } 
+#    mapvalues(raw.all$CLADE, from = levels(factor(old.orders)), to = levels(factor(modified.orders)))
+ #   mapvalues(raw.highsupport$CLADE, from = levels(factor(old.orders)), to = levels(factor(modified.orders)))
+  #  mapvalues(y$CLADE, from = levels(factor(old.orders)), to =levels(factor( modified.orders)))
+#    mapvalues(countes.melted$CLADE, from = levels(factor(old.orders)), to = levels(factor(modified.orders)))
+
+
+    raw.all$CLADE <- factor(raw.all$CLADE, levels = rev(modified.orders))
+    raw.highsupport$CLADE <- factor(raw.highsupport$CLADE, levels = rev(modified.orders))
+    y$CLADE <- factor(y$CLADE, levels = rev(modified.orders))
+    countes.melted$CLADE <- factor(countes.melted$CLADE, levels = modified.orders)
+   
+    
+    print("clades reordered!")
+  }
+  if (! is.null(new.models)) {
+
+    print("renaming and reordering model conditions ...")
+    old.orders <- as.vector(t(new.models)[,1])
+    modified.orders <- as.vector(t(new.models)[,2])
+
+    raw.all$ID <- factor(raw.all$ID, levels = old.orders)
+    raw.highsupport$ID <- factor(raw.highsupport$ID, levels = old.orders)
+    y$ID <- factor(y$ID, levels = old.orders)
+    
+
+    for (i in 1:length(levels(raw.all$ID))) {
+        levels(raw.all$ID)[levels(raw.all$ID) == old.orders[i]] <- modified.orders[i]
+        levels(y$ID)[levels(y$ID) == old.orders[i]] <- modified.orders[i]
+    }
+    raw.all$ID <- factor(raw.all$ID, levels = as.character(modified.orders), exclude = NULL, ordered =TRUE)
+    y$ID <- factor(y$ID, levels = as.character(modified.orders), exclude = NULL, ordered =TRUE)
+    print("model conditions reordered!")
+  }
   return (list (y=y, countes=clade.counts, countes.melted=countes.melted, raw.all = raw.all, y.colors=y.colors))
 }
 
@@ -210,7 +272,7 @@ metahistograms2<- function (d.boot) {
   print(p1)
   dev.off()	
 }
-metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(6,12),raw.all){
+metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.all){
   print(levels(y$DS))
   # Draw the block driagram
   for ( ds in levels(y$DS)) {
@@ -255,10 +317,14 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(6,12),raw.al
       print(p3)
     }
     dev.off()
-    db=raw.all[raw.all$MONO=="IS_MONO",]
+    if (MS) {
+	db = raw.all[raw.all$MONO %in% c("IS_MONO","IS_MONO_INCOMPLETE"),]
+    } else {
+	db=raw.all[raw.all$MONO=="IS_MONO",]
+    }
     dbc=y[which(y$Classification=="Compatible (Weak Rejection)"),c(1:3)]
     dbn=y[which(y$Classification=="Strong Rejection"),c(1:3)]
-    dbc$BOOT <- rep(-30, nrow(dbc))
+    dbc$BOOT <- rep(-50, nrow(dbc))
     dbn$BOOT <- rep(-100, nrow(dbn))
     db2=rbind(dbn[,cols],dbc[,cols],db[,cols]);
     print("here2")
@@ -266,9 +332,20 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(6,12),raw.al
     #db2$CLADE <- factor(db2$CLADE, levels=rev(clade.order))
     nrow(db2)
     pdf(paste(ds,"block-shades","pdf",sep="."),width=figuresizes[1],height=figuresizes[2]) 
+    if(nrow(dbn) == 0 && nrow(dbc)!= 0) {
+	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98"),values=rescale((c(100,99,90,50,0,-50))))
+    } else if(nrow(dbn) == 0 && nrow(dbc) == 0) {
+	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF"),values=rescale((c(100,99,90,50,0))))
+    } else if(nrow(dbn) != 0 && nrow(dbc) !=0 ) {
+    	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98","#c84060"),values=rescale((c(100,99,90,50,0,-50,-100))))
+    } else {
+    
+       c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#c84060"),values=rescale((c(100,99,90,50,0,-100))))
+    }
     p1 <- qplot(ID,CLADE,data=db2,fill=BOOT,geom="tile",xlab="",ylab="")+
-      scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE)+
-      scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98","#c84060"),values=rescale(c(100,99,90,50,0,-30,-100)))+ 
+      scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE)+c+
+      #scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98","#c84060")),values=rescale(rev(c(100,99,90,50,0,-50,-100))))+ 
+      #scale_fill_gradientn(limits = c(-100,100), colours=c("#c84060","#ec7f98","#DDEEFF","#69a1a0","#257070"),na.value="white")+
       theme_classic() + theme(axis.text.x = element_text(size=10,angle = 90,hjust=1),
                          axis.text.y = element_text(hjust=1))+theme(legend.position="bottom")
     print(p1)

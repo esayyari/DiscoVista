@@ -81,18 +81,19 @@ with open(destfile, 'w') as dest_file:
     taxa = list(allTaxa)
     string = "All" + "\t" + "\"" + taxa[0] + "+\"\"" + ("\"\"+\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t\t0\t\n"
     dest_file.write(string)
-    taxa = clades["Outgroup"] 
-    if len(taxa)>1:
-        string	= "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "-\"\"" + ("\"\"-\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t\t1\t\n" 
-    else:
-        string = "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "\"\"\"" + "\tNone\t\t1\t\n"
-    dest_file.write(string)
+    if "Outgroup" in clades:
+	    taxa = clades["Outgroup"] 
+	    if len(taxa)>1:
+        	string	= "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "-\"\"" + ("\"\"-\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t\t1\t\n" 
+	    else:
+        	string = "Outgroup" + "\t" + "All" + "-\"" + taxa[0] + "\"\"\"" + "\tNone\t\t1\t\n"
+	    dest_file.write(string)
     for clade in impClades:
         taxa = impClades[clade]
         if len(taxa)>1:
-            string  = clade + "\t" + "\"" + taxa[0] + "+\"\"" + ("\"\"+\"\"").join(taxa[1:]) + "\"\"\"" + "\tNone\t" + "\"" + taxa[0] + "+\"\"" + ("\"\"+\"\"").join(taxa[1:]) + "\"\"\"" +  "\t1\t\n"
+            string  = clade + "\t"  + taxa[0] + "+" + ("+").join(taxa[1:])  + "\tNone\t" +  taxa[0] + "+" + ("+").join(taxa[1:]) +   "\t1\t\n"
         else:
-            string = clade + "\t" + "\"" + taxa[0] + "\"\"\"" + "\tNone\t\t0\t\n"
+            string = clade + "\t"  + taxa[0]  + "\tNone\t\t0\t\n"
 
         dest_file.write(string)
 
