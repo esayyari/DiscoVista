@@ -86,4 +86,3 @@ for line in freqStat:
 		print >> g, p1
 		print >> g, p2
 		
-	

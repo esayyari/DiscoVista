@@ -188,8 +188,12 @@ def _ss(data):
 def pstdev(data):
     """Calculates the population standard deviation."""
     n = len(data)
-    if n < 2:
+    print(n)
+    if n < 1:
         raise ValueError('variance requires at least two data points')
+    elif n == 1:
+	print("Variance requires at least two data points, one is given")
+	return "NA"	
     ss = _ss(data)
     pvar = ss/n # the population variance
     return pvar**0.5

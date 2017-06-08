@@ -10,7 +10,13 @@ if (ST) {
                     "Compatible (Weak Rejection)"="#d95f02", 
                     "Strong Rejection"="#e7298a", 
                     "Missing"="#66a61e")
-  if (MS) {
+  
+   clade.colors <- c("Strong Support"="#0073b6ff",
+		     "Weak Support"="#00b5ecff",
+		     "Compatible (Weak Rejection)"="#f5e526ff",
+		     "Strong Rejection"="#f35e00ff",
+		     "Missing"="#66a61e")
+   if (MS) {
   	rename.c <- list(
     	"Strong Support"="IS_MONO-IS_MONO",
     	"Weak Support"="IS_MONO-CAN_MONO",
@@ -204,11 +210,13 @@ cols <- c( "ID" , "CLADE", "BOOT")
 metabargraph2 <- function (d.c.m, y,sizes=c(15,19)){
   
   pdf("Monophyletic_Bargraphs_Porportion.pdf",width=sizes[1],height=sizes[2])
+  xfont = 10
+  titlefont = 12
   x = d.c.m[d.c.m$Classification != "Missing",]
   d.c.m.colors <- array(clade.colors[levels(droplevels(x$Classification))])
   p1 <- ggplot(x, aes(x=CLADE, y = value, fill=Classification) , main="Support for each clade") + xlab("") + ylab("Proportion of relevant gene trees") + 
     geom_bar(position="fill",stat="identity",colour="black") + facet_wrap(~DS,scales="free_y",ncol=1) + theme_bw()+ 
-    theme(axis.text.x = element_text(size=10,angle = 90,hjust=1),legend.position="bottom", legend.direction="horizontal") + 
+    theme(axis.text.x = element_text(size=xfont,angle = 90,hjust=1),axis.text.y = element_text(size=xfont, hjust=1), legend.position="bottom", legend.direction="horizontal", legend.text = element_text(size=xfont),axis.title=element_text(size=titlefont)) + 
     scale_fill_manual(name=element_blank(), values=d.c.m.colors)  + scale_x_discrete(drop=FALSE)
   
   print(p1)

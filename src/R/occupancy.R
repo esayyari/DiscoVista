@@ -5,13 +5,14 @@ require(plyr)
 require(scales)
 
 clades<-read.csv(opt$annotation,sep='\t',header=F)
+clades<-read.csv('../../../parameters/annotation.txt',sep='\t',header=F)
 names(clades) <- c("Names","Clade")
 dir.create('figures/')
 oc <- read.csv('occupancy.csv',header=F,sep=' ')
 oc$V5 <- as.numeric(as.character(oc$V5))
 oc <- oc[oc$V5 != 0, ]
 names(oc)<-c("Seq","GENE_ID","model_condition", "Taxon","Len")
-maxG = length(levels(oc$GENE_ID))
+maxG = length(levels(as.factor(oc$GENE_ID)))
 
 oc$ID <- apply( oc[ , c(1,3) ] , 1 , paste0 , collapse = "-" )
 oc <- oc[,c(6,2,4,5)]
@@ -29,7 +30,7 @@ tc_clades3<-dcast(data=ocs3,formula=GENE_ID+ID+Clade~.)
 names(tc_clades3)[4]<-"num_clade_present"
 tc_clades4<-dcast(tc_clades3[ ,2:4], 
                   ID+Clade~., fun.aggregate = 
-                    function(x) (sum(x>0)/length(levels(tc_clades3$GENE_ID))))
+                    function(x) (sum(x>0)/length(levels(as.factor(tc_clades3$GENE_ID)))))
 names(tc_clades4)[3]<-c("clade_occupancy")
 
 

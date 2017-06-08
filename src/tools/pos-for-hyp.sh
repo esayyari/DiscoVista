@@ -37,8 +37,8 @@ popd
 astral=$(find $WS_HOME/ASTRAL/$V)
 $WS_HOME/
 java -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.tre
-echo "python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuad.corrected.csv $DS"
-python $WS_HOME/DiscoVista/src/utils/map_names.py $names $clades $d/freqQuad.csv $d/freqQuad.corrected.csv $DS
+#echo "python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuad.corrected.csv $DS"
+#python $WS_HOME/DiscoVista/src/utils/map_names.py $names $clades $d/freqQuad.csv $d/freqQuad.corrected.csv $DS
 
 sed -i "s/)N\([0-9][0-9]*\)'/)'N\1/g" $d/$name-uncollapsed.tre
 python $WS_HOME/DiscoVista/src/tools/spit-hypo-trees.py $d/$name-uncollapsed.tre $ant collapse
