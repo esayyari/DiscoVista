@@ -2,13 +2,13 @@
 
 DiscoVista (Discordance Visualization Tool) is a python and R-based software utility to analyze and visualize the phylogenetic information and gene discordances. 
 
-#INSTALLATION:
+## INSTALLATION:
 The software package __DiscoVista__ depends on some R and python packages. You could install __DiscoVista__ in a couple of steps:
 
 Clone to [__DiscoVista__](https://github.com/esayyari/DiscoVista) git repository or download [this](https://github.com/esayyari/DiscoVista/archive/master.zip) zip file.
 Then you need to set environmental variable __WS_HOME__ to the directory under which this __DiscoVista__ repository is placed. 
 
-##R dependencies
+## R dependencies
 There are some R packages that you need to install at this step. The R package dependencies are: __Reshape__, __Reshape2__, __ggplot2__, __plyr__, __scales__, and __optparse__.
 
 To install these packages you need to use the following command:
@@ -17,7 +17,7 @@ To install these packages you need to use the following command:
 install.packages(c("Reshape","Reshape2","ggplot2","plyr","scales","optparse"))
 ~~~
 
-##Python dependency
+## Python dependency
 You need to install __DendroPy__ as well. In Mac or Linux, you would use __pip__ to install DendroPy. If you have root access, you could use:
 
 ~~~bash
@@ -30,7 +30,7 @@ otherwise, you would install dendropy with the command:
 pip install dendropy --user
 ~~~
 
-##How DiscoVista works
+## How DiscoVista works
 
 The main utility to run these analyses is __discoVista.py__. To use this utility in bash you would use: 
 
