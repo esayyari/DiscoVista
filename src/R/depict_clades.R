@@ -71,10 +71,10 @@ if (opt$mode == 0 || opt$mode == 1 ) {
   }
   data = read.data(file.all="clades.txt.res", file.hs="clades.hs.txt.res", clade.order=clade.order, new.clades = new.clades, new.models = new.models)
   if (mode == 0) {
-    figuresizes = c(10,6)
+    figuresizes = c(10.5,12)
     metatable(data$y,data$y.colors,data$countes,pages=c(1),raw.all=data$raw.all,figuresizes=figuresizes)
   } else if (mode == 1) {
-    sizes = c(7,14)
+    sizes = c(6.5,13)
     metabargraph(data$countes.melted,data$y,sizes=sizes)
     metabargraph2(data$countes.melted,data$y,sizes=sizes)
     metahistograms2(data$raw.all)

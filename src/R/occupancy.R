@@ -71,10 +71,10 @@ if (! is.null(opt$modelCond)) {
 
 
 write.csv(tc, file="figures/occupancy-final.csv", row.names = FALSE, sep="\t")
-pdf('figures/occupancy.pdf',width=23.8, height=11.4,compress=F)
-p1 <- qplot(data=tc,
-      x=reorder(Taxon,occupancy/maxG,FUN=median),y=occupancy/maxG,geom=c("line"),
-      group=ID,color=ID)+theme_bw()+theme(legend.position = "bottom",axis.ticks = element_blank(),
+pdf('figures/occupancy.pdf',width=21, height=7,compress=F)
+p1 <- ggplot(data=tc,aes(
+      x=reorder(Taxon,occupancy/maxG,FUN=median),y=occupancy/maxG,group=ID,color=ID))+geom_line(size=1)+
+      theme_bw()+theme(legend.position = "bottom",axis.ticks = element_blank(),
       axis.text.x = element_text(size=16,angle = 90, hjust = 0, colour = "grey50"),
       legend.text=element_text(size=16),axis.text.y=element_text(size=16),text = element_text(size=16))+
   scale_y_continuous(labels = percent)+
@@ -82,7 +82,7 @@ p1 <- qplot(data=tc,
 print(p1)
 dev.off()
 write.csv(tc_clades4, file="figures/occupancy-clades-final.csv", row.names = FALSE, sep="\t")
-pdf('figures/occupancy_clades.pdf',width=23.8, height=11.4,compress=F)
+pdf('figures/occupancy_clades.pdf',width=5, height=3.5,compress=F)
 p1 <- qplot(data=tc_clades4,reorder(Clade,clade_occupancy),clade_occupancy,
       geom="line",color=ID,group=ID)+theme_bw()+theme(legend.position = "bottom",
       axis.text.x = element_text(angle = 90, hjust = 1, vjust=0.5, colour = "grey50"))+

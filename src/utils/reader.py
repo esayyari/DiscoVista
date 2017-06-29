@@ -119,7 +119,7 @@ class Opt(object):
             searchrooted = path + '/*/*/' + 'estimated_gene_trees.tree' + '.rerooted'
             searchthrrooted = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh) + '.rerooted'
         elif mode == 2:
-            search = path + '/*/*/*-alignment-noFilter.fasta'
+            search = path + '/*/*-alignment-noFilter.fasta'
             searchthr = None
             searchrooted = None
             searchthrrooted = None

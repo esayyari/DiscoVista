@@ -8,7 +8,7 @@ fall$GC<-fall[,5]+fall[,6]
 fdall = melt(fall,id=c("GENE","SEQUENCE","TAXON"))
 levels(fdall$variable)<-c("A","C","G","T","GC")
 
-
+dir.create('figures', showWarnings = F)
 
 fcg<-f[,c(1,2,3)]
 fcg$ALL<-f[,11]+f[,12]
@@ -21,8 +21,8 @@ tc=dcast(data=fcg[,c(2,4,5)],formula=SEQUENCE+variable~.,fun.aggregate=mean)
 
 names(tc)<-c("SEQUENCE","variable","value")
 
-pdf("figures/pTpP_GC_point.pdf",width=24,height=8)
-p <- qplot(reorder(SEQUENCE,value),value,data=tc,geom="point", color=variable,group=variable,xlab="")+
-  theme(axis.text.x = element_text(angle = 90))
+pdf("figures/pTpP_GC_point.pdf",width=12,height=5)
+p <- qplot(reorder(SEQUENCE,value),value,data=tc,geom="point", color=variable,group=variable,xlab="")+theme(axis.text.x = element_text(angle = 90, hjust=1))
 print(p)
 dev.off()
+

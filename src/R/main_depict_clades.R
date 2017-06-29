@@ -288,12 +288,12 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.al
     pdf(paste(ds,"block","pdf",sep="."),width=figuresizes[1],height=figuresizes[2])
     #png(paste(ds,"block","png",sep="."),width=2000,height=2000)#,width=figuresizes[1],height=figuresizes[2])
     
-    op <- theme(axis.text.x = element_text(size=10,angle = 90,hjust=1),
-                legend.position="bottom",axis.text.y = element_text(hjust=1))
+    op <- theme(axis.text.x = element_text(size=12,angle = 90,hjust=1,colour="black"),
+                legend.position="bottom",legend.text = element_text(size=9,colour="black"), axis.text.y = element_text(size=12,colour="black",hjust=1))
     if (1 %in% pages) {			
       p1 <- qplot(ID,CLADE,data=y,fill=Classification,geom="tile",xlab="",ylab="")+ 
         scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE) +
-        scale_fill_manual(name="Classification", values=y.colors) + theme_bw() + op
+        scale_fill_manual(name="Classification", values=y.colors) + theme_classic()  + op
       print(p1)
       
     }
@@ -354,8 +354,8 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.al
       scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE)+c+
       #scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98","#c84060")),values=rescale(rev(c(100,99,90,50,0,-50,-100))))+ 
       #scale_fill_gradientn(limits = c(-100,100), colours=c("#c84060","#ec7f98","#DDEEFF","#69a1a0","#257070"),na.value="white")+
-      theme_classic() + theme(axis.text.x = element_text(size=10,angle = 90,hjust=1),
-                         axis.text.y = element_text(hjust=1))+theme(legend.position="bottom")
+      theme_classic() + theme(axis.text.x = element_text(size=12,angle = 90,hjust=1,colour="black"),
+                         axis.text.y = element_text(hjust=1,size=12,colour="black"), legend.text = element_text(size=9,colour="black"))+theme(legend.position="bottom")
     print(p1)
     dev.off()
     write.csv(file=paste(ds,"metatable.results","csv",sep="."),cast(y,ID~CLADE))		
