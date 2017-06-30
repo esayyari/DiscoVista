@@ -1,4 +1,0 @@
-IXODES_SCAPULARIS
-Symphylella_vulgaris Glomeris_pustulata
-Lepeophtheirus_salmonis DAPHNIA_PULEX
-Cypridininae_sp Sarsinebalia_urgorii Celuca_puligator Litopenaeus_vannamei
