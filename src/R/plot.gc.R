@@ -26,3 +26,7 @@ p <- qplot(reorder(SEQUENCE,value),value,data=tc,geom="point", color=variable,gr
 print(p)
 dev.off()
 
+pdf("figures/pTpP_GC_boxplot.pdf",width=12,height=5)
+p <- qplot(reorder(SEQUENCE,value),value,data=tc, geom="boxplot",xlab="")+theme(axis.text.x = element_text(angle=90, hjust=1)) + facet_wrap(~variable)
+print(p)
+dev.off()
