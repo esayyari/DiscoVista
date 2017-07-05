@@ -5,7 +5,6 @@ require(plyr)
 require(scales)
 
 clades<-read.csv(opt$annotation,sep='\t',header=F)
-clades<-read.csv('../../../parameters/annotation.txt',sep='\t',header=F)
 names(clades) <- c("Names","Clade")
 dir.create('figures/')
 oc <- read.csv('occupancy.csv',header=F,sep=' ')
@@ -58,12 +57,12 @@ if (! is.null(opt$modelCond)) {
   pdf('figures/occupancy_map.pdf',width=24.5,height=11.7,compress=F)
   p1 <- ggplot(ocs2, aes(GENE_ID,Taxon)) + 
     geom_tile(aes(fill = rescale),colour = "white")+
-    scale_fill_gradient(low = "white",high = "steelblue")+
+    scale_fill_gradient(low = "white",high = "#00740bff")+
     scale_x_discrete(expand = c(0, 0)) +
     scale_y_discrete(expand = c(0, 0) )+
     theme(legend.position = "none",axis.ticks = element_blank(),
-        axis.text.x = element_text(size=2,angle = 90, hjust = 0, colour = "grey50"),
-        axis.text.y = element_text(size=8,angle = 0, hjust = 0, colour = "grey50"))
+        axis.text.x = element_text(size=2,angle = 90, hjust = 1, colour = "grey50"),
+        axis.text.y = element_text(size=8,angle = 0, hjust = 1, colour = "grey50"))
   print(p1)
   
   dev.off()
@@ -71,11 +70,11 @@ if (! is.null(opt$modelCond)) {
 
 
 write.csv(tc, file="figures/occupancy-final.csv", row.names = FALSE, sep="\t")
-pdf('figures/occupancy.pdf',width=21, height=7,compress=F)
+pdf('figures/occupancy.pdf',width=21, height=10,compress=F)
 p1 <- ggplot(data=tc,aes(
       x=reorder(Taxon,occupancy/maxG,FUN=median),y=occupancy/maxG,group=ID,color=ID))+geom_line(size=1)+
       theme_bw()+theme(legend.position = "bottom",axis.ticks = element_blank(),
-      axis.text.x = element_text(size=16,angle = 90, hjust = 0, colour = "grey50"),
+      axis.text.x = element_text(size=16,angle = 90, hjust = 1, colour = "grey50"),
       legend.text=element_text(size=16),axis.text.y=element_text(size=16),text = element_text(size=16))+
   scale_y_continuous(labels = percent)+
   ylab('Occupancy')+xlab('Taxon')+scale_color_brewer(name="",palette = "Paired")
