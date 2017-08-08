@@ -98,8 +98,9 @@ def reroot(*arg):
     treeName = arg[0]
     rootDef =  arg[1]
     annotation = arg[2]
-    if len(arg) == 4:
-        resultsFile=arg[3]
+    ifPrint = arg[3]
+    if len(arg) == 5:
+        resultsFile=arg[4]
     else:
         resultsFile="%s.%s" % (treeName, "rerooted")
     c={}
@@ -108,20 +109,28 @@ def reroot(*arg):
         c[x.split('\t')[0]] = x.split('\t')[1][0:-1]
     trees = dendropy.TreeList.get_from_path(treeName,'newick',rooting="force-rooted", preserve_underscores=True)
     ROOTS = readRoots(rootDef)
+    lst = list()
     for i,tree in enumerate(trees):
         roots = ROOTS
         while roots and root(roots[0],tree, c) is None:
             roots = roots[1:]
         if not roots:
+	    lst.append(i)
             print "Tree %d: none of the root groups %s exist. Leaving unrooted." %(i," or ".join((" and ".join(a) for a in ROOTS)))
+    if ifPrint == 0:
+	for i in sorted(lst, reverse=True):
+		del trees[i]
     print "writing results to " + resultsFile
     trees.write(path=resultsFile,schema='newick',suppress_rooting=True,suppress_leaf_node_labels=False, unquoted_underscores=True)
 def branchSupports(tree, DS, model, g ):
-
+    tree.encode_bipartitions()
+                
     supp = list()
     for n in tree.postorder_node_iter():
         if n.is_leaf():
-            continue
+		continue
+	if n.edge.bipartition.is_trivial():
+        	continue
         elif (n.label is not None):            
             supp.append(float(n.label))
             string = DS + " " + model + " " + n.label + "\n"
@@ -224,6 +233,9 @@ def branchInfo(treeName, outFile, outFile2):
         DS = r[0]
         trees = dendropy.TreeList.get_from_path(gene, 'newick',rooting="force-rooted", preserve_underscores=True)
         for i,tree in enumerate(trees):
+	    for m in tree.leaf_node_iter():
+		if m.edge.length is None:
+			m.edge.length = 0.0
             disrt = [n.distance_from_root() for n in tree.leaf_node_iter()]
             brLen = leafToLeafDistances(tree)
             supp = branchSupports(tree, DS, mode, g)			

@@ -85,20 +85,19 @@ class Analyze(object):
             os.makedirs(finegrained)
 	searchFiles = " ".join(glob.glob(opt.search))
 	for tree in searchFiles.split(" "):
-           tools.reroot(tree, opt.root, opt.annotation)
+           tools.reroot(tree, opt.root, opt.annotation, 1)
            tools.remove_edges_from_tree(tree, opt.threshold)
 
         searchFilesthr = " ".join(glob.glob(opt.searchthr))
         for tree in searchFilesthr.split(" "):
-            tools.reroot(tree, opt.root, opt.annotation)
+            tools.reroot(tree, opt.root, opt.annotation, 1)
 
         searchFiles = " ".join(glob.glob(opt.searchrooted))
         searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
-        if float(opt.threshold)<= 1.:
+        if float(opt.threshold)<= 1.0:
             multiplier = 100.
         else:
-            multiplier = 1.
-        print multiplier
+            multiplier = 1.0
         find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
         find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
@@ -182,7 +181,7 @@ class Analyze(object):
         opt = self.opt
         searchFiles = " ".join(glob.glob(opt.search))
         for tree in searchFiles.split(" "):
-            tools.reroot(tree, opt.root, opt.annotation)
+            tools.reroot(tree, opt.root, opt.annotation, 1)
         treeName = glob.glob(opt.searchrooted)
         outFile = opt.path + "/branchStats.csv"
         outFile2 = opt.path + "/branchSupport.csv"

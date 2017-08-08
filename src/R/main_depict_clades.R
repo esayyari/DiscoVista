@@ -108,8 +108,11 @@ cols <- c( "ID" , "CLADE", "BOOT")
     print("clades chosen!")
   }
   if (! is.numeric(raw.all$BOOT)){
+    
     raw.all$BOOT <- as.numeric(levels(raw.all$BOOT))[raw.all$BOOT]		
   }
+
+  
   print("bootstrap is numeric")
   raw.highsupport=raw.highsupport[,c(1,2,3,5)]
   # Merge 75% results and all results
@@ -345,9 +348,8 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.al
     } else if(nrow(dbn) == 0 && nrow(dbc) == 0) {
 	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF"),values=rescale((c(100,99,90,50,0))))
     } else if(nrow(dbn) != 0 && nrow(dbc) !=0 ) {
-    	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98","#c84060"),values=rescale((c(100,99,90,50,0,-50,-100))))
+    	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69A1A0","#DDEEFF","#EC7F98","#C84060"),values=rescale((c(100,99,90,50,0,-50,-100))))
     } else {
-    
        c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#c84060"),values=rescale((c(100,99,90,50,0,-100))))
     }
     p1 <- qplot(ID,CLADE,data=db2,fill=BOOT,geom="tile",xlab="",ylab="")+

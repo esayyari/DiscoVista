@@ -8,11 +8,18 @@ from types import ListType
 def get_present_taxa(tree, labels):
     return [x.taxon for x in [tree.find_node_with_taxon_label(label) for label in labels]
             if x is not None]
-def get_support_from_bipartition(tree, clade):
+def get_support_from_bipartition(tree, clade, mult):
 	bipartition = tree.taxon_namespace.taxa_bipartition(taxa=clade, is_mutable = False)
 	bipartition.is_mutable = False
 	clade = set(clade)
+	
 	e = tree.bipartition_edge_map[bipartition]
+	if bipartition.is_trivial():
+		if float(mult) <  100:
+			return (1.0, e.length)
+		else:
+			return(100.0, e.length)
+	
 	return (e.label,e.length)
 class Mono(object):
 
@@ -29,7 +36,10 @@ class Mono(object):
         letter = self.letters[ln]
         name="%s (%s)" %(ln,letter) if letter is not None and letter!="" else ln
 	if keyword == "IS_MONO" or keyword == "IS_MONO_INCOMPLETE":
-	        (support, length) = get_support_from_bipartition(tree, clade)
+	        (support, length) = get_support_from_bipartition(tree, clade, mult)
+		if support is None:
+			print support, length, clade, tree
+		support  = str(float(support) * float(mult))
 	else:
 		support = "None"
 		length = "None"

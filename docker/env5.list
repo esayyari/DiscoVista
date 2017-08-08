@@ -1,0 +1,6 @@
+HELP=0
+ANOT=parameters/annotation-1.txt
+MODL=5
+PTH=relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/
+DS=anot1
+NAME=parameters/names.txt

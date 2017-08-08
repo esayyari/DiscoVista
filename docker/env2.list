@@ -1,0 +1,4 @@
+HELP=0
+PTH=alignments/filtered/FNA2AA/
+ANOT=annotation.txt
+MODL=2
