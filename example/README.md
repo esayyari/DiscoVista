@@ -34,7 +34,7 @@ docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p species/ -r parameters/rooting.txt -t 95 -y parameters/newModel.txt parameters/newOrders.txt -m 0
+discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p species/ -r parameters/rooting.txt -t 95 -y parameters/newModel.txt parameters/newOrders.txt -m 0
 ~~~~
 
 ## Genetrees
@@ -54,7 +54,7 @@ docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p genetrees/filtered/ -r parameters/rooting.txt -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1
+discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p genetrees/filtered/ -r parameters/rooting.txt -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1
 ~~~~
 
 ## GC
@@ -73,7 +73,7 @@ docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -m 2 -a parameters/annotation.txt -p GC/unfiltered/
+discoVista.py -m 2 -a parameters/annotation.txt -p GC/unfiltered/
 ~~~~
 
 ## Occupancy
@@ -92,7 +92,7 @@ docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -m 3 -a parameters/annotation.txt -p occupancy/filtered/
+discoVista.py -m 3 -a parameters/annotation.txt -p occupancy/filtered/
 ~~~~
 
 ## Branch analysis
@@ -111,7 +111,7 @@ docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -m 4 -a parameters/annotation.txt -p branchAnalysis/ -r parameters/rooting.txt
+discoVista.py -m 4 -a parameters/annotation.txt -p branchAnalysis/ -r parameters/rooting.txt
 ~~~~
 
 ## Relative frequency 
@@ -130,5 +130,5 @@ docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -l anot1 -g Base
+discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -l anot1 -g Base
 ~~~~
