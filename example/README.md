@@ -28,7 +28,7 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c para
 or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -it --rm -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -48,7 +48,7 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c para
 or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -it --rm -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -67,7 +67,7 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -m 2 -a parameters/annotation.txt -p
 oror using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -it --rm -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -86,7 +86,7 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -m 3 -a parameters/annotation.txt -p
 or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -it --rm -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -105,7 +105,7 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -m 4 -a parameters/annotation.txt -p
 or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -it --rm -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -124,7 +124,7 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-1.txt -m 5 
 or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -it --rm -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data esayyari/discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
