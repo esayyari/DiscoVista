@@ -25,16 +25,10 @@ Model\_Condition-DST, where DST defines the type of sequence alignment. For exam
 $WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p species/ -r parameters/rooting.txt -t 95 -y parameters/newModel.txt parameters/newOrders.txt -m 0
 ~~~
 
-or using the docker image:
+or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run --env-file env0.list -v <path to example folder>/1KP:/data discovista
-~~~
-
-If you want to run discovista in the interactive mode you would first use this command:
-
-~~~bash
-docker run -it --env-files env0.list -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -51,16 +45,10 @@ Under the __genetrees/filtered__ folder we have 852 folders each has 3 subfolder
 $WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p genetrees/filtered/ -r parameters/rooting.txt -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1
 ~~~
 
-or using the docker image:
+or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run --env-file env5.list -v <path to example folder>/1KP:/data discovista
-~~~
-
-If you want to run discovista in the interactive mode you would first use this command:
-
-~~~bash
-docker run -it --env-files env1.list -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -76,16 +64,10 @@ We have the __GC/unfiltered__ folder available in the example folder. Under this
 $WS_HOME/DiscoVista/src/utils/discoVista.py -m 2 -a parameters/annotation.txt -p GC/unfiltered/
 ~~~
 
-or using the docker image:
+oror using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run --env-file env2.list -v <path to example folder>/1KP:/data discovista
-~~~
-
-If you want to run discovista in the interactive mode you would first use this command:
-
-~~~bash
-docker run -it --env-files env2.list -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -101,16 +83,10 @@ We have the __occupancy/filtered__ folder available in the example folder. Under
 $WS_HOME/DiscoVista/src/utils/discoVista.py -m 3 -a parameters/annotation.txt -p occupancy/filtered/
 ~~~
 
-or using the docker image:
+or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run --env-file env3.list -v <path to example folder>/1KP:/data discovista
-~~~
-
-If you want to run discovista in the interactive mode you would first use this command:
-
-~~~bash
-docker run -it --env-files env3.list -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -126,16 +102,10 @@ Under the folder __branchAnalysis__ available in the example folder, there are 6
 $WS_HOME/DiscoVista/src/utils/discoVista.py -m 4 -a parameters/annotation.txt -p branchAnalysis/ -r parameters/rooting.txt
 ~~~
 
-or using the docker image:
+or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run --env-file env4.list -v <path to example folder>/1KP:/data discovista
-~~~
-
-If you want to run discovista in the interactive mode you would first use this command:
-
-~~~bash
-docker run -it --env-files env4.list -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:
@@ -151,16 +121,10 @@ Under the folder __relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA__, w
 $WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -l anot1 -g Base
 ~~~
 
-or using the docker image:
+or using the docker image, you can run discovista in the interactive mode. You should first use the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run --env-file env5.list -v <path to example folder>/1KP:/data discovista
-~~~
-
-If you want to run discovista in the interactive mode you would first use this command:
-
-~~~bash
-docker run -it --env-files env5.list -v <path to example folder>/1KP:/data discovista
+docker run -it --rm -v <path to example folder>/1KP:/data discovista
 ~~~
 
 and then run it like you installed discovista on your machine from the docker image:

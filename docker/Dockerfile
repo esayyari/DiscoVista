@@ -52,13 +52,14 @@ RUN mkdir /repository && \
 
 WORKDIR /repository
 
-RUN git clone https://github.com/esayyari/DiscoVista.git 
-#&& \
-#    git clone https://github.com/esayyari/ASTRAL.git && \
- #   cd /reposiotry/ASTRAL; git checkout DiscoVista; unzip Astral.zip; cp Astral/astral.*jar .
+RUN git clone https://github.com/esayyari/DiscoVista.git;
+COPY ASTRAL-DiscoVista.tar.gz /repository 
+RUN  tar xzvf ASTRAL-DiscoVista.tar.gz; rm ASTRAL-DiscoVista.tar.gz; cd ./ASTRAL-DiscoVista/; \
+	unzip Astral.4.10.12.zip; cp Astral/astral.4.10.12.jar .
+#RUN   cd /reposiotry/ASTRAL; git checkout DiscoVista; unzip Astral.zip; cp Astral/astral.*jar .
 
 
-ENV WS_HOME /reposiotry
+ENV WS_HOME /repository
 
 RUN mkdir /data
 
@@ -66,4 +67,3 @@ COPY runDiscoVista.sh /repository/
 
 WORKDIR /data
 
-ENTRYPOINT /repository/runDiscoVista.sh 
