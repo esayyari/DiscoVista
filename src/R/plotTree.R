@@ -13,6 +13,11 @@ tree<-read.tree(args[1])
 
 d<-dirname(args[1])
 pdf(paste(d,"/tree.pdf",sep=""))
+
+plot(tree,use.edge.length=F,edge.width = 5,edge.color="orange",root.edge = F, lab4ut="axial");
+edgelabels(tree$edge.length, bg = "black",col="white", font=2)
+
+
 plot(tree,use.edge.length=F,edge.width = 5,edge.color="orange",root.edge = F, type = "unrooted",lab4ut="axial"); 
 edgelabels(tree$edge.length, bg = "black",col="white", font=2)
 
