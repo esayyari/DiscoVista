@@ -6,7 +6,7 @@ import os
 import re
 
 
-tree = dendropy.Tree.get(path=sys.argv[1],schema="newick",rooting="forced_unrooted")
+tree = dendropy.Tree.get(path=sys.argv[1],schema="newick",rooting="force-unrooted")
 
 I = set()
 Orig = set()
@@ -18,7 +18,7 @@ for nd in tree.postorder_node_iter():
 		Orig.add(nd)
 	
 
-L = range(1, 2*len(tree.leaf_nodes() -1)
+L = range(1, 2*len(tree.leaf_nodes()) -1)
 O = list(set(L) - I)
 c = 0
 for nd in tree.preorder_node_iter():

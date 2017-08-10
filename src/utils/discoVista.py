@@ -46,6 +46,9 @@ if "__main__" == __name__:
 		      help="The new order for clades")
     parser.add_option("-k", "--missing", dest="missing", default = 0,
 		      help="The missing data handling flag. If this flag set to one, clades with partially missing taxa are considered as complete.")
+    
+    parser.add_option("-l", "--label", dest="label", default = None,
+		      help="Label that will be used in the naming of output files of the relative frequency analysis.")
     opt = Opt(parser)
 
     analyzer = Analyze(opt)

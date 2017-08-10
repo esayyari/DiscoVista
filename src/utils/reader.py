@@ -3,7 +3,7 @@ import os
 from optparse import OptionParser
 class Opt(object):
     def __init__(self, parser):
-        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing) = self.parseArgs(parser)
+        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label) = self.parseArgs(parser)
         tmpPath = os.path.dirname(annotation)
         self.names = tmpPath + "/names.txt"
         self.path = path
@@ -23,7 +23,7 @@ class Opt(object):
         self.searchrooted = searchrooted
         self.searchthrrooted = searchthrrooted
         self.createNames(annotation, self.names)
-
+	self.label = label
     def parseArgs(self, parser):
 
         (options, args) = parser.parse_args()
@@ -85,39 +85,45 @@ class Opt(object):
         else:
             clades = ""
             threshold = -1
-
+	
+	if mode == 5 and not options.label:
+		parser.print_help()
+		sys.exit("Please enter a label")
+	elif mode == 5:
+		label = options.label
+	else:
+		label = ""
         if not options.annotation:
             parser.print_help()
             sys.exit("Please enter the annotation file")	
-        annotation = options.annotation
-        annotation = os.path.abspath(annotation)
-        if not os.path.isfile(annotation):
-            parser.print_help()
-            sys.exit("Please check the annotation file")
+	annotation = options.annotation
+	annotation = os.path.abspath(annotation)
+	if not os.path.isfile(annotation):
+	    parser.print_help()
+	    sys.exit("Please check the annotation file")
 
         path = os.path.expanduser(os.path.expandvars(path))
         path = os.path.abspath(path)
         if not os.path.exists(path):
             parser.print_help()
             sys.exit("please check the path to the gene direcotry")
-
+	
 	newModel = options.newModel
 	newOrder = options.newOrder
         style = options.style
         modelCond = options.modelCond
-
-        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing)
+        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label)
     def searchFiles(self, mode, path, thresh):
         if mode == 0:
             search = path + '/*/' + 'estimated_species_tree.tree'
             searchthr = path + '/*/' + 'estimated_species_tree.tree.' + str(thresh)
-            searchrooted = path + '/*/' + 'estimated_species_tree.tree' + '.rerooted'
-            searchthrrooted = path + '/*/' + 'estimated_species_tree.tree.' + str(thresh) + '.rerooted'
+            searchrooted = path + '/*/' + 'estimated_species_tree.tree'# + '.rerooted'
+            searchthrrooted = path + '/*/' + 'estimated_species_tree.tree.' + str(thresh)# + '.rerooted'
         elif mode == 1:
             search = path + '/*/*/' + 'estimated_gene_trees.tree'
             searchthr = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh)
-            searchrooted = path + '/*/*/' + 'estimated_gene_trees.tree' + '.rerooted'
-            searchthrrooted = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh) + '.rerooted'
+            searchrooted = path + '/*/*/' + 'estimated_gene_trees.tree'# + '.rerooted'
+            searchthrrooted = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh) #+ '.rerooted'
         elif mode == 2:
             search = path + '/*/*-alignment-noFilter.fasta'
             searchthr = None

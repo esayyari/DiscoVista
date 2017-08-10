@@ -10,17 +10,29 @@ def get_present_taxa(tree, labels):
             if x is not None]
 def get_support_from_bipartition(tree, clade, mult):
 	bipartition = tree.taxon_namespace.taxa_bipartition(taxa=clade, is_mutable = False)
+	clade2 = { c.taxon for c in tree.leaf_nodes() } - set(clade)
+	
+	bipartition2 = tree.taxon_namespace.taxa_bipartition(taxa=clade2, is_mutable = False)
+
 	bipartition.is_mutable = False
+	bipartition2.is_mutable = False
+
 	clade = set(clade)
 	
-	e = tree.bipartition_edge_map[bipartition]
-	if bipartition.is_trivial():
-		if float(mult) <  100:
-			return (1.0, e.length)
-		else:
-			return(100.0, e.length)
-	
-	return (e.label,e.length)
+	e  = tree.bipartition_edge_map[bipartition]
+	e2 = tree.bipartition_edge_map[bipartition2]
+	if bipartition.is_trivial() or bipartition2.is_trivial():
+                if float(mult) <  100:
+                        return (1.0, e.length)
+                else:
+                        return(100.0, e.length)
+
+
+	if e.label is None:
+		print e2, e2.label, e2.length, e.label, e.length
+		return (e2.label,e2.length)
+	else:
+		return (e.label, e.length)
 class Mono(object):
 
     def __init__(self,taxa, outFile):
@@ -38,7 +50,7 @@ class Mono(object):
 	if keyword == "IS_MONO" or keyword == "IS_MONO_INCOMPLETE":
 	        (support, length) = get_support_from_bipartition(tree, clade, mult)
 		if support is None:
-			print support, length, clade, tree
+			print "WARNING some support was not available. Ignoring this branch",  " length was: ", length, "clade was: ", clade, "tree is: ",  tree
 		support  = str(float(support) * float(mult))
 	else:
 		support = "None"

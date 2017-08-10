@@ -85,12 +85,12 @@ class Analyze(object):
             os.makedirs(finegrained)
 	searchFiles = " ".join(glob.glob(opt.search))
 	for tree in searchFiles.split(" "):
-           tools.reroot(tree, opt.root, opt.annotation, 1)
+ #          tools.reroot(tree, opt.root, opt.annotation, 1)
            tools.remove_edges_from_tree(tree, opt.threshold)
 
         searchFilesthr = " ".join(glob.glob(opt.searchthr))
-        for tree in searchFilesthr.split(" "):
-            tools.reroot(tree, opt.root, opt.annotation, 1)
+#        for tree in searchFilesthr.split(" "):
+#            tools.reroot(tree, opt.root, opt.annotation, 1)
 
         searchFiles = " ".join(glob.glob(opt.searchrooted))
         searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
@@ -213,6 +213,21 @@ class Analyze(object):
         err.write(stdout)
         err.write(stderr)
         err.close()
+    def relFreq():
+	command = WS_HOME + "/" + "DiscoVista/src/utils/pos-for-hyp.sh"
+	args = [opt.path, opt.annotation, opt.names, opt.label ]
+	cmd = ["bash",command,args]
+	stderrFile = opt.path + "/error.log"
+	print "printing errors on " + stderrFile
+	print cmd
+	fi = open(stderrFile,'w')
+	fi.close()
+	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout, stderr = proc.communicate()
+	err = open(stderrFile,'a')
+	err.write(stdout)
+	err.write(stderr)
+	err.close()
     def analyze(self):
         if self.opt.mode == 0 or self.opt.mode == 1:
             self.treesAnalyses()
@@ -222,3 +237,5 @@ class Analyze(object):
             self.occupancyAnalysis()
         elif self.opt.mode == 4:
             self.geneTreeBranchInfo()
+	elif self.opt.mode == 5:
+	    self.relFreq()

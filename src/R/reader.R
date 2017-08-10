@@ -23,7 +23,7 @@ setOptions <- function(opt) {
   } else {
     clade1 = opt$clade
   }
-  if ((mode1 == 0 || mode1 == 1 || mode1 == 4) && is.null(opt$annotation)){
+  if ((mode1 == 0 || mode1 == 1 || mode1 == 3) && is.null(opt$annotation)){
     print_help(opt_parser)
     stop("Please specify the path to the annotation file.", call.=FALSE)
   } else {

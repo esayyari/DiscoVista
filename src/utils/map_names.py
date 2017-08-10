@@ -172,7 +172,7 @@ class generateNewQuartFreq(object):
             if not flag:
                 continue
             if c % 3 == 0:
-
+		print line, key, flag
                 Node = str(int(self.cladeToEdge[key].length))
                 if c > 0:
 

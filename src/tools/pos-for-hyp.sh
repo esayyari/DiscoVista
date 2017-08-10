@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "USAGE: [species tree] [gene tree] [annotation] [names] [data set]"
+echo "USAGE: [PATH] [annotation] [names] [label]"
 
 
 name=main
@@ -12,7 +12,7 @@ annot=$2
 #rooting=$4
 names=$3
 DS=$4
-#outgroup=$6
+outgroup=$5
 
 echo "Code	Hypo" > $annot.with.header.txt
 cat $annot >> $annot.with.header.txt
@@ -42,14 +42,17 @@ java -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.
 #set -x
 
 sed -i "s/)N\([0-9][0-9]*\)'/)'N\1/g" $d/$name-uncollapsed.tre
+
 python $WS_HOME/DiscoVista/src/tools/spit-hypo-trees.py $d/$name-uncollapsed.tre $ant collapse
 cp $d/$name-uncollapsed.tre-collapsed.tre $d/$name.tre
 sed -i  "s/)'N\([0-9][0-9]*\)[^']*'/)N\1/g" $d/$name.tre
 #echo $outgroup
-#nw_reroot $d/$name.tre "$outgroup" > $d/$name.tre
+nw_reroot $d/$name.tre "$outgroup" > $d/$name.tre.rerooted
+mv $d/$name.tre.rerooted $d/$name.tre
+printf "$WS_HOME/DiscoVista/src/tools/display.py $d/$name.tre\n"
 $WS_HOME/DiscoVista/src/tools/display.py $d/$name.tre
 nw_display -S -s $d/$name.tre.out > $d/$name.svg
-#echo python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $DS $d/$name.tre.out
+echo python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $DS $d/$name.tre.out
 python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $DS $d/$name.tre.out
 cd $d
 Rscript --vanilla freqQuadVisualization.R
