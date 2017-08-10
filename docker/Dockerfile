@@ -63,7 +63,6 @@ ENV WS_HOME /repository
 
 RUN mkdir /data
 
-COPY runDiscoVista.sh /repository/
 
 WORKDIR /data
 
