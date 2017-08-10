@@ -1,6 +1,0 @@
-HELP=0
-ANOT=parameters/annotation-1.txt
-MODL=5
-PTH=relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/
-OUTD=anot1
-OUTG=Base

@@ -1,5 +1,0 @@
-HELP=0
-ANOT=parameters/annotation.txt
-MODL=4
-ROOT=parameters/rooting.txt
-PTH=branchAnalysis
