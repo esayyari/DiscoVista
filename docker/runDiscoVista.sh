@@ -16,8 +16,10 @@ cat << EOF
 		MISS		Defines if having missing clade or species is allowed in the 
 				species tree analysis
 		COND		The modle condition which the occupancy map will be created
-		DS		The label that you use for the relative frequency analysis
-		NAME		The nameing file
+		OUTD		The output directory for the outputs of the relative frequency 
+				analysis.
+		OUTG		The name of the outgroup clade in the annotation file for the
+				relative frequency analysis.
 	If you want to run everything in the interactive mode use the following command:
 	    docker run -it discoVista --env-file <env.list> -v <data on your machine>:/data
     	If you want to test the DiscoVista, please download the sample data from the DiscoVista 
@@ -92,8 +94,7 @@ if [ "$MODL" != "" ]; then
 			cmd="$disco -m $MODL -p $PTH -r $ROOT -a $ANOT"
 		fi
 	elif [ "$MODL" -eq "5" ]; then
-
-		cmd="$WS_HOM/DiscoVista/src/tools/pos-for-hyp.sh $PTH $ANOT $NAME  $DS"
+		cmd="$disco -p $PTH -m 5 -a $ANOT -l $OUTD -g $OUTG"
 	fi
 else
 	show_help

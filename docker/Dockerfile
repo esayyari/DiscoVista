@@ -52,8 +52,10 @@ RUN mkdir /repository && \
 
 WORKDIR /repository
 
-RUN git clone https://github.com/esayyari/DiscoVista.git && \
-    git clone https://github.com/esayyari/ASTRAL.git
+RUN git clone https://github.com/esayyari/DiscoVista.git 
+#&& \
+#    git clone https://github.com/esayyari/ASTRAL.git && \
+ #   cd /reposiotry/ASTRAL; git checkout DiscoVista; unzip Astral.zip; cp Astral/astral.*jar .
 
 
 ENV WS_HOME /reposiotry

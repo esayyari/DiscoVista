@@ -3,7 +3,7 @@ import os
 from optparse import OptionParser
 class Opt(object):
     def __init__(self, parser):
-        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label) = self.parseArgs(parser)
+        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label, outg) = self.parseArgs(parser)
         tmpPath = os.path.dirname(annotation)
         self.names = tmpPath + "/names.txt"
         self.path = path
@@ -24,6 +24,7 @@ class Opt(object):
         self.searchthrrooted = searchthrrooted
         self.createNames(annotation, self.names)
 	self.label = label
+	self.outg = outg
     def parseArgs(self, parser):
 
         (options, args) = parser.parse_args()
@@ -37,9 +38,9 @@ class Opt(object):
             sys.exit("Please enter the mode. Do you want to summerize the species tree (0), or the gene trees (1)")
 
         mode = int(options.mode)
-        if mode != 0 and mode != 1 and mode !=2 and mode != 3 and mode != 4:
+        if mode != 0 and mode != 1 and mode !=2 and mode != 3 and mode != 4 and mode != 5:
             parser.print_help()
-            sys.exit("To summerize species tree use 0, and to ummerize gene trees use 1. To do GC-stat analysis use 2. To do occupancy analysis use 3. To do branchInfo analysis please use 4.")
+            sys.exit("To summerize species tree use 0, and to ummerize gene trees use 1. To do GC-stat analysis use 2. To do occupancy analysis use 3. To do branchInfo analysis please use 4. To do relative frequency analysis use 5.")
         if mode == 0 or mode == 1 or mode == 4:
             if not options.root:
                 parser.print_help()
@@ -93,6 +94,14 @@ class Opt(object):
 		label = options.label
 	else:
 		label = ""
+	if mode == 5 and not options.outg:
+                parser.print_help()
+                sys.exit("Please enter the outgroup name (e.g Outgroup or Base")
+        elif mode == 5:
+                outg = options.outg
+        else:
+                outg = ""
+
         if not options.annotation:
             parser.print_help()
             sys.exit("Please enter the annotation file")	
@@ -112,7 +121,7 @@ class Opt(object):
 	newOrder = options.newOrder
         style = options.style
         modelCond = options.modelCond
-        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label)
+        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label, outg)
     def searchFiles(self, mode, path, thresh):
         if mode == 0:
             search = path + '/*/' + 'estimated_species_tree.tree'
@@ -139,6 +148,11 @@ class Opt(object):
             searchthr = None
             searchrooted = path + '/*/*-estimated_gene_trees.tree.rerooted'
             searchthrrooted = None
+	elif mode == 5:
+	    search = None
+	    searchthr = None
+	    searchrooted = None
+	    searchthrrooted = None
         return (search, searchthr, searchrooted, searchthrrooted)
     def createNames(self, annotation, names):
         f = open(names, 'w')

@@ -48,7 +48,9 @@ if "__main__" == __name__:
 		      help="The missing data handling flag. If this flag set to one, clades with partially missing taxa are considered as complete.")
     
     parser.add_option("-l", "--label", dest="label", default = None,
-		      help="Label that will be used in the naming of output files of the relative frequency analysis.")
+		      help="name of the output folder for the relative frequency analysis.")
+    parser.add_option("-g", "--outgroup", dest="outg", default = None,
+		      help="Name of the outgroup for the hypothesis in relative frequency analysis specified in the annotation file, eg. Outgroup or Base.")
     opt = Opt(parser)
 
     analyzer = Analyze(opt)

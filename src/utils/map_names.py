@@ -6,14 +6,15 @@ import dendropy
 
 class generateNewQuartFreq(object):
 
-    def __init__(self,nameFile,anotFile, freqStatFile, outFile, treeFile):
+    def __init__(self,nameFile,anotFile, freqStatFile, outFile, name, treeFile):
         self.nameFile = nameFile
         self.anotFile = anotFile
         self.freqStatFile = freqStatFile
         self.outFile = outFile
         self.treeFile = treeFile
+        self.name = name
         self.g = open(self.outFile,'w')
-        self.tree = dendropy.Tree.get(path=self.treeFile, schema="newick", rooting="force-unrooted")
+        self.tree = dendropy.Tree.get(path=self.treeFile, schema="newick", rooting="force-rooted")
 
         self.tree.encode_bipartitions()
         self.setEdgesMap()
@@ -106,7 +107,7 @@ class generateNewQuartFreq(object):
         allTaxa = {l.taxon.label for l in tree.leaf_nodes()}
 
         for nd in tree.postorder_internal_node_iter():
-	    if nd == tree.seed_node:
+	    if nd.parent_node == tree.seed_node:
 		continue
             edge = nd.edge
             taxa = edge.bipartition.leafset_taxa(tree.taxon_namespace)
@@ -154,11 +155,12 @@ class generateNewQuartFreq(object):
             else:
                 bipartString = bipart2String + " | " + bipart1String
             edge.label = bipartString
-	
             cladeToEdge[edge.label] = edge
 
         self.cladeToEdge = cladeToEdge
 
+
+#	def generate_edge_labels():
     def generate_new_freqStat(self):
         self.freqStat = open(self.freqStatFile).readlines()
         Linet = list()
@@ -166,10 +168,11 @@ class generateNewQuartFreq(object):
         for i in range(0,len(self.freqStat)):
             line = self.freqStat[i]
             (key, flag) = self.map_taxa_to_clades(line)
-
+	    print line, key, flag
             if not flag:
                 continue
             if c % 3 == 0:
+
                 Node = str(int(self.cladeToEdge[key].length))
                 if c > 0:
 
@@ -191,14 +194,15 @@ class generateNewQuartFreq(object):
             print >> self.g, "\t".join(Linet[2]) + "\t" + "t2"
             print >> self.g, "\t".join(Linet[1]) + "\t" + "t3"
 if __name__ == "__main__":
-    if (len(sys.argv)<6):
-        print "USAGE: " + sys.argv[0] + " NameFiles Anotation freqStat Outfile Tree"
+    if (len(sys.argv)<7):
+        print "USAGE: " + sys.argv[0] + " NameFiles Anotation freqStat Outfile Name Tree"
         exit(1)
     namesFile = sys.argv[1]
     anotFile = sys.argv[2]
     freqStatFile = sys.argv[3]
     outFile = sys.argv[4]
-    treeList = sys.argv[5]
-    generateFreq = generateNewQuartFreq(namesFile, anotFile, freqStatFile, outFile, treeList)
+    name = sys.argv[5]
+    treeList = sys.argv[6]
+    generateFreq = generateNewQuartFreq(namesFile, anotFile, freqStatFile, outFile, name, treeList)
     generateFreq.generate_new_freqStat()
 

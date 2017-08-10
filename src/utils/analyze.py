@@ -213,15 +213,18 @@ class Analyze(object):
         err.write(stdout)
         err.write(stderr)
         err.close()
-    def relFreq():
+    def relFreq(self):
+	WS_HOME = os.environ['WS_HOME']
+	opt = self.opt
 	command = WS_HOME + "/" + "DiscoVista/src/utils/pos-for-hyp.sh"
-	args = [opt.path, opt.annotation, opt.names, opt.label ]
-	cmd = ["bash",command,args]
+	args = [opt.path, opt.annotation, opt.names, opt.label, opt.outg ]
+	cmd = ["bash",command] + args
 	stderrFile = opt.path + "/error.log"
 	print "printing errors on " + stderrFile
 	print cmd
 	fi = open(stderrFile,'w')
 	fi.close()
+	print cmd
 	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	stdout, stderr = proc.communicate()
 	err = open(stderrFile,'a')

@@ -145,10 +145,10 @@ $WS_HOME/DiscoVista/src/utils/discoVista.py -m 4 -a parameters/annotation.txt -p
 ~~~~
 
 ## Relative frequency 
-Under the folder __relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA__, we have two files with the names __estimated\_species\_tree.tree__, and __estimated\_gene\_trees.tree__ for species tree, and set of gene trees (852) in newick format. In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
+Under the folder __relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA__, we have two files with the names __estimated\_species\_tree.tree__, and __estimated\_gene\_trees.tree__ for species tree, and set of gene trees (852) in newick format. In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine. Let's assume that you want to test the relative frequencies of the firts hypothesis (__annotation-1.txt__), in which there are 5 clades, _Base_ (as outgroup), _Charales_, _Coleochaetales_, _Landplants_, _Zygnematophyceae_. We use the following set of commands:
 
 ~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameter/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/
+$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -l anot1 -g Base
 ~~~
 
 or using the docker image:
@@ -166,5 +166,5 @@ docker run -it --env-files env5.list -v <path to example folder>/1KP:/data disco
 and then run it like you installed discovista on your machine from the docker image:
 
 ~~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameter/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/
+$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -l anot1 -g Base
 ~~~~
