@@ -60,7 +60,7 @@ RUN  tar xzvf ASTRAL-DiscoVista.tar.gz; rm ASTRAL-DiscoVista.tar.gz; cd ./ASTRAL
 
 
 ENV WS_HOME /repository
-
+ENV PATH /repository/DiscoVista/src/utils:/repository/DiscoVista/src/R:$PATH
 RUN mkdir /data
 
 
