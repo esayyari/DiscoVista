@@ -47,8 +47,9 @@ if "__main__" == __name__:
     parser.add_option("-k", "--missing", dest="missing", default = 0,
 		      help="The missing data handling flag. If this flag set to one, clades with partially missing taxa are considered as complete.")
     
-    parser.add_option("-l", "--label", dest="label", default = None,
-		      help="name of the output folder for the relative frequency analysis.")
+    parser.add_option("-o", "--output", dest="label", default = None,
+
+		      help="name of the output folder for the relative frequency analysis. If you are using the docker it should start with '/data'.")
     parser.add_option("-g", "--outgroup", dest="outg", default = None,
 		      help="Name of the outgroup for the hypothesis in relative frequency analysis specified in the annotation file, eg. Outgroup or Base.")
     opt = Opt(parser)

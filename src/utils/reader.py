@@ -87,13 +87,12 @@ class Opt(object):
             clades = ""
             threshold = -1
 	
-	if mode == 5 and not options.label:
+	if not options.label:
 		parser.print_help()
-		sys.exit("Please enter a label")
-	elif mode == 5:
-		label = options.label
-	else:
-		label = ""
+		sys.exit("Please enter the output folder")
+	label = options.label
+	if not os.path.exists(label):
+	    os.makedirs(label)
 	if mode == 5 and not options.outg:
                 parser.print_help()
                 sys.exit("Please enter the outgroup name (e.g Outgroup or Base")

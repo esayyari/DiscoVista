@@ -17,8 +17,7 @@ outgroup=$5
 
 d=$(dirname $species)
 
-mkdir -p $d/$out || true
-out=$d/$out
+mkdir -p $out || true
 cp $species $out/
 cp $genes $out/
 cp $annot $out/

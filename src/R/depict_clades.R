@@ -38,7 +38,9 @@ source(reader)
 
 currOpt = setOptions(optTmp)
 opt = currOpt
-setwd(opt$out)
+print(opt$inputPath)
+print("here")
+setwd(opt$inputPath)
 
 print(getwd())
 if(!is.null(opt$cladeOrder)){

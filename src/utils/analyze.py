@@ -11,7 +11,7 @@ class Analyze(object):
         self.opt = opt
     def gcStatAnalysis(self):
         opt = self.opt
-        outFile = opt.path + "/gc-stat.csv"
+        outFile = opt.label + "/gc-stat.csv"
         f = open(outFile, 'w')
         searchFile = " ".join(glob.glob(opt.search))
         for align in searchFile.split(" "):
@@ -28,8 +28,8 @@ class Analyze(object):
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
-        stderrFile = opt.path + "/error.log"
+        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation]
+        stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
         print cmd
@@ -44,7 +44,7 @@ class Analyze(object):
         err.close()
     def occupancyAnalysis(self):
         opt = self.opt
-        outFile = opt.path + "/occupancy.csv"
+        outFile = opt.label + "/occupancy.csv"
 	print opt.search
         tools.occupancy(opt.search, outFile)
         print "All the occupancy stats have written on file %s" % (outFile)  
@@ -53,10 +53,10 @@ class Analyze(object):
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
         if (opt.modelCond is None):
-            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation]
         else:
-            args = ["-p",  WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-x", opt.modelCond ]
-        stderrFile = opt.path + "/error.log"
+            args = ["-p",  WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-x", opt.modelCond]
+        stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
         print cmd
@@ -73,14 +73,14 @@ class Analyze(object):
 
     def treesAnalyses(self):
         opt = self.opt
-        outFile = opt.path + "/clades.txt"
+        outFile = opt.label + "/clades.txt"
         f = open(outFile,'w')
         f.close()
 
-        outFilethr = opt.path + "/clades.hs.txt"
+        outFilethr = opt.label + "/clades.hs.txt"
         f = open(outFilethr,'w')
         f.close()
-        finegrained = opt.path + "/finegrained"	
+        finegrained = opt.label + "/finegrained"	
         if not os.path.exists(finegrained):
             os.makedirs(finegrained)
 	searchFiles = " ".join(glob.glob(opt.search))
@@ -156,15 +156,15 @@ class Analyze(object):
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 	if opt.newModel is not None and opt.newOrder is not None:
-	        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)), 
+	        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)), 
 			"-m", str(opt.missing)]
 	elif opt.newModel is not None and opt.newOrder is None:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
 	elif opt.newModel is None and opt.newOrder is not None:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
 	else:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-m", str(opt.missing)]
-        stderrFile = opt.path + "/error.log"
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-m", str(opt.missing)]
+        stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
         print cmd
@@ -183,8 +183,8 @@ class Analyze(object):
         for tree in searchFiles.split(" "):
             tools.reroot(tree, opt.root, opt.annotation, 1)
         treeName = glob.glob(opt.searchrooted)
-        outFile = opt.path + "/branchStats.csv"
-        outFile2 = opt.path + "/branchSupport.csv"
+        outFile = opt.label + "/branchStats.csv"
+        outFile2 = opt.label + "/branchSupport.csv"
         tools.branchInfo(treeName, outFile, outFile2)	
         print "The branch Length and support values are written on file %s" % (outFile)
         currPath = os.path.dirname(os.path.abspath(__file__))
@@ -193,14 +193,14 @@ class Analyze(object):
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 	if opt.newModel is not None and opt.newOrder is not None:
 		
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
         elif opt.newModel is not None and opt.newOrder is None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel)]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel)]
         elif opt.newModel is None and opt.newOrder is not None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder)]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder)]
         else:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.path, "-a", opt.annotation]
-        stderrFile = opt.path + "/error.log"
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation]
+        stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
         print cmd
@@ -219,7 +219,7 @@ class Analyze(object):
 	command = WS_HOME + "/" + "DiscoVista/src/utils/pos-for-hyp.sh"
 	args = [opt.path, opt.annotation, opt.names, opt.label, opt.outg ]
 	cmd = ["bash",command] + args
-	stderrFile = opt.path + "/error.log"
+	stderrFile = opt.label + "/error.log"
 	print "printing errors on " + stderrFile
 	print cmd
 	fi = open(stderrFile,'w')

@@ -47,8 +47,6 @@ setOptions <- function(opt) {
   	}
  }
   opt$missing = MS
-  out1 = opt$inputPath
-  opt$out = out1
   opt$mode = mode1
   opt$ST = ST1
   opt$WS_HOME = WS_HOME
