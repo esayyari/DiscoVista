@@ -161,6 +161,18 @@ class Mono(object):
                 self.clades[name] = clade
                 self.clade_comps[name] = components
             self.show[name] = show
+def getTaxa(cladeFiles):
+	
+	f = open(cladeFiles, 'r')
+	lines = f.readlines()
+	for line in lines:
+		tmp = line.split('\t')[0]
+		if (tmp == "All"):
+			line = line.strip('\n')
+			listLine = line.split('\t')[1]
+			taxa = set(listLine.replace('""+""','\t').replace('""','\t').replace('"','\t').replace('+','\t').strip('\t').replace('\t\t','\t').split('\t'))
+	return taxa
+	f.close()
 
 def main(*arg):
     namesFile = arg[0]
@@ -168,7 +180,9 @@ def main(*arg):
     outFile = arg[2]
     mult = float(arg[3])
     print mult
-    taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
+    taxa = getTaxa(cladesFile)
+    print taxa
+#    taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
     mono = Mono(taxa, outFile)
     mono.read_clades(cladesFile)
     for fileName in arg[4:][0].split(' '):
@@ -187,6 +201,7 @@ if __name__ == '__main__':
     namesFile = sys.argv[1]
     cladesFile = sys.argv[2]    
     outFile = sys.argv[3]
+    getTaxa(cladesFile)
     taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())	
     mono = Mono(taxa, outFile)
     mono.read_clades(cladesFile)

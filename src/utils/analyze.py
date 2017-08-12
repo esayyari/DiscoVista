@@ -28,7 +28,7 @@ class Analyze(object):
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation]
+        args = ["-p", WS_HOME, "-s", str(opt.mode),  "-i", opt.label]
         stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
@@ -53,9 +53,9 @@ class Analyze(object):
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
         if (opt.modelCond is None):
-            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation]
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-a", opt.annotation]
         else:
-            args = ["-p",  WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-x", opt.modelCond]
+            args = ["-p",  WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-a", opt.annotation, "-x", opt.modelCond]
         stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
@@ -156,14 +156,14 @@ class Analyze(object):
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 	if opt.newModel is not None and opt.newOrder is not None:
-	        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)), 
+	        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)), 
 			"-m", str(opt.missing)]
 	elif opt.newModel is not None and opt.newOrder is None:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
 	elif opt.newModel is None and opt.newOrder is not None:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
 	else:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-m", str(opt.missing)]
+		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-m", str(opt.missing)]
         stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
@@ -192,14 +192,13 @@ class Analyze(object):
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 	if opt.newModel is not None and opt.newOrder is not None:
-		
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
         elif opt.newModel is not None and opt.newOrder is None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-y", os.path.abspath(opt.newModel)]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode),  "-i", opt.label, "-y", os.path.abspath(opt.newModel)]
         elif opt.newModel is None and opt.newOrder is not None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation, "-t", os.path.abspath(opt.newOrder)]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-t", os.path.abspath(opt.newOrder)]
         else:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-a", opt.annotation]
+        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label]
         stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile

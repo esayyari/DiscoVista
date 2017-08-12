@@ -22,7 +22,8 @@ class Opt(object):
         self.searchthr = searchthr
         self.searchrooted = searchrooted
         self.searchthrrooted = searchthrrooted
-        self.createNames(annotation, self.names)
+	if (annotation is not ""):
+	        self.createNames(annotation, self.names)
 	self.label = label
 	self.outg = outg
     def parseArgs(self, parser):
@@ -41,7 +42,7 @@ class Opt(object):
         if mode != 0 and mode != 1 and mode !=2 and mode != 3 and mode != 4 and mode != 5:
             parser.print_help()
             sys.exit("To summerize species tree use 0, and to ummerize gene trees use 1. To do GC-stat analysis use 2. To do occupancy analysis use 3. To do branchInfo analysis please use 4. To do relative frequency analysis use 5.")
-        if mode == 0 or mode == 1 or mode == 4:
+        if mode == 4:
             if not options.root:
                 parser.print_help()
                 sys.exit("Please enter the path to the rooting definitions")
@@ -79,9 +80,6 @@ class Opt(object):
 
             if float(threshold)<=1.0:
                 threshold = float(threshold)
-            if not options.annotation:
-                parser.print_help()
-                sys.exit("Please enter the annotation file")
 
         else:
             clades = ""
@@ -101,14 +99,18 @@ class Opt(object):
         else:
                 outg = ""
 
-        if not options.annotation:
+        if (mode == 3 or mode == 5 ) and not options.annotation:
             parser.print_help()
             sys.exit("Please enter the annotation file")	
-	annotation = options.annotation
-	annotation = os.path.abspath(annotation)
-	if not os.path.isfile(annotation):
-	    parser.print_help()
-	    sys.exit("Please check the annotation file")
+	elif (mode == 3 or  mode == 5 ):
+	    annotation = options.annotation
+	    annotation = os.path.abspath(annotation)
+	    if not os.path.isfile(annotation):
+	    	parser.print_help()
+	    	sys.exit("Please check the annotation file")
+	else:
+	    annotation = ""
+		
 
         path = os.path.expanduser(os.path.expandvars(path))
         path = os.path.abspath(path)

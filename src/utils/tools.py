@@ -56,13 +56,13 @@ def concatenateFiles(outFile, search):
 
 hdir=os.path.dirname(os.path.realpath(__file__))
 
-def root (rootgroup, tree, c):
+def root(rootgroup, tree):
     root = None
     bigest = 0
     oldroot = tree.seed_node
     for n in tree.postorder_node_iter():
         if n.is_leaf():
-            n.r = c.get(n.taxon.label) in rootgroup or n.taxon.label in rootgroup
+            n.r = n.taxon.label in rootgroup
             n.s = 1
         else:
             n.r = all((a.r for a in n.child_nodes()))
@@ -103,16 +103,16 @@ def reroot(*arg):
         resultsFile=arg[4]
     else:
         resultsFile="%s.%s" % (treeName, "rerooted")
-    c={}
-    for x in open(annotation):
-        x.replace("\n","")
-        c[x.split('\t')[0]] = x.split('\t')[1][0:-1]
+    #c={}
+    #for x in open(annotation):
+      #  x.replace("\n","")
+      #  c[x.split('\t')[0]] = x.split('\t')[1][0:-1]
     trees = dendropy.TreeList.get_from_path(treeName,'newick',rooting="force-rooted", preserve_underscores=True)
     ROOTS = readRoots(rootDef)
     lst = list()
     for i,tree in enumerate(trees):
         roots = ROOTS
-        while roots and root(roots[0],tree, c) is None:
+        while roots and root(roots[0],tree) is None:
             roots = roots[1:]
         if not roots:
 	    lst.append(i)

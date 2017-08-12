@@ -22,13 +22,13 @@ Under the __species__ folder we have 31 folders each with this structure:
 Model\_Condition-DST, where DST defines the type of sequence alignment. For example  __astral.trim50genes33taxa.no3rd.final-FNA2AA__ is a folder under the __species__ folder, where __astral.trim50genes33taxa.no3rd.final__ is the  model condition name, and __FNA2AA__ is the DST. Then under each folder we have a species tree with the name __estimated\_species\_tree.tree__.  In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
 
 ~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p species/ -r parameters/rooting.txt -t 95 -y parameters/newModel.txt parameters/newOrders.txt -m 0 -o species/results
+$WS_HOME/DiscoVista/src/utils/discoVista.py -c parameters/clade-defs.txt -p species/ -t 95 -y parameters/newModel.txt -w parameters/newOrders.txt -m 0 -o species/results
 ~~~
 
 or using the docker image, you can run discovista with the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p species/ -r parameters/rooting.txt -t 95 -y parameters/newModel.txt -w parameters/newOrders.txt  -m 0 -o species/results
+docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -c parameters/clade-defs.txt -p species/ -t 95 -y parameters/newModel.txt -w parameters/newOrders.txt -m 0 -o species/results
 ~~~
 
 
@@ -37,13 +37,13 @@ docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista
 Under the __genetrees/filtered__ folder we have 852 folders each has 3 subfolders with one gene tree under each with the name __estimated\_gene\_trees.tree__. Each of these subfolders are named as __ID-Model\_Condition-DST__. More particularly, we have the __4032__ (ID) folder, and under this folder we have 3 subfolders __4032-c1c2_filterlen33-FNA2AA\_c1c2\_filterlen33__, __4032-filterlen33-FAA\_filterlen33__, and __4032-filterlen33-FNA2AA\_filterlen33__. In these folders __c1c2\_filterlen33__, and __filterlen33__ are the model conditions, and FAA and FNA2AA are the sequence alignment type.  In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
 
 ~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p genetrees/filtered/ -r parameters/rooting.txt -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1 -o genetrees/filtered/results
+$WS_HOME/DiscoVista/src/utils/discoVista.py -c parameters/clade-defs.txt -p genetrees/filtered/  -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1 -o genetrees/filtered/results
 ~~~
 
 or using the docker image, you can run discovista with the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -a parameters/annotation.txt -c parameters/clade-defs.txt -p genetrees/filtered/ -r parameters/rooting.txt -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1 -o genetrees/filtered/results
+docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -c parameters/clade-defs.txt -p genetrees/filtered/ -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1 -o genetrees/filtered/results
 ~~~
 
 
@@ -51,13 +51,13 @@ docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.
 We have the __GC/unfiltered__ folder available in the example folder. Under this folder we have 852 folders for each gene and the name of each folder is condsidered as the GENE ID, e.g. gene ID 4032. Then under each of these folders we have a __fasta__ file, with the name __DS-alignment-noFilter.fasta__. For example, __FNA2AA-alignment-noFilter.fasta__ is available under the folder __GC/unfiltered/4032__.  In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
 
 ~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -m 2 -a parameters/annotation.txt -p GC/unfiltered/ -o GC/unfiltered/results
+$WS_HOME/DiscoVista/src/utils/discoVista.py -m 2 -p GC/unfiltered/ -o GC/unfiltered/results
 ~~~
 
 or using the docker image, you can run discovista with the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -m 2 -a parameters/annotation.txt -p GC/unfiltered/ -o GC/unfiltered/results
+docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -m 2  -p GC/unfiltered/ -o GC/unfiltered/results
 ~~~
 
 
@@ -80,13 +80,13 @@ docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.
 Under the folder __branchAnalysis__ available in the example folder, there are 6 folders, __GAMMA.2__, __c1c2.GAMMA.2__,  __c1c2.f25__,  __c1c2\_filterlen33__,  __f25__,  and   __filterlen33__, and under each of them we have a file with this naming structure __FNA2AA-estimated_gene_trees.tree__, where you would replace __FNA2AA__ with any alignment type or label that you wish, and each of them has 852 gene trees (lines) in the newick format.  In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
 
 ~~~bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -m 4 -a parameters/annotation.txt -p branchAnalysis/ -r parameters/rooting.txt -o branchAnalysis/results
+$WS_HOME/DiscoVista/src/utils/discoVista.py -m 4 -p branchAnalysis/ -r parameters/rooting.txt -o branchAnalysis/results
 ~~~
 
 or using the docker image, you can run discovista with the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ~~~bash
-docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -m 4 -a parameters/annotation.txt -p branchAnalysis/ -r parameters/rooting.txt -o branchAnalysis/results
+docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -m 4  -p branchAnalysis/ -r parameters/rooting.txt -o branchAnalysis/results
 ~~~
 
 
