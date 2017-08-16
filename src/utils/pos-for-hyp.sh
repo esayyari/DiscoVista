@@ -76,7 +76,7 @@ $WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre $outgroup
 
 printf  "python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out\n"
 
-python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out
+python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $outgroup $d/$name.tre.out
 
 cd $d
 

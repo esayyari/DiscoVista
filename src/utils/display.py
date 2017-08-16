@@ -35,8 +35,8 @@ for c in children:
 		tmplabel = c.edge.length
 		other = list(set(children)-{c})
 		break
-other[0].edge.label = None
-other[0].edge.length = None
+other[0].edge.label =  tmplabel
+other[0].edge.length = tmplabel
 tree.write(path=sys.argv[1]+".out",schema= "newick",
         suppress_internal_taxon_labels=False,
         suppress_internal_node_labels=False,

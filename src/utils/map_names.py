@@ -36,6 +36,7 @@ class generateNewQuartFreq(object):
             edgeMap[side1Str] = edge.length
             edgeMap[side2Str] = edge.length
         self.edgeMap = edgeMap
+	print self.edgeMap
 
 
     def getClades(self, bipartquad1):
@@ -141,7 +142,10 @@ class generateNewQuartFreq(object):
                     bipart1.append(str(int(self.edgeMap[bipart])))
                 elif set(otherSide).issubset(mainotherSide):
                     bipart = ",".join(otherSide)
-                    bipart2.append(str(int(self.edgeMap[bipart])))
+		    print self.edgeMap
+		    print bipart
+		    print self.edgeMap[bipart]
+            	    bipart2.append(str(int(self.edgeMap[bipart])))
             if bipart1[0]<bipart1[1]:
                 bipart1String = bipart1[0]+","+bipart1[1]
             else:
