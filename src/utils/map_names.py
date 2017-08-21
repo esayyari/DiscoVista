@@ -6,13 +6,12 @@ import dendropy
 
 class generateNewQuartFreq(object):
 
-    def __init__(self,nameFile,anotFile, freqStatFile, outFile, name, treeFile):
+    def __init__(self,nameFile,anotFile, freqStatFile, outFile, treeFile):
         self.nameFile = nameFile
         self.anotFile = anotFile
         self.freqStatFile = freqStatFile
         self.outFile = outFile
         self.treeFile = treeFile
-        self.name = name
         self.g = open(self.outFile,'w')
         self.tree = dendropy.Tree.get(path=self.treeFile, schema="newick", rooting="force-rooted")
 
@@ -198,15 +197,14 @@ class generateNewQuartFreq(object):
             print >> self.g, "\t".join(Linet[2]) + "\t" + "t2"
             print >> self.g, "\t".join(Linet[1]) + "\t" + "t3"
 if __name__ == "__main__":
-    if (len(sys.argv)<7):
-        print "USAGE: " + sys.argv[0] + " NameFiles Anotation freqStat Outfile Name Tree"
+    if (len(sys.argv)<6):
+        print "USAGE: " + sys.argv[0] + " NameFiles Anotation freqStat Outfile Tree"
         exit(1)
     namesFile = sys.argv[1]
     anotFile = sys.argv[2]
     freqStatFile = sys.argv[3]
     outFile = sys.argv[4]
-    name = sys.argv[5]
-    treeList = sys.argv[6]
-    generateFreq = generateNewQuartFreq(namesFile, anotFile, freqStatFile, outFile, name, treeList)
+    treeList = sys.argv[5]
+    generateFreq = generateNewQuartFreq(namesFile, anotFile, freqStatFile, outFile, treeList)
     generateFreq.generate_new_freqStat()
 

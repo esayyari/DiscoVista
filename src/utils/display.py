@@ -4,10 +4,17 @@ import dendropy
 import sys
 import os
 import re
+import random
+
+random.seed(a=885456)
 
 
 tree = dendropy.Tree.get(path=sys.argv[1],schema="newick",rooting="default-rooted")
-outgroup = sys.argv[2]
+if (len(sys.argv)>2):
+	outgroup = sys.argv[2]
+else:
+	outgroupNode = random.sample(tree.leaf_nodes(),1)[0]
+	outgroup = outgroupNode.taxon.label
 outgroup_node = tree.find_node_with_taxon_label(outgroup)
 new_root = tree.reroot_at_edge(outgroup_node.edge,suppress_unifurcations=True)
 I = set()

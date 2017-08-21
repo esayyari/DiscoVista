@@ -2,7 +2,6 @@
 
 echo "USAGE: [PATH] [annotation] [names] [OUTDIR] [label] [outgroup]"
 
-
 name=main
 pth=$1
 
@@ -12,8 +11,12 @@ annot=$2
 names=$3
 out=$4
 name="main"
-
-outgroup=$5
+if [ "$#" -eq "5" ]; then
+	
+	outgroup=""
+else
+	outgroup=$5
+fi
 
 d=$(dirname $species)
 
@@ -64,19 +67,26 @@ cp $d/$name-uncollapsed.tre-collapsed.tre $d/$name.tre
 
 sed -i  "s/)'N\([0-9][0-9]*\)[^']*'/)N\1/g" $d/$name.tre
 
-nw_reroot $d/$name.tre "$outgroup" > $d/$name.tre.rerooted
+if [ "$outgroup" != "" ]; then
+	nw_reroot $d/$name.tre "$outgroup" > $d/$name.tre.rerooted
+	mv $d/$name.tre.rerooted $d/$name.tre
+fi
 
-mv $d/$name.tre.rerooted $d/$name.tre
+
 
 printf "$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre\n"
 
-$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre $outgroup
+if [ "$outgroup" != "" ]; then
+	$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre $outgroup
+else
+	$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre
+fi
 
 #nw_display -S -s $d/$name.tre.out > $d/$name.svg
 
 printf  "python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out\n"
 
-python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $outgroup $d/$name.tre.out
+python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out
 
 cd $d
 

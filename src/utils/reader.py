@@ -91,10 +91,7 @@ class Opt(object):
 	label = options.label
 	if not os.path.exists(label):
 	    os.makedirs(label)
-	if mode == 5 and not options.outg:
-                parser.print_help()
-                sys.exit("Please enter the outgroup name (e.g Outgroup or Base")
-        elif mode == 5:
+        elif mode == 5 and options.outg:
                 outg = options.outg
         else:
                 outg = ""

@@ -22,9 +22,8 @@ tc=dcast(data=fcg[],formula=SEQUENCE+variable~.,fun.aggregate=mean)
 names(tc)<-c("SEQUENCE","variable","value")
 
 pdf("figures/pTpP_GC_point.pdf",width=12,height=5)
-p <- qplot(reorder(SEQUENCE,value),value,data=tc,geom="point", color=variable,
-           group=variable,xlab="")+
-  theme(axis.text.x = element_text(angle = 90, hjust=1))+scale_color_brewer(name="",palette = "RdBu")
+p <- ggplot(aes(reorder(SEQUENCE,value),value,color=variable,group=variable),data=tc)+geom_point()+xlab("")+
+  theme_bw()+theme(axis.text.x = element_text(angle = 90,hjust=1))+scale_color_brewer(name="",palette = "RdBu")
 print(p)
 dev.off()
 
