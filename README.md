@@ -246,6 +246,12 @@ docker run -v <absolute path to data folder>:/data esayyari/discovista discoVist
 
 
 ### 6. Relative frequencey analysis
+DiscoVista can show frequency of all three topologies around some focal branches of the infered species trees. These figures can be used to test amount of ILS, as well as if the conditions of ILS are met or not. Before describing the inputs and outputs of this analysis note that this analysis depends on DiscoVista branch of [ASTRAL](https://github.com/smirarab/ASTRAL/tree/DiscoVista), and in future version we will merge it with the master branch of ASTRAL. If you don’t want to deal with installation difficulties you would simply use DiscoVista docker image.
+
+In order to run this analysis you need a folder (“-p”) under which you have your estimated species tree (with the name estimated_species_tree.tree) and your gene trees all in one file (with the name estimated_gene_trees.tree). For example, in the 1KP folder we have an estimated gene tree that has 844 genes in it. The rooting of them is not important. You need the output folder (“-o”), and you need an annotation file (“-a”) where you have one line per each species which assigns each species to a major split (clade) separated by tabs. There is an optional feature (“-g”) that you might specify the root of the tree you expect from your splits to it as well, e.g. Base or Outgroup.
+
+
+The output will be similar figures to what we have under the results folder of examples. But it will generate 4 different figures. One of them is named tree.pdf which has 4 different ways of showing your summarized species tree based on your annotation file, and are your guide trees. Then we have the relativeFreq.pdf, which shows the frequency of three topologies around each focal internal branches of your summarized species tree. Here are example commands to run this analysis:
 
 ~~~bash
 ./discoVista.py -p $path -m 5 -a parameter/annotation-hypo.txt -o $path/results  -g Outgroup
