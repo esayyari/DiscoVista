@@ -91,7 +91,8 @@ class Opt(object):
 	label = options.label
 	if not os.path.exists(label):
 	    os.makedirs(label)
-        elif mode == 5 and options.outg:
+
+        if mode == 5 and options.outg:
                 outg = options.outg
         else:
                 outg = ""

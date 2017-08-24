@@ -33,7 +33,6 @@ def remove_edges_from_tree(*arg):
         edges = set(tree.edges(filt))
         print >>sys.stderr, len(edges), "edges will be removed"
         for e in edges:
-	    print e.label
             e.collapse()
         if strip_internal:
             for n in tree.internal_nodes():
@@ -197,7 +196,6 @@ def _ss(data):
 def pstdev(data):
     """Calculates the population standard deviation."""
     n = len(data)
-    print(n)
     if n < 1:
         raise ValueError('variance requires at least two data points')
     elif n == 1:

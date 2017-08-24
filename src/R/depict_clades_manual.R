@@ -10,12 +10,12 @@ setwd("/Users/erfan/Main/oasis/Insects/genes/")
 
 print(getwd())
 
-new.clades = read.csv("../newOrders.txt1",  sep="\t", header = F)
+new.clades = read.csv("../parameters/newOrders.txt",  sep="\t", header = F)
 
 
   MS = F
   ST = F
-  cl=read.csv("../clade-defs.txt",header=T,sep="\t")
+  cl=read.csv("../parameters/clade-defs.txt",header=T,sep="\t")
   names(cl)<-c("V1","V2","V3",names(cl)[4:length(cl)])
   depict = paste(WS_HOME,"/DiscoVista/src/R/main_depict_clades.R", sep="")
   source(depict)
@@ -31,26 +31,26 @@ new.clades = read.csv("../newOrders.txt1",  sep="\t", header = F)
     data$countes.melted$M<-data$countes.melted$DS
     data$y$M<-data$y$DS
     
-    data$y$M<-gsub(pattern = "FAA_", replacement="", x=data$y$M)
-    data$y$Th<-data$y$M
-    data$y$Th<-gsub(pattern = ".*_raxml",replacement ="RAxML",x=data$y$Th)
-    data$y$Th[grep(pattern = "^RAxML",x=data$y$Th,invert=T)]<-"FastTree"
-    data$y$M<-gsub(pattern = "_raxml",replacement="",x=data$y$M)
-    
-    data$countes.melted$M<-gsub(pattern = "FAA_", replacement="", x=data$countes.melted$M)
-    data$countes.melted$Th<-data$countes.melted$M
-    data$countes.melted$Th<-gsub(pattern = ".*_raxml",replacement ="RAxML",x=data$countes.melted$Th)
-    data$countes.melted$Th[grep(pattern = "^RAxML",x=data$countes.melted$Th,invert=T)]<-"FastTree"
-    data$countes.melted$M<-gsub(pattern = "_raxml",replacement="",x=data$countes.melted$M)
-    
+    # data$y$M<-gsub(pattern = "FNA2AA_", replacement="", x=data$y$M)
+    # data$y$Th<-data$y$M
+    # data$y$Th<-gsub(pattern = ".*_raxml",replacement ="RAxML",x=data$y$Th)
+    # data$y$Th[grep(pattern = "^RAxML",x=data$y$Th,invert=T)]<-"FastTree"
+    # data$y$M<-gsub(pattern = "_raxml",replacement="",x=data$y$M)
+    # 
+    # data$countes.melted$M<-gsub(pattern = "FNA2AA_", replacement="", x=data$countes.melted$M)
+    # data$countes.melted$Th<-data$countes.melted$M
+    # data$countes.melted$Th<-gsub(pattern = ".*_raxml",replacement ="RAxML",x=data$countes.melted$Th)
+    # data$countes.melted$Th[grep(pattern = "^RAxML",x=data$countes.melted$Th,invert=T)]<-"FastTree"
+    # data$countes.melted$M<-gsub(pattern = "_raxml",replacement="",x=data$countes.melted$M)
+    # 
     data$countes.melted$M<-as.factor(data$countes.melted$M)
     data$countes.melted$Th<-as.factor(data$countes.melted$Th)
     data$y$M<-as.factor(data$y$M)
     data$y$Th<-as.factor(data$y$Th)
     
-    sizes = c(12,6)
+    sizes = c(6,12)
     
-    pdf("figures/Monophyletic_Bargraphs_Porportion.pdf",width=sizes[1],height=sizes[2])
+    pdf("Monophyletic_Bargraphs_Porportion.pdf",width=sizes[1],height=sizes[2])
     xfont = 10
     titlefont = 12
     d.c.m<-data$countes.melted
@@ -60,9 +60,10 @@ new.clades = read.csv("../newOrders.txt1",  sep="\t", header = F)
     levels(x$M) <- list("No-Filtering"="no_filtering","33% Filtering"="33","50% Filtering"="50","66% Filtering"="66")
     # x$M <- factor(x$M,levels=c("no_filtering","33","50","66"))
     x$Th<- factor(x$Th,levels=c("RAxML","FastTree"))
-    p1 <- ggplot(x[x$M %in% c("No-Filtering","50% Filtering"),], aes(x=CLADE, y = value, fill=Classification) , main="Support for each clade") + xlab("") + ylab("Proportion of relevant gene trees") + 
+    p1 <- ggplot(x, aes(x=CLADE, y = value, fill=Classification) , main="Support for each clade") + xlab("") + ylab("Proportion of relevant gene trees") + 
       geom_bar(position="fill",stat="identity",colour="black") +
-      facet_grid(M~Th,scales="free_y") + theme_bw()+ 
+      facet_grid(DS~.,scales="free_y") + 
+      theme_bw()+ 
       geom_hline(aes(yintercept=.25),size=0.8,color="red")+
       geom_hline(aes(yintercept=.5),size=0.8,color="red")+
       theme(axis.text.x = element_text(size=xfont,angle = 90,hjust=1,color="black")

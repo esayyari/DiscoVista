@@ -29,7 +29,7 @@ def get_support_from_bipartition(tree, clade, mult):
 
 
 	if e.label is None:
-		print e2, e2.label, e2.length, e.label, e.length
+		#print e2, e2.label, e2.length, e.label, e.length
 		return (e2.label,e2.length)
 	else:
 		return (e.label, e.length)
@@ -39,10 +39,12 @@ class Mono(object):
         self.allclades = dict()
         self.clades = dict()
         self.clade_comps = dict()
+	self.othercomps = dict()
         self.alltaxa = taxa
         self.letters = dict()
         self.outFile = outFile
         self.show = dict()
+	self.c = 1
     def print_result(self, treeName, keyword, bipartition, lst, tree, ofile, mult, clade):
         ln = "_".join([str(l) for l in lst]) if type(lst) == ListType else lst
         letter = self.letters[ln]
@@ -92,16 +94,30 @@ class Mono(object):
 
     def analyze_clade(self,name, clade, comps, tree, treeName, mult, allBiparts):
         ofile = open(self.outFile,'a+')
+	#allTaxa = tree.leaf_nodes()
+	#allTaxaLabels = {t.taxon.label for t in allTaxa}
         taxa = get_present_taxa(tree, clade)
+	otherTaxaLabel = self.alltaxa - set(clade)
         taxaLabel = {t.label for t in taxa }
+	otherSideTaxa = get_present_taxa(tree, otherTaxaLabel)
+	othercomps = self.othercomps[name]
+	otherTaxaLabel = {t.label for t in otherSideTaxa}
         if comps:
             for comp in comps:
                 if not set(self.allclades[comp]) & taxaLabel:
                     self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
                     return
+	if othercomps:
+	    #print "othercomps", othercomps
+	    for comp in othercomps:
+		if not set(self.allclades[comp]) & otherTaxaLabel:
+		    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
+		    return	 
         #print len(taxa), len(clade)
-        if len(taxa) < 2:
+        if len(taxa) < 2 or len(otherSideTaxa) < 2:
             self.print_result(treeName, "NO_CLADE", None, name, tree, ofile, mult, clade)
+	    if len(otherSideTaxa) < 2:
+	    	print tree.leaf_nodes(), taxa, taxaLabel, otherSideTaxa, otherTaxaLabel, tree
         else:
             self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile, mult, allBiparts)
         ofile.close()
@@ -110,6 +126,7 @@ class Mono(object):
 		nd.edge.label = nd.label
 	tree_tmp = tree.clone(depth=1)
 	allBiparts = [ t.compile_split_bitmask() for t in tree_tmp.encode_bipartitions(is_bipartitions_mutable = True) ]
+	self.alltaxa = set(self.allclades["All"])
         for k, v in self.allclades.items():
             if self.show[k] == 1:
                 if k in self.clade_comps:
@@ -151,6 +168,10 @@ class Mono(object):
             else:
                 show = 1
 
+	    if len(r)>=6:
+                othercomponents=r[5].strip().split("+") if r[5] != "" else []
+            else:
+                othercomponents=[]
             name = r[0]
             if len(r)>=4:
                 self.letters[name] = r[2]
@@ -160,6 +181,10 @@ class Mono(object):
             if r[3] != "None":
                 self.clades[name] = clade
                 self.clade_comps[name] = components
+	    if len(r)>=6 and r[5] != "None":
+		self.othercomps[name] = othercomponents
+	    elif len(r)<6:
+		self.othercomps[name] = othercomponents
             self.show[name] = show
 def getTaxa(cladeFiles):
 	
@@ -179,14 +204,15 @@ def main(*arg):
     cladesFile = arg[1]
     outFile = arg[2]
     mult = float(arg[3])
-    print mult
+
     taxa = getTaxa(cladesFile)
-    print taxa
-#    taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
+    #taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())
+    #print taxa
     mono = Mono(taxa, outFile)
     mono.read_clades(cladesFile)
+    
     for fileName in arg[4:][0].split(' '):
-        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-rooted")
+        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted")
         labelsSet = set(t.label for t in trees.taxon_namespace)
         namemismatch = labelsSet - taxa
         if namemismatch:
@@ -196,17 +222,16 @@ def main(*arg):
         for i, tree in enumerate(trees):
             treeName = "%s_%s" % (fileName, i)
             mono.analyze(tree, treeName, mult)
-
 if __name__ == '__main__':
     namesFile = sys.argv[1]
     cladesFile = sys.argv[2]    
     outFile = sys.argv[3]
-    getTaxa(cladesFile)
-    taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())	
+    taxa = getTaxa(cladesFile)
+    #taxa = set(x.split('\t')[0].strip() for x in open(namesFile).readlines())	
+    #print taxa
     mono = Mono(taxa, outFile)
     mono.read_clades(cladesFile)
     for fileName in sys.argv[4:]:
-        print fileName    
         trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted")
         labelsSet = set(t.label for t in trees.taxon_namespace)
         namemismatch = labelsSet - taxa

@@ -98,7 +98,9 @@ class Analyze(object):
             multiplier = 100.
         else:
             multiplier = 1.0
+	
         find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
+	
         find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
         f = open(outFile,'r')

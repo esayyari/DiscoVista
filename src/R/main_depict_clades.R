@@ -219,7 +219,7 @@ metabargraph2 <- function (d.c.m, y,sizes=c(15,19)){
   d.c.m.colors <- array(clade.colors[levels(droplevels(x$Classification))])
   p1 <- ggplot(x, aes(x=CLADE, y = value, fill=Classification) , main="Support for each clade") + xlab("") + ylab("Proportion of relevant gene trees") + 
     geom_bar(position="fill",stat="identity",colour="black") + facet_wrap(~DS,scales="free_y",ncol=1) + theme_bw()+ 
-    theme(axis.text.x = element_text(size=xfont,angle = 90,hjust=1),axis.text.y = element_text(size=xfont, hjust=1), legend.position="bottom", legend.direction="horizontal", legend.text = element_text(size=xfont),axis.title=element_text(size=titlefont)) + 
+    theme(axis.text.x = element_text(size=xfont,color='black',angle = 90,hjust=1),axis.text.y = element_text(size=xfont,color='black', hjust=1), legend.position="bottom", legend.direction="horizontal", legend.text = element_text(size=xfont),axis.title=element_text(size=titlefont)) + 
     scale_fill_manual(name=element_blank(), values=d.c.m.colors)  + scale_x_discrete(drop=FALSE)
   
   print(p1)
@@ -232,7 +232,7 @@ metabargraph <- function (d.c.m, y,sizes=c(15,19)){
   d.c.m.colors <- array(clade.colors[levels(droplevels(d.c.m$Classification))])
   p1 <- ggplot(d.c.m, aes(x=CLADE, fill=Classification) , main="Support for each clade") + xlab("") + ylab("Number of Gene Trees") + 
     geom_bar(aes(y = value),stat="identity",colour="black") + facet_wrap(~DS,scales="free_y",ncol=1) + theme_bw()+ 
-    theme(axis.text.x = element_text(size=10,angle = 90,hjust=1),legend.position="bottom", legend.direction="horizontal") + 
+    theme(axis.text.x = element_text(size=10,color='black',angle = 90,hjust=1),legend.position="bottom", legend.direction="horizontal", axis.text.y = element_text(size=10,color='black',hjust=1)) + 
     scale_fill_manual(name=element_blank(), values=d.c.m.colors)  + scale_x_discrete(drop=FALSE)
   
   print(p1)
