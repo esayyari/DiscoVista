@@ -149,12 +149,13 @@ Here are the example outputs of the:
 
 [species-shade]: example/figures/species/FNA2AA.block-shades.png ""
 
-In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods reported in two different closely related datasets. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted
+In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods of  previously published dataset of plants (Wickett, et al., 2014, PNAS). The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted
 
 ![alt text][species]
 
 [species]: example/figures/species/FNA2AA.block.png ""
 
+In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods of  previously published dataset of plants (Wickett, et al., 2014, PNAS). The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
 * Using docker:
 
 ```bash
@@ -195,6 +196,21 @@ To perform discordance analysis on gene trees, you need gene trees with the MLBS
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -m 1 -c /data/parameter/clades-def.txt -p $path -t 75  -o $path/results 
 ```
 
+Here are some example outputs of this analysis:
+
+![alt text][gt-portion]
+
+[gt-portion]: example/figures/genetrees/Monophyletic_Bargraphs_Porportion.png ""
+
+This figure shows the portion of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected. Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted.
+
+
+![alt text][gt]
+
+[gt]: example/figures/genetrees/Monophyletic_Bargraphs.png ""
+
+This figure shows the number of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected or are missing of three model conditions of previously published dataset of plants (Wickett, et al., 2014, PNAS). Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted. 
+
 
 ### 3. GC content analysis
 * GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species for each codon position separately. This might not be true for the third codon, which suggests removing the third codon position might help gene tree inferences.
@@ -209,6 +225,17 @@ docker run -v <absolute path to data folder>:/data esayyari/discovista discoVist
 ```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 2 -o $path/results 
 ```
+
+Here are some example outputs of this analysis:
+
+
+![alt text][gcpt]
+
+[gcpt]: example/figures/GC/pTpP_GC_point.png ""
+
+This figure shows the portion of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected. Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted.
+
+
 
 ### 4. Occupancy analysis
 * To see the occupancy of different species or clades in different genes you would use this analysis. 
