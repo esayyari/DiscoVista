@@ -11,17 +11,17 @@ Since DiscoVista has several dependencies and installation might be difficult an
 * Install docker following the instractures for [Mac](https://docs.docker.com/docker-for-mac/install/), [Windows](https://docs.docker.com/docker-for-windows/install/), [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/). If you have other operating systems please look at [here](https://www.docker.com/community-edition) for more details.  
 * After installation and running the docker, you should pull docker with this command inside a terminal:
 
-~~~bash
+```bash
 docker pull esayyari/discovista
-~~~
+```
 
 This will pull the image.
 
 * Then you can run DiscoVista following this command:
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py [OPTIONS]
-~~~
+```
 
 By using "-v" we mount the data folder to /data folder inside the container, and all the changes and figures that DiscoVista creates will be available inside this folder. Also note that, __\<absolute path to data folder\>__ is an aboslute path, and program assumes that data is mounted under __/data__ inside container. We will talk about the proper set of options later. 
 
@@ -38,22 +38,22 @@ After installing R, there are some R packages that you need to install at this s
 
 To install these packages you need to use the following command in R:
 
-~~~R
+```R
 install.packages(c("Reshape","Reshape2","ggplot2","plyr","scales","ape","optparse"))
-~~~
+```
 
 ## Python dependency
 You need to install __DendroPy>=4.2.0__ as well. In Mac or Linux, you would use __pip__ to install DendroPy. If you have root access, you could use:
 
-~~~bash
+```bash
 sudo pip install dendropy
-~~~
+```
 
 otherwise, you would install dendropy with the command:
 
-~~~bash
+```bash
 pip install dendropy --user
-~~~
+```
 
 ## Other dependencies
 DiscoVista relies on two other softwares for performing its analyses as well. The first one is [newick utilities](http://cegg.unige.ch/newick_utils), and the other one is [ASTRAL-DiscoVista](https://github.com/smirarab/ASTRAL/tree/DiscoVista). Please install newick utilities, and add them to your __PATH__. Also, please put your ASTRAL folder under __WS\_HOME__, the same folder that DiscoVista lives. 
@@ -66,7 +66,7 @@ There is a sample dataset and the corresponding [result](https://github.com/esay
 
 The main utility to run these analyses is __discoVista.py__. To use this utility in bash you would use: 
 
-~~~
+```bash
 Usage: discoVista.py [options]
 
 Options:
@@ -102,7 +102,7 @@ Options:
                         Name of the outgroup for the hypothesis in relative
                         frequency analysis specified in the annotation file,
                         eg. Outgroup or Base.
-~~~ 
+``` 
 
 There are some files that you need to run these analyses. Note that some of these parameter files might not be needed for some of analyses. <a name="somefiles"></a>
 
@@ -122,9 +122,9 @@ Clade definition file has different columns. The column names are: __Clade Name_
 
 Also, there is the python code **generate_clade-defs.py** that could be used to generate the clade definition file from the annotation file. You would use it using the command:
 
-~~~bash
+```bash
 generate_clade-defs.py [annotation file] [outputfile] [important branches file]
-~~~
+```
 
 In important branches file, you could define other important branches of the expected tree. Let's say that we have two clades **A**, and **B**, and you are interested in the branch that separates **AB** from others. Then you would define it with **A+B** in this file.
 
@@ -139,28 +139,28 @@ To perform discordance analysis on species trees, you need gene trees with the M
 
 * Let's assume that the MLBS values are drawn on branches of the species tree available at path **\<path\>**, and there are 3 model conditions, RAxML\_highly\_filtered-NA, RAxML\_med\_filtered-NA, and RAxML\_highly\_filtered-NA. Also, assume that you consider branches with MLBS above 95 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
 
-~~~bash
+```bash
 ./discoVista.py -m 0 -c clades-def.txt -p $path -t 95 -o $path/results 
-~~~
+```
 
 * Using docker:
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py discoVista.py -m 0 -c clades-def.txt -p $path -t 95 -o $path/results 
-~~~
+```
 
 
 * If you are using local posterior probabilities instead of MLBS, and let's assume that the branches above the threshold of 0.95 considered as highly supported branches, then you would use the software with:
 
-~~~bash
+```bash
 ./discoVista.py -m 0  -c parameter/clades-def.txt -p $path  -t 0.95 -o $path/results 
-~~~
+```
 
 *  Using docker:
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -m 0 -c /data/parameter/clades-def.txt -p $path  -t 0.95 -o $path/results 
-~~~
+```
 
 
 ### 2. Discordance analysis on gene trees
@@ -173,76 +173,76 @@ To perform discordance analysis on gene trees, you need gene trees with the MLBS
 
 * Let's assume that the MLBS values are drawn on branches of the gene trees of model condition RAxML\_highly\_filtered-NA available at path **path**. Also, assume that you consider branches with MLBS above 75 as highly supported branches, and the code will contract branches below that. Then you would call the software in bash using the following command:
 
-~~~bash
+```bash
 ./discoVista.py -m 1 -c parameter/clades-def.txt -p $path -t 75 -o $path/results 
-~~~
+```
 
 * Using docker:
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -m 1 -c /data/parameter/clades-def.txt -p $path -t 75  -o $path/results 
-~~~
+```
 
 
 ### 3. GC content analysis
 * GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species for each codon position separately. This might not be true for the third codon, which suggests removing the third codon position might help gene tree inferences.
 * For GC content analysis use this structure **path/GENE_ID/DST-alignment-noFilter.fasta**, where **DST** defines the data sequence type (e.g FNA, NA, etc.), and DST-alignment-noFilter.fasta is the original sequence alignment without filtering. Please use the following command in bash:
 
-~~~bash
+```bash
 ./discoVista.py -p $path -m 2 -o $path/results 
-~~~
+```
 
 * Using docker:
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 2 -o $path/results 
-~~~
+```
 
 ### 4. Occupancy analysis
 * To see the occupancy of different species or clades in different genes you would use this analysis. 
 * For this analysis use this structure to have the sequence alignments, **path/GENE\_ID/DST-alignment-MODEL\_CONDITION.fasta**, where **MODE\_CONDITION** defines the model condition that the sequence is generated based on. Then you would use this command:
- 
-~~~bash
+
+```bash
  ./discoVista.py -p $path -m 3 -a parameter/annotation.txt -o $path/results 
-~~~
+```
  
  * Using docker:
 
   
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 3 -a /data/parameter/annotation.txt -o $path/results 
-~~~
+```
  
 * If you want to have a tile graph that describes the occupancy of species for only one model condition you would use the option **-x DST-model\_condition**. For example, if you are interested in the occupancy map of your data and you used FNA as your DST in your directory names, and the model condition is noFiltered, then you can use this command: 
  
-~~~bash
+```bash
  ./discoVista.py -p $path -m 3 -a parameter/annotation.txt -x FNA-noFiltered -o $path/results 
-~~~
+```
 
 * Using docker
 
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 3 -a /data/parameter/annotation.txt -x FNA-noFiltered -o $path/results 
-~~~
+```
  
 
 ### 5. Branch support vs branch length analysis
 * This analysis shows the correlation between the average of average gene MLBS values and average of average and maximum gene branch lengths for analyzing the long branch attraction and the effects of different inference methods on the reliability of gene trees. 
 * First, organize gene trees using this structure **path/MODEL\_CONDITION/DST-estimated\_gene\_trees.tree**, where all estimated gene trees for the model condition are concatenated. Let's say that you have 3 model conditions, noFiltered, medFiltered, and highFiltered and you use FNA as your DST, then you would use the following code:
 
-~~~bash
+```bash
 ./discoVista.py -p $path -m 4  -r parameter/rootingDef.txt -o $path/results 
-~~~
+```
 
 * Using docker:
 
 * Using bash
 
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 4  -r /data/parameter/rootingDef.txt -o $path/results 
-~~~
+```
 
 
 ### 6. Relative frequencey analysis
@@ -253,14 +253,14 @@ In order to run this analysis you need a folder (“-p”) under which you have 
 
 The output will be similar figures to what we have under the results folder of examples. But it will generate 4 different figures. One of them is named tree.pdf which has 4 different ways of showing your summarized species tree based on your annotation file, and are your guide trees. Then we have the relativeFreq.pdf, which shows the frequency of three topologies around each focal internal branches of your summarized species tree. Here are example commands to run this analysis:
 
-~~~bash
+```bash
 ./discoVista.py -p $path -m 5 -a parameter/annotation-hypo.txt -o $path/results  -g Outgroup
-~~~
+```
 
 using docker:
 
-~~~bash
+```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 5  -a /data/parameter/annotation-hypo.txt -o $path/results -g Outgroup
-~~~
+```
 ## Bug Reports
 Please contact esayyari@ucsd.edu.
