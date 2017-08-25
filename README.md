@@ -147,7 +147,7 @@ Here is the example:
 
 ![alt text][species-shade]
 
-[species-shade]: example/figures/species/FNA2AA.block-shades.pdf "DiscoVista Specie tree analysis: Rows correspond to major orders and clades, and columns correspond to the results of di↵erent methods reported in two di↵erent closely related datasets. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
+[species-shade]: example/figures/species/FNA2AA.block-shades.png "DiscoVista Specie tree analysis: Rows correspond to major orders and clades, and columns correspond to the results of di↵erent methods reported in two di↵erent closely related datasets. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
 "
 
 * Using docker:
