@@ -151,7 +151,7 @@ Here are the example outputs of the:
 
 In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods reported in two different closely related datasets. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted
 
-![alt text][species]
+![alt text2][species]
 [species]: example/figures/species/FNA2AA.block.png ""
 
 * Using docker:
