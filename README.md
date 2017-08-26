@@ -143,12 +143,6 @@ To perform discordance analysis on species trees, you need gene trees with the M
 ./discoVista.py -m 0 -c clades-def.txt -p $path -t 95 -o $path/results 
 ```
 
-Here is the example:
-
-![alt text][species-shade]
-
-[species-shade]: example/figures/species/FNA2AA.block-shades.png "DiscoVista Specie tree analysis: Rows correspond to major orders and clades, and columns correspond to the results of di↵erent methods reported in two di↵erent closely related datasets. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
-"
 
 * Using docker:
 
@@ -168,6 +162,21 @@ docker run -v <absolute path to data folder>:/data esayyari/discovista discoVist
 ```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -m 0 -c /data/parameter/clades-def.txt -p $path  -t 0.95 -o $path/results 
 ```
+
+
+Here are the example outputs of the:
+
+![alt text][species-shade]
+
+[species-shade]: example/figures/species/FNA2AA.block-shades.png ""
+
+In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods of  previously published dataset of plants (Wickett, et al., 2014, PNAS). The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Note that we have the results of one species tree with Bayesian support values instead of MLBS values, and the support values are not directly comparable. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted
+
+![alt text][species]
+
+[species]: example/figures/species/FNA2AA.block.png ""
+
+In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods of  previously published dataset of plants (Wickett, et al., 2014, PNAS). Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
 
 
 ### 2. Discordance analysis on gene trees
@@ -190,6 +199,22 @@ To perform discordance analysis on gene trees, you need gene trees with the MLBS
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -m 1 -c /data/parameter/clades-def.txt -p $path -t 75  -o $path/results 
 ```
 
+Here are some example outputs of this analysis:
+
+![alt text][gt-portion]
+
+[gt-portion]: example/figures/genetrees/Monophyletic_Bargraphs_Porportion.png ""
+
+
+This figure shows the portion of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected for three model conditions of plants dataset (Wickett, et al., 2014, PNAS). FAA-filterlen33: gene trees on amino acids sequences, and fragmentary sequences removed (66% gaps or more) FNA2AA-f25: amino acid sequences back translated to DNA, and sequences on long branches (25X median branch length)removed; FNA2AA-filterlen33: amino acid sequences back translated to DNA, and fragmentary sequences removed (66% gaps or more). Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted.
+
+
+![alt text][gt]
+
+[gt]: example/figures/genetrees/Monophyletic_Bargraphs.png ""
+
+This figure shows the number of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected or are missing of three model conditions (same as above) of previously published dataset of plants (Wickett, et al., 2014, PNAS). Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted. 
+
 
 ### 3. GC content analysis
 * GC content analysis shows the ratio of GC content (to the number of A, C, G, T's) in first codon position, second codon position, third codon position, and all together across different species. For satisfying stationary assumption in DNA sequence evolution models, we expect that these ratios be close to identical across all species for each codon position separately. This might not be true for the third codon, which suggests removing the third codon position might help gene tree inferences.
@@ -204,6 +229,23 @@ docker run -v <absolute path to data folder>:/data esayyari/discovista discoVist
 ```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 2 -o $path/results 
 ```
+
+Here are some example outputs of this analysis:
+
+
+![alt text][gcpt]
+
+[gcpt]: example/figures/GC/pTpP_GC_point.png ""
+
+
+This figure corresponds to the GC content analysis of the 1kp dataset. Each dot shows the average GC content ratio for each species in all (red), first (pink), second (light blue), and third (dark blue) codon positions.
+
+![alt text][gcpt]
+
+[gcpt]: example/figures/GC/pTpP_GC_boxplot.png ""
+
+
+This figure corresponds to the GC content analysis of the 1kp dataset, using boxplots for first, second, third, as well as all three codon positions.
 
 ### 4. Occupancy analysis
 * To see the occupancy of different species or clades in different genes you would use this analysis. 
@@ -233,6 +275,24 @@ docker run -v <absolute path to data folder>:/data esayyari/discovista discoVist
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 3 -a /data/parameter/annotation.txt -x FNA-noFiltered -o $path/results 
 ```
  
+ 
+ 
+Here are some example outputs of this analysis:
+
+![alt text][occ]
+
+[occ]: example/figures/occupancy/occupancy.png ""
+
+This figure shows the occupancy analysis on the 1kp dataset over each individual species for two model conditions (described above). 
+
+
+ 
+![alt text][occ-clades]
+
+[occ-clades]: example/figures/occupancy/occupancy_clades.png ""
+
+
+This figure shows the occupancy analysis on the important splits of 1kp dataset over each individual species for two model conditions (described above). 
 
 ### 5. Branch support vs branch length analysis
 * This analysis shows the correlation between the average of average gene MLBS values and average of average and maximum gene branch lengths for analyzing the long branch attraction and the effects of different inference methods on the reliability of gene trees. 
@@ -269,5 +329,15 @@ using docker:
 ```bash
 docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py -p $path -m 5  -a /data/parameter/annotation-hypo.txt -o $path/results -g Outgroup
 ```
+
+
+![alt text][relfreq]
+
+[relfreq]: example/figures/relativeFreq/relativeFreq.png ""
+
+This figure corresponds to the DiscoVista relative frequency analysis on 1kp dataset considering 4 different hypotheses. Frequency of three topologies around focal internal branches of ASTRAL species trees using the trimmed gene trees (removing alignments with more than 66% gap characters) on first and second codon positions of amino acid alignments back translated to DNA in 1kp dataset. Main topologies are shown in red, and the other two alternative topologies are shown in blue. The dotted lines indicate the 1/3 threshold. The title of each subfigure indicates the label of the corresponding branch on the tree on the right (also generated by DiscoVista). Each internal branch has four neighboring branches which could be used to represent quartet topologies. On the x-axis the exact definition of each quartet topology is shown using the neighboring branch labels separated by “\#”.
+
+
+
 ## Bug Reports
 Please contact esayyari@ucsd.edu.
