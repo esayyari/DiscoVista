@@ -287,9 +287,7 @@ This figure shows the occupancy analysis on the 1kp dataset over each individual
 
 
  
-![alt text][occ-clades]
-
-[occ-clades]<p align="center"> 
+<p align="center"> 
 <img src="example/figures/occupancy/occupancy_clades.png">
 </p>
 
