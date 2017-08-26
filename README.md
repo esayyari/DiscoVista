@@ -289,7 +289,9 @@ This figure shows the occupancy analysis on the 1kp dataset over each individual
  
 ![alt text][occ-clades]
 
-[occ-clades]: example/figures/occupancy/occupancy_clades.png ""
+[occ-clades]<p align="center"> 
+<img src="example/figures/occupancy/occupancy_clades.png">
+</p>
 
 
 This figure shows the occupancy analysis on the important splits of 1kp dataset over each individual species for two model conditions (described above). 
