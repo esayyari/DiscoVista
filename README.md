@@ -240,9 +240,9 @@ Here are some example outputs of this analysis:
 
 This figure corresponds to the GC content analysis of the 1kp dataset. Each dot shows the average GC content ratio for each species in all (red), first (pink), second (light blue), and third (dark blue) codon positions.
 
-![alt text][gcpt]
+![alt text][gcbox]
 
-[gcpt]: example/figures/GC/pTpP_GC_boxplot.png ""
+[gcbox]: example/figures/GC/pTpP_GC_boxplot.png ""
 
 
 This figure corresponds to the GC content analysis of the 1kp dataset, using boxplots for first, second, third, as well as all three codon positions.
