@@ -31,12 +31,12 @@ class Opt(object):
         (options, args) = parser.parse_args()
         if not options.path:
             parser.print_help()
-            sys.exit("please enter the path to the gene directory")
+            sys.exit("please enter the path to data folder.")
 
         path = options.path
         if not options.mode:
             parser.print_help()
-            sys.exit("Please enter the mode. Do you want to summerize the species tree (0), or the gene trees (1)")
+            sys.exit("Please enter the mode. To summarize the species trees use 0. To summarize the gene trees use 1. To do GC content analysis use 2. To run occupancy analysis use 3. To run frequency analysis use 5.")
 
         mode = int(options.mode)
         if mode != 0 and mode != 1 and mode !=2 and mode != 3 and mode != 4 and mode != 5:
@@ -64,13 +64,13 @@ class Opt(object):
         if mode == 0 or mode == 1:
             if not options.clades:
                 parser.print_help()
-                sys.exit("Please enter the path to clade definitions")
+                sys.exit("Please enter the path to splits definitions")
 
             clades = options.clades
             clades = os.path.abspath(clades)
             if not os.path.isfile(clades):
                 parser.print_help()
-                sys.exit("Please check the path to the rooting definitions")
+                sys.exit("Please check the path to the splits definitions")
 
             if not options.thresh:
                 parser.print_help()
@@ -105,7 +105,7 @@ class Opt(object):
 	    annotation = os.path.abspath(annotation)
 	    if not os.path.isfile(annotation):
 	    	parser.print_help()
-	    	sys.exit("Please check the annotation file")
+	    	sys.exit("Please check the annotation path")
 	else:
 	    annotation = ""
 		
@@ -114,7 +114,7 @@ class Opt(object):
         path = os.path.abspath(path)
         if not os.path.exists(path):
             parser.print_help()
-            sys.exit("please check the path to the gene direcotry")
+            sys.exit("please check the path to data direcotry")
 	
 	newModel = options.newModel
 	newOrder = options.newOrder
