@@ -6,14 +6,17 @@ DiscoVista (Discordance Visualization Tool) is a software package for visualizin
 
 ### Installation using docker images:
 
-Since DiscoVista has several dependencies and installation might be difficult and time consuming, we are now adding a docker image linked to the [DiscoVista github repository](https://github.com/smirarab/ASTRAL/tree/DiscoVista). Docker is a software container platform, which could be used to solve version control, compatibility and complex installation procedure problems. With docker, you should first install [docker](https://www.docker.com), and then pull the docker image from the dockerhub, and then you are ready to use DiscoVista. This is the procedure to use DiscoVista with docker:
+Since DiscoVista has several dependencies, direct installation might be difficult and time consuming; therefore, we have created a docker image automatically linked to the [DiscoVista github repository](https://github.com/smirarab/ASTRAL/tree/DiscoVista).
 
-* Install docker following the instractures for [Mac](https://docs.docker.com/docker-for-mac/install/), [Windows](https://docs.docker.com/docker-for-windows/install/), [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/). If you have other operating systems please look at [here](https://www.docker.com/community-edition) for more details.  
+Docker is a software container platform (almost like a virtual machine system) that greatly simplifies installation. To use the docker installation of DiscoVista, you should first install [docker](https://www.docker.com) and then pull the docker image from the dockerhub. That is it; you will be ready to use DiscoVista. 
+
+Here is what you need to do:
+
+* Install docker following the instractures for [Mac](https://docs.docker.com/docker-for-mac/install/), [Windows](https://docs.docker.com/docker-for-windows/install/), or [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/). If you have other operating systems look [here](https://www.docker.com/community-edition) for more details.  
 * After installation and running the docker, you should pull docker with this command inside a terminal:
-
-```bash
+  ```bash
 docker pull esayyari/discovista
-```
+  ```
 
 This will pull the image.
 
