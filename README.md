@@ -1,6 +1,6 @@
 # DiscoVista
 
-DiscoVista (Discordance Visualization Tool) is a python and R-based software utility to analyze and visualize the phylogenetic information and gene discordances. 
+DiscoVista (Discordance Visualization Tool) is a software package for visualizing phylogenetic discordance. The package is writtent by Erfan Sayyari and Siavash Mirarab. 
 
 ## INSTALLATION:
 
