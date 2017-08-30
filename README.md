@@ -24,7 +24,7 @@ Here is what you need to do:
   ```
 By using `-v` we mount the data folder to /data folder inside the container, and all the changes and figures that DiscoVista creates will be available inside this folder. Also note that, `\<absolute path to data folder\>` is an aboslute path, and program assumes that data is mounted under `/data` inside container.
 
-### Difficault option (preferred): installation from source code:
+### Difficault option: installation from source code:
 The software package __DiscoVista__ depends on several R and python packages. You could install __DiscoVista__ in a couple of steps:
 
 * Clone to [__DiscoVista__](https://github.com/esayyari/DiscoVista) git repository or download [this](https://github.com/esayyari/DiscoVista/archive/master.zip) zip file.
@@ -34,8 +34,8 @@ The software package __DiscoVista__ depends on several R and python packages. Yo
 * Then you need to install the dependencies described below. 
 
 #### R dependencies
-DiscoVista uses R to do some postprocessing, and making figures. For more details regarding R and the installation instruction please see the following [link](https://www.r-project.org).
-After installing R, there are some R packages that you need to install at this step. The R package dependencies are: __Reshape__, __Reshape2__, __ggplot2__, __plyr__, __scales__, __ape__, and __optparse__.
+For instruction on installing R please see [this(https://www.r-project.org).
+After installing R, there are several R packages that you need to install. The R package dependencies are: __Reshape__, __Reshape2__, __ggplot2__, __plyr__, __scales__, __ape__, and __optparse__.
 
 To install these packages you need to use the following command in R:
 
@@ -44,7 +44,7 @@ install.packages(c("Reshape","Reshape2","ggplot2","plyr","scales","ape","optpars
 ```
 
 #### Python dependency
-You need to install __DendroPy>=4.2.0__ as well. In Mac or Linux, you would use __pip__ to install DendroPy. If you have root access, you could use:
+You need to install __DendroPy>=4.2.0__. In Mac or Linux, you would use __pip__ to install DendroPy. If you have root access, you could use:
 
 ```bash
 sudo pip install dendropy
@@ -57,7 +57,10 @@ pip install dendropy --user
 ```
 
 #### Other dependencies
-DiscoVista relies on two other softwares for performing its analyses as well. The first one is [newick utilities](http://cegg.unige.ch/newick_utils), and the other one is [ASTRAL-DiscoVista](https://github.com/smirarab/ASTRAL/tree/DiscoVista). Please install newick utilities, and add them to your __PATH__. Also, please put your ASTRAL folder under __WS\_HOME__, the same folder that DiscoVista lives. 
+DiscoVista relies on two other softwares for performing its analyses as well.
+
+* [newick utilities](http://cegg.unige.ch/newick_utils):  Please install newick utilities, and make sure its in the `PATH`.
+* [ASTRAL-DiscoVista](https://github.com/smirarab/ASTRAL/tree/DiscoVista). Please put your ASTRAL folder under `WS\_HOME`, the same folder where DiscoVista is placed. 
 
 ## Sample dataset
 
