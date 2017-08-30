@@ -46,17 +46,8 @@ d=`pwd`;
 
 cp $species-hypo.tre $d/$name-hypo.tre
 
-f=$(cat $WS_HOME/ASTRAL/.git/HEAD | grep -o "DiscoVista")
-if [ "$f" != "DiscoVista" ]; then
-	echo "please use branch DiscoVista with the command git checkout DiscoVista"
-	exit 1
-fi
-pushd .
-cd $WS_HOME/ASTRAL
-V=$(git ls-tree -r DiscoVista | grep "Astral.*zip" | awk '{print $NF}'| sed -e 's/Astral/astral/' | sed -e 's/.zip/.jar/')
-popd
 
-astral=$(find $WS_HOME/ASTRAL/$V)
+astral=$WS_HOME/DiscoVista/bin/astral.4.10.12.jar
 java -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.tre
 
 sed -i "s/)N\([0-9][0-9]*\)'/)'N\1/g" $d/$name-uncollapsed.tre
@@ -82,7 +73,6 @@ else
 	$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre
 fi
 
-#nw_display -S -s $d/$name.tre.out > $d/$name.svg
 
 printf  "python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out\n"
 
