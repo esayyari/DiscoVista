@@ -25,7 +25,7 @@ if "__main__" == __name__:
 
 
     parser.add_option("-m", "--mode", dest="mode",
-                      help="summerize gene trees or estimated species tree. To summerize species tree use 0.\n To summereize gene trees use 1\n. For GC stat analysis use 2.")
+                      help="Specifies the analysis to perform. \n To summarize species tree use 0.  To summarize gene \ntrees use 1 . For GC stat analysis use 2. For occupancy\n analysis use 3. For frequency analysis use 5.")
 
     parser.add_option("-p", "--path", dest="path",
                       help="path to the gene directory or species tree")
