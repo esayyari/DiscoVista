@@ -15,17 +15,13 @@ Here is what you need to do:
 * Install docker following the instractures for [Mac](https://docs.docker.com/docker-for-mac/install/), [Windows](https://docs.docker.com/docker-for-windows/install/), or [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/). If you have other operating systems look [here](https://www.docker.com/community-edition) for more details.  
 * After installation and running the docker, you should pull docker with this command inside a terminal:
   ```bash
-docker pull esayyari/discovista
+  docker pull esayyari/discovista
   ```
-
-This will pull the image.
-
+  This will pull the image.
 * Then you can run DiscoVista following this command:
-
-```bash
-docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py [OPTIONS]
-```
-
+  ```bash
+  docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py [OPTIONS]
+  ```
 By using "-v" we mount the data folder to /data folder inside the container, and all the changes and figures that DiscoVista creates will be available inside this folder. Also note that, __\<absolute path to data folder\>__ is an aboslute path, and program assumes that data is mounted under __/data__ inside container. We will talk about the proper set of options later. 
 
 ### Installation using source code:
