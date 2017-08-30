@@ -1,0 +1,52 @@
+Clade Name	Clade Definition	Section	Letter	Components	Show	Comments
+Base	"Entransia fimbriata+""Klebsormidium subtile""+""Chlorokybus atmophyticus""+""Spirotaenia minuta""+""Mesostigma viride""+""Pyramimonas parkeae""+""Monomastix opisthostigma""+""Nephroselmis pyriformis""+""Uronema sp"""	None		0	
+Zygnematophyceae	"Penium margaritaceum+""Cosmarium ochthodes""+""Roya obtusa""+""Netrium digitus""+""Spirogyra sp""+""Cylindrocystis cushleckae""+""Mougeotia sp""+""Cylindrocystis brebissonii""+""Mesotaenium endlicherianum"""	None		1	
+Coleochaetales	"Coleochaete irregularis+""Coleochaete scutata""+""Chaetosphaeridium globosum"""	None		1	
+Chara	Chara vulgaris	None		0	
+Nuphar	"""Nuphar advena"""	None		0	
+Amborela	"""Amborella trichopoda"""	None		0
+Chloranthales	"""Sarcandra glabra"""	None		0
+Ginkgo	"""Ginkgo biloba"""	None		0
+Cycads	"Cycas micholitzii+""Cycas rumphii""+""Zamia vazquezii"""	None		0
+Gnetales	"Welwitschia mirabilis+""Ephedra sinica""+""Gnetum montanum"""	None		1
+Anthocerophyta	"Nothoceros vincentianus+""Nothoceros aenigmaticus"""	None		0
+Marchantiophyta	"Marchantia emarginata+""Marchantia polymorpha""+""Ricciocarpos natans""+""Sphaerocarpos texanus""+""Metzgeria crassipilis""+""Bazzania trilobata"""	None		0
+Pinaceae	"Cedrus libani+""Pinus taeda"""	None		0	
+Eudicots	"Catharanthus roseus+""Allamanda cathartica""+""Ipomoea purpurea""+""Rosmarinus officinalis""+""Tanacetum parthenium""+""Inula helenium""+""Diospyros malabarica""+""Kochia scoparia""+""Carica papaya""+""Arabidopsis thaliana""+""Hibiscus cannabinus""+""Populus trichocarpa""+""Boehmeria nivea""+""Medicago truncatula""+""Larrea tridentata""+""Vitis vinifera""+""Podophyllum peltatum""+""Aquilegia formosa""+""Eschscholzia californica"""	None		0	
+Monocots	"Sabal bermudana+""Yucca filamentosa""+""Smilax bona nox""+""Colchicum autumnale""+""Dioscorea villosa""+""Acorus americanus""+""Zea mays""+""Sorghum bicolor""+""Brachypodium distachyon""+""Oryza sativa"""	None		0	
+Magnoliids	"Liriodendron tulipifera+""Persea americana""+""Houttuynia cordata""+""Saruma henryi"""	None		0	
+Coniferales minus Pinaceae	"""Cunninghamia lanceolata""+""Juniperus scopulorum""+""Taxus baccata""+""Sciadopitys verticillata""+""Prumnopitys andina"""	None		0
+Bryophyta	"Leucodon brachypus+""Anomodon attenuatus""+""Thuidium delicatulum""+""Rhynchostegium serrulatum""+""Bryum argenteum""+""Rosulabryum cf capillare""+""Hedwigia ciliata""+""Ceratodon purpureus""+""Physcomitrella patens""+""Polytrichum commune""+""Sphagnum lescurii"""	None		1
+Kadsura	"""Kadsura heteroclita"""	None		0	
+All	"Catharanthus roseus+""Allamanda cathartica""+""Ipomoea purpurea""+""Rosmarinus officinalis""+""Tanacetum parthenium""+""Inula helenium""+""Diospyros malabarica""+""Kochia scoparia""+""Carica papaya""+""Arabidopsis thaliana""+""Hibiscus cannabinus""+""Populus trichocarpa""+""Boehmeria nivea""+""Medicago truncatula""+""Larrea tridentata""+""Vitis vinifera""+""Podophyllum peltatum""+""Aquilegia formosa""+""Eschscholzia californica""+""Sarcandra glabra""+""Liriodendron tulipifera""+""Persea americana""+""Houttuynia cordata""+""Saruma henryi""+""Sabal bermudana""+""Yucca filamentosa""+""Smilax bona nox""+""Colchicum autumnale""+""Dioscorea villosa""+""Acorus americanus""+""Zea mays""+""Sorghum bicolor""+""Brachypodium distachyon""+""Oryza sativa""+""Kadsura heteroclita""+""Nuphar advena""+""Amborella trichopoda""+""Cunninghamia lanceolata""+""Juniperus scopulorum""+""Taxus baccata""+""Sciadopitys verticillata""+""Prumnopitys andina""+""Gnetum montanum""+""Welwitschia mirabilis""+""Ephedra sinica""+""Cedrus libani""+""Pinus taeda""+""Cycas rumphii""+""Cycas micholitzii""+""Zamia vazquezii""+""Ginkgo biloba""+""Psilotum nudum""+""Ophioglossum petiolatum""+""Angiopteris evecta""+""Pteridium aquilinum""+""Alsophila spinulosa""+""Equisetum diffusum""+""Dendrolycopodium obscurum""+""Pseudolycopodiella caroliniana""+""Huperzia squarrosa""+""Selaginella moellendorffii 1kp""+""Selaginella moellendorffii genome""+""Leucodon brachypus""+""Anomodon attenuatus""+""Thuidium delicatulum""+""Rhynchostegium serrulatum""+""Bryum argenteum""+""Rosulabryum cf capillare""+""Hedwigia ciliata""+""Ceratodon purpureus""+""Physcomitrella patens""+""Polytrichum commune""+""Sphagnum lescurii""+""Marchantia polymorpha""+""Marchantia emarginata""+""Ricciocarpos natans""+""Sphaerocarpos texanus""+""Bazzania trilobata""+""Metzgeria crassipilis""+""Nothoceros aenigmaticus""+""Nothoceros vincentianus""+""Penium margaritaceum""+""Cosmarium ochthodes""+""Roya obtusa""+""Netrium digitus""+""Spirogyra sp""+""Cylindrocystis cushleckae""+""Mougeotia sp""+""Cylindrocystis brebissonii""+""Mesotaenium endlicherianum""+""Coleochaete irregularis""+""Coleochaete scutata""+""Chaetosphaeridium globosum""+""Chara vulgaris""+""Entransia fimbriata""+""Klebsormidium subtile""+""Spirotaenia minuta""+""Chlorokybus atmophyticus""+""Mesostigma viride""+""Uronema sp""+""Monomastix opisthostigma""+""Pyramimonas parkeae""+""Nephroselmis pyriformis"""	None		0	
+LandPlants	All-Base-Chara-Coleochaetales-Zygnematophyceae	None		0	
+Zygnematophyceae/Coleochaetales	Zygnematophyceae+Coleochaetales	None	Zygnematophyceae+Coleochaetales	0	
+Zygnematophyceae/LandPlants	Zygnematophyceae+LandPlants	None	Zygnematophyceae+LandPlants	1	
+Chara/LandPlants	LandPlants+Chara	None	LandPlants+Chara	1	
+Coleochaetales/Zygnematophyceae/LandPlants	Coleochaetales+Zygnematophyceae+LandPlants	None	Coleochaetales+Zygnematophyceae+LandPlants	0	
+Coleochaetales/LandPlants	Coleochaetales+LandPlants	None	Coleochaetales+LandPlants	1	
+Coleochaetales/Chara/LandPlants	Coleochaetales+Chara/LandPlants	None	Coleochaetales+Chara+LandPlants	1	
+Chara/Coleochaetales	Chara+Coleochaetales	None	Coleochaetales+Chara	1	
+Tracheophytes	LandPlants-Bryophyta-Marchantiophyta-Anthocerophyta	None		1	
+Bryophyta/Marchantiophyta	Bryophyta+Marchantiophyta	None	Bryophyta+Marchantiophyta	1	
+Bryophyta/Marchantiophyta/Anthocerophyta	Bryophyta+Marchantiophyta+Anthocerophyta	None	Bryophyta+Marchantiophyta+Anthocerophyta	1	
+Anthocerophyta/Tracheophytes	Anthocerophyta+Tracheophytes	None	Anthocerophyta+Tracheophytes	1	
+Bryophyta/Tracheophytes	Bryophyta+Tracheophytes	None	Bryophyta+Tracheophytes	1	
+Bryophyta/Tracheophytes/Anthocerophyta	Bryophyta+Tracheophytes+Anthocerophyta	None	Bryophyta+Tracheophytes+Anthocerophyta	1	
+Bryophyta/Marchantiophyta/Tracheophytes	Tracheophytes+Bryophyta+Marchantiophyta	None	Tracheophytes+Bryophyta+Marchantiophyta	1	
+Gnetales/Pinaceae	Gnetales+Pinaceae	None	Gnetales+Pinaceae	1	
+Coniferales	Pinaceae+Coniferales minus Pinaceae	None		1	
+Coniferales/Gnetales	Gnetales+Coniferales	None	Gnetales+Coniferales	1	
+Ginkgo/Cycads	Cycads+Ginkgo	None	Cycads+Ginkgo	0	
+Ginkgo/Cycads/Coniferales	Ginkgo+Cycads+Coniferales	None	Cycads+Coniferales	0	
+Ginkgo/Cycads/Coniferales/Gnetales	Ginkgo+Cycads+Coniferales+Gnetales	None	Cycads+Coniferales+Gnetales	0	
+Eudicots/Magnoliids	Eudicots+Magnoliids	None	Eudicots+Magnoliids	1	
+Eudicots/Magnoliids/Chloranthales	Eudicots+Magnoliids+Chloranthales	None	Eudicots+Magnoliids+Chloranthales	1	
+Magnoliids/Chloranthales	Chloranthales+Magnoliids	None	Chloranthales+Magnoliids	1	
+Magnoliids/Chloranthales/Monocots	Magnoliids+Chloranthales+Monocots	None	Magnoliids+Chloranthales+Monocots	1	
+Monocots/Eudicots	Eudicots+Monocots	None	Eudicots+Monocots	1	
+Monocots/Magnoliids	Magnoliids+Monocots	None	Magnoliids+Monocots	1	
+Amborela/Nuphar	Amborela+Nuphar	None	Amborela+Nuphar	1		
+AngioSperms	Monocots+Amborela/Nuphar+Eudicots+Magnoliids+Chloranthales+Kadsura	None		1
+AngioSperms minus Amborela	AngioSperms-Amborela	None		1	
+AngioSperms minus Amborela and Nuphar	AngioSperms-Amborela/Nuphar	None		1	

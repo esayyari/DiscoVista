@@ -1,0 +1,20 @@
+Your *rooted* input gene trees should be in files:
+*/raxmlboot.????/RAxML_bipartitions.final.rooted
+The first directory gives the type of gene tree you have (e.g., FAA, FNA, etc). 
+The second level directories correspond to genes.
+Don't forget to first root your gene trees.
+
+Your gene trees with low support branches contracted should be in:
+*/raxmlboot.????/RAxML_bipartitions.final.rooted.75
+To remove branches below a threshold, you can use any code, including my script called
+remove_edges_from_tree.py
+which requires dendropy 3.12
+
+
+Then your clade definitions should be in clade-defs.txt. See example for format. 
+One taxon from each clade in Components section should be present for the clade to be scored. 
+
+names.csv should simply have the name of all the taxa in your gene trees
+
+Run redo-gt.sh
+Use depict_clades_2.R to draw graphs 

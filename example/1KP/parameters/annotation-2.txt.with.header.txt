@@ -1,0 +1,104 @@
+Code	Hypo
+Catharanthus_roseus	Vascular Plants
+Allamanda_cathartica	Vascular Plants
+Ipomoea_purpurea	Vascular Plants
+Rosmarinus_officinalis	Vascular Plants
+Tanacetum_parthenium	Vascular Plants
+Inula_helenium	Vascular Plants
+Diospyros_malabarica	Vascular Plants
+Kochia_scoparia	Vascular Plants
+Carica_papaya	Vascular Plants
+Arabidopsis_thaliana	Vascular Plants
+Hibiscus_cannabinus	Vascular Plants
+Populus_trichocarpa	Vascular Plants
+Boehmeria_nivea	Vascular Plants
+Medicago_truncatula	Vascular Plants
+Larrea_tridentata	Vascular Plants
+Vitis_vinifera	Vascular Plants
+Podophyllum_peltatum	Vascular Plants
+Aquilegia_formosa	Vascular Plants
+Eschscholzia_californica	Vascular Plants
+Sarcandra_glabra	Vascular Plants
+Liriodendron_tulipifera	Vascular Plants
+Persea_americana	Vascular Plants
+Houttuynia_cordata	Vascular Plants
+Saruma_henryi	Vascular Plants
+Sabal_bermudana	Vascular Plants
+Yucca_filamentosa	Vascular Plants
+Smilax_bona_nox	Vascular Plants
+Colchicum_autumnale	Vascular Plants
+Dioscorea_villosa	Vascular Plants
+Acorus_americanus	Vascular Plants
+Zea_mays	Vascular Plants
+Sorghum_bicolor	Vascular Plants
+Brachypodium_distachyon	Vascular Plants
+Oryza_sativa	Vascular Plants
+Kadsura_heteroclita	Vascular Plants
+Nuphar_advena	Vascular Plants
+Amborella_trichopoda	Vascular Plants
+Cunninghamia_lanceolata	Vascular Plants
+Juniperus_scopulorum	Vascular Plants
+Taxus_baccata	Vascular Plants
+Sciadopitys_verticillata	Vascular Plants
+Prumnopitys_andina	Vascular Plants
+Gnetum_montanum	Vascular Plants
+Welwitschia_mirabilis	Vascular Plants
+Ephedra_sinica	Vascular Plants
+Cedrus_libani	Vascular Plants
+Pinus_taeda	Vascular Plants
+Cycas_rumphii	Vascular Plants
+Cycas_micholitzii	Vascular Plants
+Zamia_vazquezii	Vascular Plants
+Ginkgo_biloba	Vascular Plants
+Psilotum_nudum	Vascular Plants
+Ophioglossum_petiolatum	Vascular Plants
+Angiopteris_evecta	Vascular Plants
+Pteridium_aquilinum	Vascular Plants
+Alsophila_spinulosa	Vascular Plants
+Equisetum_diffusum	Vascular Plants
+Dendrolycopodium_obscurum	Vascular Plants
+Pseudolycopodiella_caroliniana	Vascular Plants
+Huperzia_squarrosa	Vascular Plants
+Selaginella_moellendorffii_1kp	Vascular Plants
+Selaginella_moellendorffii_genome	Vascular Plants
+Leucodon_brachypus	Mosses
+Anomodon_attenuatus	Mosses
+Thuidium_delicatulum	Mosses
+Rhynchostegium_serrulatum	Mosses
+Bryum_argenteum	Mosses
+Rosulabryum_cf_capillare	Mosses
+Hedwigia_ciliata	Mosses
+Ceratodon_purpureus	Mosses
+Physcomitrella_patens	Mosses
+Polytrichum_commune	Mosses
+Sphagnum_lescurii	Mosses
+Marchantia_polymorpha	Liverworts
+Marchantia_emarginata	Liverworts
+Ricciocarpos_natans	Liverworts
+Sphaerocarpos_texanus	Liverworts
+Bazzania_trilobata	Liverworts
+Metzgeria_crassipilis	Liverworts
+Nothoceros_aenigmaticus	Hornworts
+Nothoceros_vincentianus	Hornworts
+Penium_margaritaceum	Base
+Cosmarium_ochthodes	Base
+Roya_obtusa	Base
+Netrium_digitus	Base
+Spirogyra_sp	Base
+Cylindrocystis_cushleckae	Base
+Mougeotia_sp	Base
+Cylindrocystis_brebissonii	Base
+Mesotaenium_endlicherianum	Base
+Coleochaete_irregularis	Base
+Coleochaete_scutata	Base
+Chaetosphaeridium_globosum	Base
+Chara_vulgaris	Base
+Entransia_fimbriata	Base
+Klebsormidium_subtile	Base
+Spirotaenia_minuta	Base
+Chlorokybus_atmophyticus	Base
+Mesostigma_viride	Base
+Uronema_sp	Base
+Monomastix_opisthostigma	Base
+Pyramimonas_parkeae	Base
+Nephroselmis_pyriformis	Base
