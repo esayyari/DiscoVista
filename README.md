@@ -1,6 +1,6 @@
 # DiscoVista
 
-DiscoVista (Discordance Visualization Tool) is a software package for visualizing phylogenetic discordance. The package is writtent by Erfan Sayyari and Siavash Mirarab. 
+DiscoVista (Discordance Visualization Tool) is a commandline software package for visualizing phylogenetic discordance. The package is writtent by Erfan Sayyari and Siavash Mirarab. 
 
 ## INSTALLATION:
 
@@ -66,9 +66,9 @@ DiscoVista relies on two other softwares for performing its analyses as well.
 
 There is a sample dataset and the corresponding [result](https://github.com/esayyari/DiscoVista/tree/master/example) for each of the DiscoVista analyses. Also, there is a [README file](https://github.com/esayyari/DiscoVista/blob/master/example/README.md) which describes the data folder structure, the parameters, and exact commands used for each analysis. 
 
-## How does DiscoVista work
+## How does DiscoVista work?
 
-The main utility to run these analyses is __discoVista.py__. To use this utility in bash you would use: 
+The main utility to run DiscoVista is __discoVista.py__. To use this utility in commandline you would use: 
 
 ```bash
 Usage: discoVista.py [options]
@@ -108,7 +108,8 @@ Options:
                         eg. Outgroup or Base.
 ``` 
 
-There are some files that you need to run these analyses. Note that some of these parameter files might not be needed for some of analyses. <a name="somefiles"></a>
+### Input files
+Several types of inputs (in addition to gene trees and species trees) need to be provided to DiscoVista (but a subset may be needed for any visualization). 
 
 1. You would pass the annotation file to the utility using **-a ANNOTATION**. In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Please use tab as the separator. 
 2. You would pass the rooting definition file to the utility using **-r ROOT**. Let's say that you have an **outgroup** clade. On the lines of this file, the set of species in the order of speciation events time are listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroup which are the second most distant species to the ingroup species, and so on. 
