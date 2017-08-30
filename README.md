@@ -4,7 +4,7 @@ DiscoVista (Discordance Visualization Tool) is a software package for visualizin
 
 ## INSTALLATION:
 
-### Installation using docker images:
+### Simpler option (preferred): installation using docker images:
 
 Since DiscoVista has several dependencies, direct installation might be difficult and time consuming; therefore, we have created a docker image automatically linked to the [DiscoVista github repository](https://github.com/smirarab/ASTRAL/tree/DiscoVista).
 
@@ -22,16 +22,18 @@ Here is what you need to do:
   ```bash
   docker run -v <absolute path to data folder>:/data esayyari/discovista discoVista.py [OPTIONS]
   ```
-By using "-v" we mount the data folder to /data folder inside the container, and all the changes and figures that DiscoVista creates will be available inside this folder. Also note that, __\<absolute path to data folder\>__ is an aboslute path, and program assumes that data is mounted under __/data__ inside container. We will talk about the proper set of options later. 
+By using `-v` we mount the data folder to /data folder inside the container, and all the changes and figures that DiscoVista creates will be available inside this folder. Also note that, `\<absolute path to data folder\>` is an aboslute path, and program assumes that data is mounted under `/data` inside container.
 
-### Installation using source code:
-The software package __DiscoVista__ depends on some R, and python packages. You could install __DiscoVista__ in a couple of steps:
+### Difficault option (preferred): installation from source code:
+The software package __DiscoVista__ depends on several R and python packages. You could install __DiscoVista__ in a couple of steps:
 
-Clone to [__DiscoVista__](https://github.com/esayyari/DiscoVista) git repository or download [this](https://github.com/esayyari/DiscoVista/archive/master.zip) zip file.
-Then you need to set environmental variable __WS_HOME__ to the directory under which __DiscoVista__ repository is placed. For example, if you clone to DiscoVista and placed it under the __/Users/Erfan/reposiotry__ folder, then you would export __WS\_HOME__ as __/Users/Erfan/reposiotry__.
+* Clone to [__DiscoVista__](https://github.com/esayyari/DiscoVista) git repository or download [this](https://github.com/esayyari/DiscoVista/archive/master.zip) zip file.
 
+* Then you need to set environmental variable `WS_HOME` to the directory under which __DiscoVista__ repository is placed. For example, if you clone to DiscoVista and placed it under the `/Users/Erfan/reposiotry` folder, then you would export `WS\_HOME` as `/Users/Erfan/reposiotry`.
 
-## R dependencies
+* Then you need to install the dependencies described below. 
+
+#### R dependencies
 DiscoVista uses R to do some postprocessing, and making figures. For more details regarding R and the installation instruction please see the following [link](https://www.r-project.org).
 After installing R, there are some R packages that you need to install at this step. The R package dependencies are: __Reshape__, __Reshape2__, __ggplot2__, __plyr__, __scales__, __ape__, and __optparse__.
 
@@ -41,7 +43,7 @@ To install these packages you need to use the following command in R:
 install.packages(c("Reshape","Reshape2","ggplot2","plyr","scales","ape","optparse"))
 ```
 
-## Python dependency
+#### Python dependency
 You need to install __DendroPy>=4.2.0__ as well. In Mac or Linux, you would use __pip__ to install DendroPy. If you have root access, you could use:
 
 ```bash
@@ -54,7 +56,7 @@ otherwise, you would install dendropy with the command:
 pip install dendropy --user
 ```
 
-## Other dependencies
+#### Other dependencies
 DiscoVista relies on two other softwares for performing its analyses as well. The first one is [newick utilities](http://cegg.unige.ch/newick_utils), and the other one is [ASTRAL-DiscoVista](https://github.com/smirarab/ASTRAL/tree/DiscoVista). Please install newick utilities, and add them to your __PATH__. Also, please put your ASTRAL folder under __WS\_HOME__, the same folder that DiscoVista lives. 
 
 ## Sample dataset
