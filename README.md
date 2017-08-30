@@ -76,9 +76,10 @@ Options:
                         The annotation file
   -c CLADES, --clades=CLADES
                         The path to the clades definition file
-  -m MODE, --mode=MODE  summerize gene trees or estimated species tree. To
-                        summerize species tree use 0.  To summereize gene
-                        trees use 1 . For GC stat analysis use 2.
+  -m MODE, --mode=MODE  Specifies the analysis to perform. To
+                        summarize species tree use 0.  To summarize gene
+                        trees use 1 . For GC stat analysis use 2. For occupancy
+                        analysis use 3. For frequency analysis use 5.
   -p PATH, --path=PATH  path to the gene directory or species tree
   -r ROOT, --rooting=ROOT
                         The rooting file
@@ -108,9 +109,9 @@ Options:
 ### Input files
 Several types of inputs (in addition to gene trees and species trees) need to be provided to DiscoVista (but a subset may be needed for any visualization).
 
-1. *The annotation file* (`-a file`). In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Use tab as the field separator.
-2.  *The rooting file* (`-r file`). Let's say that you have an *outgroup* clade. On each line of this file, the set of species in an outgroup clade is listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroups which are the second most distant species to the ingroup species, and so on. We root at the first outgroup clade; if not, will move to the second, third, and so on. Note that most analyses do not need an outgroup.
-3. *Clade definitions* (`-c CLADE`). There is an example of this file available under the DiscoVista GitHub repository. Also, an auxiliary tool to generate this clade definition file in made available under `DiscoVista/src/utils/generate_clade-defs.py`. We further elaborate on the contents of this file below.
+1. *The annotation file* (`-a file`). In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Use tab as the field separator. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters.tar.gz).
+2.  *The rooting file* (`-r file`). Let's say that you have an *outgroup* clade. On each line of this file, the set of species in an outgroup clade is listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroups which are the second most distant species to the ingroup species, and so on. We root at the first outgroup clade; if not, will move to the second, third, and so on. Note that most analyses do not need an outgroup. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters.tar.gz)
+3. *Clade definitions* (`-c CLADE`). There is an example of this file available under the DiscoVista GitHub repository. Also, an auxiliary tool to generate this clade definition file in made available under `DiscoVista/src/utils/generate_clade-defs.py`. We further elaborate on the contents of this file below. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters.tar.gz).
 
 ### The clade definition file
 Each line of the clade definition file defines a clade of potential interest.
