@@ -33,15 +33,15 @@ docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista
 
 Here are the outputs:
 
-![alt text][species-shade]
+![alt text][species-shade1]
 
-[species-shade]: example/figures/species/FNA2AA.block-shades.png ""
+[species-shade1]: example/figures/species/FNA2AA.block-shades.png ""
 
 In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods of the plant dataset. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted
 
-![alt text][species]
+![alt text][species1]
 
-[species]: example/figures/species/FNA2AA.block.png ""
+[species1]: example/figures/species/FNA2AA.block.png ""
 
 In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods ofthe plants dataset. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
 
