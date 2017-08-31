@@ -56,12 +56,6 @@ otherwise, you would install dendropy with the command:
 pip install dendropy --user
 ```
 
-#### Other dependencies
-DiscoVista relies on two other softwares for performing its analyses as well.
-
-* [newick utilities](http://cegg.unige.ch/newick_utils):  Please install newick utilities, and make sure its in the `PATH`.
-* [ASTRAL-DiscoVista](https://github.com/smirarab/ASTRAL/tree/DiscoVista). Please put your ASTRAL folder under `WS\_HOME`, the same folder where DiscoVista is placed.
-
 
 ## How does DiscoVista work?
 
@@ -109,9 +103,9 @@ Options:
 ### Input files
 Several types of inputs (in addition to gene trees and species trees) need to be provided to DiscoVista (but a subset may be needed for any visualization).
 
-1. *The annotation file* (`-a file`). In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Use tab as the field separator. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters/annotation.txt).
-2.  *The rooting file* (`-r file`). Let's say that you have an *outgroup* clade. On each line of this file, the set of species in an outgroup clade is listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroups which are the second most distant species to the ingroup species, and so on. We root at the first outgroup clade; if not, will move to the second, third, and so on. Note that most analyses do not need an outgroup. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters/rooting.txt)
-3. *Clade definitions* (`-c CLADE`). There is an example of this file available under the DiscoVista GitHub repository. Also, an auxiliary tool to generate this clade definition file in made available under `DiscoVista/src/utils/generate_clade-defs.py`. We further elaborate on the contents of this file below. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters/clade-defs.txt).
+1. *The annotation file* (`-a file`). In each line of this file, you need the taxon name and the corresponding clade name that species belongs to. Use tab as the field separator. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters/annotation.txt). This file is used with occupancy and frequency analyses. 
+2.  *The rooting file* (`-r file`). Let's say that you have an *outgroup* clade. On each line of this file, the set of species in an outgroup clade is listed. The set of species on the first line belongs to the species that are the most distant species to the ingroup species. The next line belongs species in the outgroups which are the second most distant species to the ingroup species, and so on. We root at the first outgroup clade; if not, will move to the second, third, and so on. Note that most analyses do not need an outgroup. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters/rooting.txt). This is only used with the 
+3. *Clade definitions* (`-c CLADE`). In this file the user can easily combine taxa into groups of interest and give the groups names. Each split is a bipartition of the taxa into two groups and corresponds to an edge in an unrooted tree. The user can specify one side of a split (which would be a clade if the side that doesn't include the root is given). With careful definition of splits, alternative hypotheses of interests could be specified. You would find an example of annotation file [here](https://github.com/esayyari/DiscoVista/blob/master/example/1KP/parameters/clade-defs.txt). Also, an auxiliary tool to generate this clade definition file in made available under `DiscoVista/src/utils/generate_clade-defs.py`. We further elaborate on the contents of this file below.  
 
 ### The clade definition file
 Each line of the clade definition file defines a clade of potential interest.
