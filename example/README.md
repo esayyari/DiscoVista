@@ -152,13 +152,13 @@ docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista
 Under the folder __relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA__, we have two files with the names __estimated\_species\_tree.tree__, and __estimated\_gene\_trees.tree__ for species tree, and set of gene trees (852) in newick format. In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine. Let's assume that you want to test the relative frequencies of the firts hypothesis (__annotation-1.txt__), in which there are 5 clades, _Base_ (as outgroup), _Charales_, _Coleochaetales_, _Landplants_, _Zygnematophyceae_. We use the following set of commands:
 
 ```bash
-$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -o relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/results/anot1 -g Base
+$WS_HOME/DiscoVista/src/utils/discoVista.py -a parameters/annotation-4.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -o relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/results/anot4 -g Base
 ```
 
 or using the docker image, you can run discovista with the following command. Note that __\<path to example folder\>__ is the absolute path to the directory where 1KP example folder is placed:
 
 ```bash
-docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -o relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/results/anot1 -g Base
+docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -a parameters/annotation-4.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -o relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/results/anot4 -g Base
 ```
 
 Here is the example output of this analysis:
