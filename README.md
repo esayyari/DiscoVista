@@ -2,6 +2,9 @@
 
 DiscoVista (Discordance Visualization Tool) is a command-line software package for visualizing phylogenetic discordance. The package is written by Erfan Sayyari and Siavash Mirarab.
 
+While a general description of commands is given below, a more detailed tutorial on one example dataset (Wickett, et al., 2014, PNAS) is available [here](example/README.md).
+
+
 ## INSTALLATION:
 
 ### Simpler option (preferred): using docker
@@ -128,13 +131,7 @@ This will create one clade for every value in the second column of the annotatio
 Using `other clades file`, you could define other important branches of the expected tree. Let's say that in your annotation file you have two clades **A**, and **B**, and you are interested in a clade that unites **A** and **B**. Then you would define it with **A+B** in this file.
 
 ## Using DiscoVista
-Throughout this tutorial, we assume that you are using bash, and your current directory is `$WS_HOME/DiscoVista/`.
-
-The tutorial is going to use a sample plant dataset from the Wickett, et al., 2014, PNAS.
-The sample dataset and the corresponding [result](https://github.com/esayyari/DiscoVista/tree/master/example) figures for each of the DiscoVista analyses are included [as part of the package](example/). Also, there is a [README file](example/README.md) which describes the data folder structure, the parameters, and exact commands used for each analysis on the sample dataset.
-
-For the tutorial, we assume the rooting definitions are listed in `rooting.txt`, the annotation file is `annotation.txt`, and the clade definition file is `clade-definition.txt`. For our example
-dataset, these files can be found under the **`$WS_HOME/DiscoVista/parameter`** folder. Also,  we assume that the output will be written under `<the analysis folder>/results` folder.
+Throughout the descriptions below, we assume that you are using bash, and your current directory is `$WS_HOME/DiscoVista/`.
 
 ### 1. Discordance analysis on species trees
 To perform discordance analysis on species trees, you need species trees with support values draw on the branches and represented in the Newick format as node labels. For drawing bootstrap support values  on branches we highly recommend using [newick utilities](http://cegg.unige.ch/newick_utils). Please double check the support values after rerooting with our tool using any graphical viewing software like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to be sure support values are correctly drawn and rerooting was correct.
