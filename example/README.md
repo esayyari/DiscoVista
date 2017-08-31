@@ -16,7 +16,7 @@ Under the __parameters__ folder, we have all the parameter files:
 * __rooting.txt__:       Rooting definition file. In this rooting file you should specify the outgroup species, but you don't have to just list them in one line. You have this option to list them with respect to their distances to the ingroup species. For example, the rooting definition available here, has 3 lines, where on the first line we have the most distant species to the ingroups. On the other two lines we have the other outgroup species, with respect to their distance to the ingroup after the main set of outgroups.
 
 
-## Species
+## Species tree
 
 Under the __species__ folder we have 31 folders each with this structure:
 Model\_Condition-DST, where DST defines the type of sequence alignment. For example  __astral.trim50genes33taxa.no3rd.final-FNA2AA__ is a folder under the __species__ folder, where __astral.trim50genes33taxa.no3rd.final__ is the  model condition name, and __FNA2AA__ is the DST. Then under each folder we have a species tree with the name __estimated\_species\_tree.tree__.  In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
