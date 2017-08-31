@@ -46,9 +46,18 @@ class generateNewQuartFreq(object):
 
             while quadSet:
                 y = list(quadSet)[0]
+		print self.taxaDict[y]
                 if set(self.clades[self.taxaDict[y]]).issubset(quadSet):
                     quadSet = quadSet.difference(set(self.clades[self.taxaDict[y]]))
                     h.append(self.taxaDict[y])
+		else:
+		    print "Something went wrong"
+		    print y
+		    print self.taxaDict[y]
+		    print set(self.clades[self.taxaDict[y]])
+		    print set(quadSet)
+		    exit(1)
+
             topology.append(h)
         return topology
 
