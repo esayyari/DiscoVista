@@ -31,6 +31,19 @@ or using the docker image, you can run discovista with the following command. No
 docker run  -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -c parameters/clade-defs.txt -p species/ -t 95 -y parameters/newModel.txt -w parameters/newOrders.txt -m 0 -o species/results
 ```
 
+Here are the outputs:
+
+![alt text][species-shade]
+
+[species-shade]: example/figures/species/FNA2AA.block-shades.png ""
+
+In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods of the plant dataset. The spectrum of blue-green indicates amount of MLBS values for monophyletic clades. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted
+
+![alt text][species]
+
+[species]: example/figures/species/FNA2AA.block.png ""
+
+In this figure rows correspond to major orders and clades, and columns correspond to the results of different methods ofthe plants dataset. Weakly rejected clades correspond to clades that are not present in the tree, but are compatible if low support branches (below 90%) are contracted.
 
 ## Genetrees
 
@@ -46,6 +59,21 @@ or using the docker image, you can run discovista with the following command. No
 docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -c parameters/clade-defs.txt -p genetrees/filtered/ -t 75 -w parameters/newOrders.txt -y parameters/newModel.txt -m 1 -o genetrees/filtered/results
 ```
 
+Here are example outputs of this analysis:
+
+![alt text][gt-portion]
+
+[gt-portion]: example/figures/genetrees/Monophyletic_Bargraphs_Porportion.png ""
+
+
+This figure shows the portion of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected for three model conditions of the plants dataset. FAA-filterlen33: gene trees on amino acids sequences, and fragmentary sequences removed (66% gaps or more) FNA2AA-f25: amino acid sequences back translated to DNA, and sequences on long branches (25X median branch length)removed; FNA2AA-filterlen33: amino acid sequences back translated to DNA, and fragmentary sequences removed (66% gaps or more). Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted.
+
+
+![alt text][gt]
+
+[gt]: example/figures/genetrees/Monophyletic_Bargraphs.png ""
+
+This figure shows the number of RAxML genes for which important clades (x-axis) are highly (weakly) supported or rejected or are missing of three model conditions (same as above) of the plants dataset. Weakly rejected clades are those that are not in the tree but are compatible if low support branches (below 75%) are contracted.
 
 ## GC
 We have the __GC/unfiltered__ folder available in the example folder. Under this folder we have 852 folders for each gene and the name of each folder is condsidered as the GENE ID, e.g. gene ID 4032. Then under each of these folders we have a __fasta__ file, with the name __DS-alignment-noFilter.fasta__. For example, __FNA2AA-alignment-noFilter.fasta__ is available under the folder __GC/unfiltered/4032__.  In order to generate the same figures as available in the supplementary materials of the paper you would use the following commands if you installed __discoVista__ on your machine:
@@ -60,6 +88,19 @@ or using the docker image, you can run discovista with the following command. No
 docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -m 2  -p GC/unfiltered/ -o GC/unfiltered/results
 ```
 
+![alt text][gcpt]
+
+[gcpt]: example/figures/GC/pTpP_GC_point.png ""
+
+
+This figure corresponds to the GC content analysis of the 1kp dataset. Each dot shows the average GC content ratio for each species in all (red), first (pink), second (light blue), and third (dark blue) codon positions.
+
+![alt text][gcbox]
+
+[gcbox]: example/figures/GC/pTpP_GC_boxplot.png ""
+
+
+This figure corresponds to the GC content analysis of the 1kp dataset, using boxplots for first, second, third, as well as all three codon positions.
 
 
 ## Occupancy
@@ -74,6 +115,22 @@ or using the docker image, you can run discovista with the following command. No
 ```bash
 docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -m 3 -a parameters/annotation.txt -p occupancy/filtered/ -o occupancy/filtered/results
 ```
+Here are example outputs of this analysis:
+
+![alt text][occ]
+
+[occ]: example/figures/occupancy/occupancy.png ""
+
+This figure shows the occupancy analysis on the 1kp dataset over each individual species for two model conditions (described above).
+
+
+
+<p align="center">
+<img src="example/figures/occupancy/occupancy_clades.png">
+</p>
+
+
+This figure shows the occupancy analysis on the important splits of 1kp dataset over each individual species for two model conditions (described above).
 
 
 ## Branch analysis
@@ -103,3 +160,12 @@ or using the docker image, you can run discovista with the following command. No
 ```bash
 docker run -v <path to example folder>/1KP:/data esayyari/discovista discoVista.py -a parameters/annotation-1.txt -m 5 -p relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/ -o relativeFreq/astral.trim50genes33taxa.no3rd.final-FNA2AA/results/anot1 -g Base
 ```
+
+Here is the example output of this analysis:
+
+![alt text][relfreq]
+
+[relfreq]: example/figures/relativeFreq/relativeFreq.png ""
+
+This figure corresponds to the DiscoVista relative frequency analysis on 1kp dataset considering 4 different hypotheses. Frequency of three topologies around focal internal branches of ASTRAL species trees using the trimmed gene trees (removing alignments with more than 66% gap characters) on first and second codon positions of amino acid alignments back translated to DNA in 1kp dataset. Main topologies are shown in red, and the other two alternative topologies are shown in blue. The dotted lines indicate the 1/3 threshold. The title of each subfigure indicates the label of the corresponding branch on the tree on the right (also generated by DiscoVista). Each internal branch has four neighboring branches which could be used to represent quartet topologies. On the x-axis the exact definition of each quartet topology is shown using the neighboring branch labels separated by “\#”.
+
