@@ -6,8 +6,16 @@ import dendropy
 
 
 def get_present_taxa(tree, labels):
-    return [x.taxon for x in [tree.find_node_with_taxon_label(label) for label in labels]
-            if x is not None]
+	ptaxa = list()
+	for label in labels:
+		print label
+		x = tree.find_node_with_taxon_label(label)
+		if x is None:
+			print "The species '" + label + "' was not found in the species tree. Please check your annotation file"
+			exit(1)
+		else:
+			ptaxa.append(x.taxon)	
+	return ptaxa
 def is_mono(tree, clades):
         tree_tmp = tree.clone(depth=1)
         allBiparts = [ t.compile_split_bitmask() for t in tree_tmp.encode_bipartitions(is_bipartitions_mutable = True) ]
@@ -30,7 +38,12 @@ for line in anot:
 	line = line.strip('\n')
 	line = line.strip()
 	listLine = line.split('\t')
+	x = tree.find_node_with_taxon_label(listLine[0])
+	if x is None:
+		print "The species '" + listLine[0] + "' was not found in the species tree. Please check your annotation file"
+		exit(1)
 	if listLine[1] in clades:
+		
 		clades[listLine[1]].append(listLine[0])
 	else:
 		clades[listLine[1]] = list()
