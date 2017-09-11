@@ -50,6 +50,7 @@ if impBranch is not None:
 
 for line in src:
     line = line.strip("\n")
+    print line
     r = line.split("\t")
     taxa = r[0]
     clade = r[1]

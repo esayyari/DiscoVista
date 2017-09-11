@@ -1,7 +1,12 @@
 #!/bin/bash
 
-echo "USAGE: [PATH] [annotation] [names] [OUTDIR] [label] [outgroup]"
+echo "USAGE: [PATH] [annotation] [names] [OUTDIR] [outgroup]"
 
+if [ "$#" -lt "4" ]; then
+	echo "USAGE: [PATH] [annotation] [names] [OUTDIR] [outgroup]"
+	echo "Number of inputs should be at least 4 not $#"
+	exit 1
+fi
 name=main
 pth=$1
 
@@ -39,8 +44,10 @@ cat $annot >> $annot.with.header.txt
 
 ant=$(find $annot.with.header.txt)
 
-
+python $WS_HOME/DiscoVista/src/utils//check-anot-if-mono.py $species $annot
+[ $? -eq 0 ] || exit $?
 python $WS_HOME/DiscoVista/src/utils/spit-hypo-trees.py $species  $ant contract
+[ $? -eq 0 ] || exit $?
 
 d=`pwd`;
 
@@ -49,11 +56,13 @@ cp $species-hypo.tre $d/$name-hypo.tre
 
 astral=$WS_HOME/DiscoVista/bin/astral.4.10.12.jar
 java -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.tre
+[ $? -eq 0 ] || exit $?
 
 sed -i "s/)N\([0-9][0-9]*\)'/)'N\1/g" $d/$name-uncollapsed.tre
 
-python $WS_HOME/DiscoVista/src/utils/spit-hypo-trees.py $d/$name-uncollapsed.tre $ant collapse
 
+python $WS_HOME/DiscoVista/src/utils/spit-hypo-trees.py $d/$name-uncollapsed.tre $ant collapse
+[ $? -eq 0 ] || exit $?
 cp $d/$name-uncollapsed.tre-collapsed.tre $d/$name.tre
 
 sed -i  "s/)'N\([0-9][0-9]*\)[^']*'/)N\1/g" $d/$name.tre
@@ -77,7 +86,7 @@ fi
 printf  "python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out\n"
 
 python $WS_HOME/DiscoVista/src/utils/map_names.py $names $annot $d/freqQuad.csv $d/freqQuadCorrected.csv $d/$name.tre.out
-
+[ $? -eq 0 ] || exit $?
 cd $d
 
 Rscript --vanilla freqQuadVisualization.R
