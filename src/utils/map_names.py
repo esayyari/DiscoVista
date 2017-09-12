@@ -13,7 +13,7 @@ class generateNewQuartFreq(object):
         self.outFile = outFile
         self.treeFile = treeFile
         self.g = open(self.outFile,'w')
-        self.tree = dendropy.Tree.get(path=self.treeFile, schema="newick", rooting="force-rooted")
+        self.tree = dendropy.Tree.get(path=self.treeFile, schema="newick", rooting="force-rooted",preserve_underscores=True)
 
         self.tree.encode_bipartitions()
         self.setEdgesMap()

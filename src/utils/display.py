@@ -9,7 +9,7 @@ import random
 random.seed(a=885456)
 
 
-tree = dendropy.Tree.get(path=sys.argv[1],schema="newick",rooting="default-rooted")
+tree = dendropy.Tree.get(path=sys.argv[1],schema="newick",rooting="default-rooted",preserve_underscores=True)
 if (len(sys.argv)>2):
 	outgroup = sys.argv[2]
 else:
