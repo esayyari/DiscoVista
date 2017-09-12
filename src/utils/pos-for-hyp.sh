@@ -16,7 +16,7 @@ annot=$2
 names=$3
 out=$4
 name="main"
-if [ "$#" -eq "5" ]; then
+if [ "$#" -ne "5" ]; then
 	
 	outgroup=""
 else
@@ -67,10 +67,10 @@ cp $d/$name-uncollapsed.tre-collapsed.tre $d/$name.tre
 
 sed -i  "s/)'N\([0-9][0-9]*\)[^']*'/)N\1/g" $d/$name.tre
 
-if [ "$outgroup" != "" ]; then
-	nw_reroot $d/$name.tre "$outgroup" > $d/$name.tre.rerooted
-	mv $d/$name.tre.rerooted $d/$name.tre
-fi
+#if [ "$outgroup" != "" ]; then
+#	nw_reroot $d/$name.tre "$outgroup" > $d/$name.tre.rerooted
+#	mv $d/$name.tre.rerooted $d/$name.tre
+#fi
 
 
 
