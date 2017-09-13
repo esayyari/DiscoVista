@@ -81,7 +81,7 @@ if __name__ == '__main__':
                 p.taxon = t
                 for c in p.child_nodes():
                     p.remove_child(c)
-        trees.write(file=open(treeName+"-collapsed.tre",'w'),schema='newick',suppress_rooting=True,unquoted_underscores=True)
+        trees.write(file=open(treeName+"-collapsed.tre",'w'),schema='newick',suppress_rooting=True,unquoted_underscores=True,preserve_spaces=True)
         sys.exit(0)
 
         
@@ -128,4 +128,4 @@ if __name__ == '__main__':
             outrees.append(tree)    
             print()
     with open(treeName+"-hypo.tre",'w') as f:
-        outrees.write(file=f,schema='newick',suppress_rooting=True,unquoted_underscores=True)
+        outrees.write(file=f,schema='newick',suppress_rooting=True,unquoted_underscores=True,preserve_spaces=True)

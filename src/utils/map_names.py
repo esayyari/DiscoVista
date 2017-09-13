@@ -35,7 +35,6 @@ class generateNewQuartFreq(object):
             edgeMap[side1Str] = edge.length
             edgeMap[side2Str] = edge.length
         self.edgeMap = edgeMap
-	print self.edgeMap
 
 
     def getClades(self, bipartquad1):
@@ -107,14 +106,14 @@ class generateNewQuartFreq(object):
         tree = self.tree
         cladeToEdge = dict()
         tree.encode_bipartitions()
-        allTaxa = {l.taxon.label for l in tree.leaf_nodes()}
-
+        allTaxa = {l.taxon.label.replace("'","") for l in tree.leaf_nodes()}
+	
         for nd in tree.postorder_internal_node_iter():
 	    if nd.parent_node == tree.seed_node:
 		continue
             edge = nd.edge
             taxa = edge.bipartition.leafset_taxa(tree.taxon_namespace)
-            mainTaxaLabels = {l.label for l in taxa}
+            mainTaxaLabels = {l.label.replace("'","") for l in taxa}
             mainotherSide = (allTaxa - mainTaxaLabels)
 
             if nd == tree.seed_node:
@@ -129,7 +128,7 @@ class generateNewQuartFreq(object):
             bipart2 = list()
             for e in neighbors:
                 taxa = e.bipartition.leafset_taxa(tree.taxon_namespace)
-                taxaLabels = sorted([l.label for l in taxa])
+                taxaLabels = sorted([l.label.replace("'","") for l in taxa])
                 otherSide = sorted(list(allTaxa - set(taxaLabels)))
                 if not taxaLabels or not otherSide:
                     continue
@@ -144,9 +143,6 @@ class generateNewQuartFreq(object):
                     bipart1.append(str(int(self.edgeMap[bipart])))
                 elif set(otherSide).issubset(mainotherSide):
                     bipart = ",".join(otherSide)
-		    print self.edgeMap
-		    print bipart
-		    print self.edgeMap[bipart]
             	    bipart2.append(str(int(self.edgeMap[bipart])))
             if bipart1[0]<bipart1[1]:
                 bipart1String = bipart1[0]+","+bipart1[1]
@@ -174,7 +170,6 @@ class generateNewQuartFreq(object):
         for i in range(0,len(self.freqStat)):
             line = self.freqStat[i]
             (key, flag) = self.map_taxa_to_clades(line)
-	    print line, key, flag
             if not flag:
                 continue
             if c % 3 == 0:

@@ -8,7 +8,6 @@ import dendropy
 def get_present_taxa(tree, labels):
 	ptaxa = list()
 	for label in labels:
-		print label
 		x = tree.find_node_with_taxon_label(label)
 		if x is None:
 			print "The species '" + label + "' was not found in the species tree. Please check your annotation file"

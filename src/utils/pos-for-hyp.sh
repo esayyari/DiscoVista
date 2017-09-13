@@ -21,6 +21,7 @@ if [ "$#" -ne "5" ]; then
 	outgroup=""
 else
 	outgroup=$5
+	echo "outgroup is $outgroup"
 fi
 
 d=$(dirname $species)

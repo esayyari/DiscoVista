@@ -11,7 +11,7 @@ random.seed(a=885456)
 
 tree = dendropy.Tree.get(path=sys.argv[1],schema="newick",rooting="default-rooted",preserve_underscores=True)
 if (len(sys.argv)>2):
-	outgroup = sys.argv[2]
+	outgroup = " ".join(sys.argv[2:])
 else:
 	outgroupNode = random.sample(tree.leaf_nodes(),1)[0]
 	outgroup = outgroupNode.taxon.label
@@ -49,8 +49,8 @@ tree.write(path=sys.argv[1]+".out",schema= "newick",
         suppress_internal_node_labels=False,
         suppress_rooting=True,
         suppress_edge_lengths=False,
-        unquoted_underscores=False,
-        preserve_spaces=False,
+        unquoted_underscores=True,
+        preserve_spaces=True,
         store_tree_weights=False,
         suppress_annotations=False,
         suppress_item_comments=False)
