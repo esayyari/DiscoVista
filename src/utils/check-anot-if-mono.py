@@ -17,16 +17,20 @@ def get_present_taxa(tree, labels):
 	return ptaxa
 def is_mono(tree, clades):
         tree_tmp = tree.clone(depth=1)
-        allBiparts = [ t.compile_split_bitmask() for t in tree_tmp.encode_bipartitions(is_bipartitions_mutable = True) ]
+	alltmp = tree_tmp.encode_bipartitions(is_bipartitions_mutable = True)
+        allBiparts = [ t.compile_split_bitmask() for t in alltmp ]
 	taxon_namespace = tree.taxon_namespace
 	taxa = get_present_taxa(tree, clades)
-        bipartition = taxon_namespace.taxa_bipartition(taxa=taxa)
+	otherside = set(taxon_namespace)-set(taxa)
+        bipartition = taxon_namespace.taxa_bipartition(taxa=taxa,is_bipartitions_updated=True)
+	othersidebipart = taxon_namespace.taxa_bipartition(taxa=otherside,is_bipartitions_updated=True)
         bipartition = bipartition.compile_split_bitmask()
+	othesidebipart = othersidebipart.compile_split_bitmask()
         allBiparts = set(allBiparts)
-        return (bipartition in allBiparts)
+        return (bipartition in allBiparts or othesidebipart in allBiparts)
 
 
-tree = dendropy.Tree.get_from_path(sys.argv[1], 'newick', preserve_underscores=True,rooting="default-rooted")
+tree = dendropy.Tree.get_from_path(sys.argv[1], 'newick', preserve_underscores=True,rooting="default-unrooted")
 
 anot = (open(sys.argv[2],'r')).readlines()
 
@@ -50,6 +54,8 @@ for line in anot:
 
 for clade in clades:
 	m = is_mono(tree, set(clades[clade]))
+	
+	print m, clades[clade], clade
 	if m:
 		continue
 	else:

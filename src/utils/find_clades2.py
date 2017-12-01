@@ -107,17 +107,18 @@ class Mono(object):
                 if not set(self.allclades[comp]) & taxaLabel:
                     self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
                     return
-	if othercomps:
+	if othercomps and len(othercomps) != 0:
 	    #print "othercomps", othercomps
 	    for comp in othercomps:
-		if not set(self.allclades[comp]) & otherTaxaLabel:
-		    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
-		    return	 
+		if comp != "":
+			if not set(self.allclades[comp]) & otherTaxaLabel:
+			    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
+			    return	 
         #print len(taxa), len(clade)
         if len(taxa) < 2 or len(otherSideTaxa) < 2:
             self.print_result(treeName, "NO_CLADE", None, name, tree, ofile, mult, clade)
-	    if len(otherSideTaxa) < 2:
-	    	print tree.leaf_nodes(), taxa, taxaLabel, otherSideTaxa, otherTaxaLabel, tree
+	    #if len(otherSideTaxa) < 2:
+	    #	print tree.leaf_nodes(), taxa, taxaLabel, otherSideTaxa, otherTaxaLabel, tree
         else:
             self.check_mono(tree, treeName, taxa, name, len(taxa) == len(clade), ofile, mult, allBiparts)
         ofile.close()
@@ -140,6 +141,8 @@ class Mono(object):
             line = line.replace("\n","")
             sign = "+"
             r = line.split('\t')
+	    r[1] = r[1].strip()
+	    r[0] = r[0].strip()
             if r[0] == 'Clade Name':
                 continue
             clade = set()
@@ -212,7 +215,7 @@ def main(*arg):
     mono.read_clades(cladesFile)
     
     for fileName in arg[4:][0].split(' '):
-        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted")
+        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted",preserve_underscores=True)
         labelsSet = set(t.label for t in trees.taxon_namespace)
         namemismatch = labelsSet - taxa
         if namemismatch:
@@ -232,7 +235,7 @@ if __name__ == '__main__':
     mono = Mono(taxa, outFile)
     mono.read_clades(cladesFile)
     for fileName in sys.argv[4:]:
-        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted")
+        trees = dendropy.TreeList.get(path=fileName, schema='newick', rooting="force-unrooted",preserve_underscores=True)
         labelsSet = set(t.label for t in trees.taxon_namespace)
         namemismatch = labelsSet - taxa
         if namemismatch:

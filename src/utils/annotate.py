@@ -13,7 +13,7 @@ def iter_all_strings():
         for s in itertools.product(ascii_lowercase, repeat = size):
             yield "".join(s)
         size += 1
-        print size
+	print size
 
 gen = iter_all_strings()
 def label_gen():
@@ -68,4 +68,3 @@ if __name__ == "__main__":
         bipart[key] = bipart[key].replace("\n","")
         keyt = key.replace("\n","")
         to_print = bipart[key] + " " + keyt 
-        print to_print
