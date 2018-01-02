@@ -242,10 +242,10 @@ metabargraph <- function (d.c.m, y,sizes=c(15,19)){
     write.csv(file=paste(ds,"counts","csv",sep="."),cast(d.c.m[which(d.c.m$DS == ds),c(1,2,4)],CLADE~Classification))
     print(ds)
     for ( clade in levels(y$CLADE)) {
-      q <- y[which(y$CLADE == clade & y$DS ==ds),] 
+      q <- y[which(y$CLADE == clade & y$DS ==ds),]
       write.csv(file=paste("finegrained/clades",ds,gsub("/",",",clade),"csv",sep="."),q, row.names=F)
     }
-  } 
+  }
   
 }
 
@@ -271,7 +271,7 @@ metahistograms<- function (d.boot) {
   dev.off()	
 }
 
-metahistograms2<- function (d.boot) {
+metahistograms2<- function (d.boot,sizes) {
   print(levels(d.boot$DS))
   pdf("Monophyletic_Bootstrap_Support_2.pdf",width=18,height=18)
   o <- theme_bw()+theme(strip.text.x = element_text(size = 9),legend.position="bottom")

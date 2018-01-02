@@ -11,20 +11,22 @@ class Analyze(object):
         self.opt = opt
     def gcStatAnalysis(self):
         opt = self.opt
-        outFile = opt.label + "/gc-stat.csv"
-        f = open(outFile, 'w')
-        searchFile = " ".join(glob.glob(opt.search))
-        for align in searchFile.split(" "):
-            gc_stats.main(align)	
-        print "All GC stat files have been generated"
+        if opt.figureFlag != 1:
+            outFile = opt.label + "/gc-stat.csv"
+            f = open(outFile, 'w')
+            searchFile = " ".join(glob.glob(opt.search))
+            for align in searchFile.split(" "):
+                gc_stats.main(align)
+            print "All GC stat files have been generated"
 
-        search = opt.path + "/*/gc-stat.txt"
+            search = opt.path + "/*/gc-stat.txt"
 
-        print >>f, "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" %("GENE","SEQUENCE","TAXON","A_C","C_C","G_C","T_C","N_C","frag_C","A_R","C_R","G_R","T_R","c1_A_C","c1_C_C","c1_G_C","c1_T_C","c1_N_C","c1_frag_C","c1_A_R","c1_C_R","c1_G_R","c1_T_R","c2_A_C","c2_C_C","c2_G_C","c2_T_C","c2_N_C","c2_frag_C","c2_A_R","c2_C_R","c2_G_R","c2_T_R","c3_A_C","c3_C_C","c3_G_C","c3_T_C","c3_N_C","c3_frag_C","c3_A_R","c3_C_R","c3_G_R","c3_T_R")	
-        f.close()
-        tools.concatenateFiles(outFile, search)	
-        print "Concatenated GC stats are written to %s" % (outFile)
-        currPath = os.path.dirname(os.path.abspath(__file__))
+            print >>f, "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" %("GENE","SEQUENCE","TAXON","A_C","C_C","G_C","T_C","N_C","frag_C","A_R","C_R","G_R","T_R","c1_A_C","c1_C_C","c1_G_C","c1_T_C","c1_N_C","c1_frag_C","c1_A_R","c1_C_R","c1_G_R","c1_T_R","c2_A_C","c2_C_C","c2_G_C","c2_T_C","c2_N_C","c2_frag_C","c2_A_R","c2_C_R","c2_G_R","c2_T_R","c3_A_C","c3_C_C","c3_G_C","c3_T_C","c3_N_C","c3_frag_C","c3_A_R","c3_C_R","c3_G_R","c3_T_R")
+            f.close()
+            tools.concatenateFiles(outFile, search)
+            print "Concatenated GC stats are written to %s" % (outFile)
+            currPath = os.path.dirname(os.path.abspath(__file__))
+
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
@@ -42,12 +44,14 @@ class Analyze(object):
         err.write(stdout)
         err.write(stderr)
         err.close()
+
     def occupancyAnalysis(self):
         opt = self.opt
         outFile = opt.label + "/occupancy.csv"
-	print opt.search
-        tools.occupancy(opt.search, outFile)
-        print "All the occupancy stats have written on file %s" % (outFile)  
+        print opt.search
+        if opt.figureFlag != 1:
+            tools.occupancy(opt.search, outFile)
+            print "All the occupancy stats have written on file %s" % (outFile)
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
@@ -83,89 +87,90 @@ class Analyze(object):
         finegrained = opt.label + "/finegrained"	
         if not os.path.exists(finegrained):
             os.makedirs(finegrained)
-	searchFiles = " ".join(glob.glob(opt.search))
-	for tree in searchFiles.split(" "):
- #          tools.reroot(tree, opt.root, opt.annotation, 1)
-           tools.remove_edges_from_tree(tree, opt.threshold)
+        if opt.figureFlag != 1:
+            searchFiles = " ".join(glob.glob(opt.search))
+            for tree in searchFiles.split(" "):
+     #          tools.reroot(tree, opt.root, opt.annotation, 1)
+               tools.remove_edges_from_tree(tree, opt.threshold)
 
-        searchFilesthr = " ".join(glob.glob(opt.searchthr))
-#        for tree in searchFilesthr.split(" "):
-#            tools.reroot(tree, opt.root, opt.annotation, 1)
+            searchFilesthr = " ".join(glob.glob(opt.searchthr))
+    #        for tree in searchFilesthr.split(" "):
+    #            tools.reroot(tree, opt.root, opt.annotation, 1)
 
-        searchFiles = " ".join(glob.glob(opt.searchrooted))
-        searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
-        if float(opt.threshold)<= 1.0:
-            multiplier = 100.
-        else:
-            multiplier = 1.0
-	
-        find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
-	
-        find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
+            searchFiles = " ".join(glob.glob(opt.searchrooted))
+            searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
+            if float(opt.threshold)<= 1.0:
+                multiplier = 100.
+            else:
+                multiplier = 1.0
 
-        f = open(outFile,'r')
-        outRes = outFile + ".res"
+            find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles)
 
-        oRes = open(outRes, 'w')
-        outResthr = outFilethr + ".res"
+            find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
 
-        oResThr = open(outResthr, 'w')
-        oRes.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
+            f = open(outFile,'r')
+            outRes = outFile + ".res"
 
-        for line in f:
-            linet = line.replace("\n","")
-            listLine = linet.split("\t")
-            b = os.path.basename(os.path.dirname(listLine[0]))
+            oRes = open(outRes, 'w')
+            outResthr = outFilethr + ".res"
 
-            #if opt.mode == 1:
-            #	ID = os.path.basename(os.path.dirname(os.path.dirname(listLine[0])))
-            #	method = re.sub("^-","",re.split(ID,b)[1])
-            #else:
-            ID = b
-            tmp = re.split("-", b)
-            method = tmp[len(tmp)-1]
+            oResThr = open(outResthr, 'w')
+            oRes.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
 
-            MONO = listLine[1]
-            BOOT = listLine[2]
-            CLADE = re.sub("\s+\(.*","", listLine[3])
-	    BRANCHLEN = listLine[4]
-            oRes.write( "%s\t%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE, BRANCHLEN))
-        f.close()
-        oRes.close()
-        oResThr.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
-        f = open(outFilethr,'r')
-        for line in f:
-            linet = line.replace("\n","")
-            listLine = linet.split("\t")
+            for line in f:
+                linet = line.replace("\n","")
+                listLine = linet.split("\t")
+                b = os.path.basename(os.path.dirname(listLine[0]))
 
-            b = os.path.basename(os.path.dirname(listLine[0]))
-        #	if opt.mode == 1:
-        #		ID = os.path.basename(os.path.dirname(os.path.dirname(listLine[0])))
-        #		method = re.sub("^-","",re.split(ID,b)[1])
-        #	else:
-            ID = b
-            tmp = re.split("-", b)
-            method = tmp[len(tmp)-1]
+                #if opt.mode == 1:
+                #	ID = os.path.basename(os.path.dirname(os.path.dirname(listLine[0])))
+                #	method = re.sub("^-","",re.split(ID,b)[1])
+                #else:
+                ID = b
+                tmp = re.split("-", b)
+                method = "DS"
 
-            MONO = listLine[1]
-            BOOT = listLine[2]
-            CLADE = re.sub("\s+\(.*","",listLine[3])
-	    BRANCHLEN = listLine[3]
-            oResThr.write( "%s\t%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE, BRANCHLEN))
-        oResThr.close()
+                MONO = listLine[1]
+                BOOT = listLine[2]
+                CLADE = re.sub("\s+\(.*","", listLine[3])
+                BRANCHLEN = listLine[4]
+                oRes.write( "%s\t%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE, BRANCHLEN))
+            f.close()
+            oRes.close()
+            oResThr.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
+            f = open(outFilethr,'r')
+            for line in f:
+                linet = line.replace("\n","")
+                listLine = linet.split("\t")
+
+                b = os.path.basename(os.path.dirname(listLine[0]))
+            #	if opt.mode == 1:
+            #		ID = os.path.basename(os.path.dirname(os.path.dirname(listLine[0])))
+            #		method = re.sub("^-","",re.split(ID,b)[1])
+            #	else:
+                ID = b
+                tmp = re.split("-", b)
+                method = "DS"
+
+                MONO = listLine[1]
+                BOOT = listLine[2]
+                CLADE = re.sub("\s+\(.*","",listLine[3])
+                BRANCHLEN = listLine[3]
+                oResThr.write( "%s\t%s\t%s\t%s\t%s\t%s\n" % (ID, method, MONO, BOOT, CLADE, BRANCHLEN))
+            oResThr.close()
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-	if opt.newModel is not None and opt.newOrder is not None:
-	        args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)), 
+        if opt.newModel is not None and opt.newOrder is not None:
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel)),
 			"-m", str(opt.missing)]
-	elif opt.newModel is not None and opt.newOrder is None:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
-	elif opt.newModel is None and opt.newOrder is not None:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
-	else:
-		args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-m", str(opt.missing)]
+        elif opt.newModel is not None and opt.newOrder is None:
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-y", os.path.abspath(opt.newModel), "-m", str(opt.missing)]
+        elif opt.newModel is None and opt.newOrder is not None:
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-t", os.path.abspath(opt.newOrder), "-m", str(opt.missing)]
+        else:
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-c", opt.clades, "-i", opt.label, "-m", str(opt.missing)]
         stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
@@ -179,6 +184,7 @@ class Analyze(object):
         err.write(stdout)
         err.write(stderr)
         err.close()
+
     def geneTreeBranchInfo(self):
         opt = self.opt
         searchFiles = " ".join(glob.glob(opt.search))
@@ -193,14 +199,14 @@ class Analyze(object):
         WS_HOME = os.environ['WS_HOME']
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
-	if opt.newModel is not None and opt.newOrder is not None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
+        if opt.newModel is not None and opt.newOrder is not None:
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-t", str(os.path.abspath(opt.newOrder)), "-y", str(os.path.abspath(opt.newModel))]
         elif opt.newModel is not None and opt.newOrder is None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode),  "-i", opt.label, "-y", os.path.abspath(opt.newModel)]
+            args = ["-p", WS_HOME, "-s", str(opt.mode),  "-i", opt.label, "-y", os.path.abspath(opt.newModel)]
         elif opt.newModel is None and opt.newOrder is not None:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-t", os.path.abspath(opt.newOrder)]
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label, "-t", os.path.abspath(opt.newOrder)]
         else:
-        	args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label]
+            args = ["-p", WS_HOME, "-s", str(opt.mode), "-i", opt.label]
         stderrFile = opt.label + "/error.log"
         cmd = [command, path2script] + args
         print "printing outputs and errors on " + stderrFile
@@ -214,24 +220,26 @@ class Analyze(object):
         err.write(stdout)
         err.write(stderr)
         err.close()
+
     def relFreq(self):
-	WS_HOME = os.environ['WS_HOME']
-	opt = self.opt
-	command = WS_HOME + "/" + "DiscoVista/src/utils/pos-for-hyp.sh"
-	args = [opt.path, opt.annotation, opt.names, opt.label, opt.outg ]
-	cmd = ["bash",command] + args
-	stderrFile = opt.label + "/error.log"
-	print "printing errors on " + stderrFile
-	print cmd
-	fi = open(stderrFile,'w')
-	fi.close()
-	print cmd
-	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	stdout, stderr = proc.communicate()
-	err = open(stderrFile,'a')
-	err.write(stdout)
-	err.write(stderr)
-	err.close()
+        WS_HOME = os.environ['WS_HOME']
+        opt = self.opt
+        command = WS_HOME + "/" + "DiscoVista/src/utils/pos-for-hyp.sh"
+        args = [opt.path, opt.annotation, opt.names, opt.label, opt.outg ]
+        cmd = ["bash",command] + args
+        stderrFile = opt.label + "/error.log"
+        print "printing errors on " + stderrFile
+        print cmd
+        fi = open(stderrFile,'w')
+        fi.close()
+        print cmd
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = proc.communicate()
+        err = open(stderrFile,'a')
+        err.write(stdout)
+        err.write(stderr)
+        err.close()
+
     def analyze(self):
         if self.opt.mode == 0 or self.opt.mode == 1:
             self.treesAnalyses()
@@ -241,5 +249,5 @@ class Analyze(object):
             self.occupancyAnalysis()
         elif self.opt.mode == 4:
             self.geneTreeBranchInfo()
-	elif self.opt.mode == 5:
-	    self.relFreq()
+        elif self.opt.mode == 5:
+            self.relFreq()

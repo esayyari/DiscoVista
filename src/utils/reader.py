@@ -3,7 +3,7 @@ import os
 from optparse import OptionParser
 class Opt(object):
     def __init__(self, parser):
-        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label, outg) = self.parseArgs(parser)
+        (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label, outg, figureFlag) = self.parseArgs(parser)
         tmpPath = os.path.dirname(annotation)
         self.names = tmpPath + "/names.txt"
         self.path = path
@@ -14,24 +14,25 @@ class Opt(object):
         self.style = style
         self.annotation = annotation
         self.modelCond = modelCond
-	self.newOrder = newOrder
-	self.newModel = newModel
-	self.missing = missing
+        self.newOrder = newOrder
+        self.newModel = newModel
+        self.missing = missing
         (search, searchthr, searchrooted, searchthrrooted) = self.searchFiles(mode, self.path, threshold)
         self.search = search
         self.searchthr = searchthr
         self.searchrooted = searchrooted
         self.searchthrrooted = searchthrrooted
-	if (annotation is not ""):
-	        self.createNames(annotation, self.names)
-	self.label = label
-	self.outg = outg
+        self.figureFlag = figureFlag
+        if (annotation is not ""):
+            self.createNames(annotation, self.names)
+        self.label = label
+        self.outg = outg
     def parseArgs(self, parser):
 
         (options, args) = parser.parse_args()
         if not options.path:
             parser.print_help()
-            sys.exit("please enter the path to data folder.")
+            sys.exit("please enter the path to data folder")
 
         path = options.path
         if not options.mode:
@@ -56,10 +57,10 @@ class Opt(object):
 
         else:
             root = ""
-	if options.missing is None:
-		missing = 0
-	else:
-		missing = options.missing
+        if options.missing is None:
+            missing = 0
+        else:
+            missing = options.missing
 
         if mode == 0 or mode == 1:
             if not options.clades:
@@ -84,13 +85,12 @@ class Opt(object):
         else:
             clades = ""
             threshold = -1
-	
-	if not options.label:
-		parser.print_help()
-		sys.exit("Please enter the output folder")
-	label = options.label
-	if not os.path.exists(label):
-	    os.makedirs(label)
+        if not options.label:
+            parser.print_help()
+            sys.exit("Please enter the output folder")
+        label = options.label
+        if not os.path.exists(label):
+            os.makedirs(label)
 
         if mode == 5 and options.outg:
                 outg = options.outg
@@ -100,14 +100,14 @@ class Opt(object):
         if (mode == 3 or mode == 5 ) and not options.annotation:
             parser.print_help()
             sys.exit("Please enter the annotation file")	
-	elif (mode == 3 or  mode == 5 ):
-	    annotation = options.annotation
-	    annotation = os.path.abspath(annotation)
-	    if not os.path.isfile(annotation):
-	    	parser.print_help()
-	    	sys.exit("Please check the annotation path")
-	else:
-	    annotation = ""
+        elif (mode == 3 or  mode == 5 ):
+            annotation = options.annotation
+            annotation = os.path.abspath(annotation)
+            if not os.path.isfile(annotation):
+                parser.print_help()
+                sys.exit("Please check the annotation path")
+        else:
+            annotation = ""
 		
 
         path = os.path.expanduser(os.path.expandvars(path))
@@ -115,12 +115,18 @@ class Opt(object):
         if not os.path.exists(path):
             parser.print_help()
             sys.exit("please check the path to data direcotry")
-	
-	newModel = options.newModel
-	newOrder = options.newOrder
+        newModel = options.newModel
+        newOrder = options.newOrder
         style = options.style
+        if style is not None:
+            style = os.path.expanduser(os.path.expandvars(style))
+            style = os.path.abspath(style)
+            if not os.path.exists(style):
+                parser.print_help()
+                sys.exit("Cannot find the option file.")
+        figureFlag = options.figureFlag
         modelCond = options.modelCond
-        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label, outg)
+        return (path, root, clades, threshold, mode, style, annotation, modelCond, newModel, newOrder, missing, label, outg, figureFlag)
     def searchFiles(self, mode, path, thresh):
         if mode == 0:
             search = path + '/*/' + 'estimated_species_tree.tree'
@@ -128,10 +134,10 @@ class Opt(object):
             searchrooted = path + '/*/' + 'estimated_species_tree.tree'# + '.rerooted'
             searchthrrooted = path + '/*/' + 'estimated_species_tree.tree.' + str(thresh)# + '.rerooted'
         elif mode == 1:
-            search = path + '/*/*/' + 'estimated_gene_trees.tree'
-            searchthr = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh)
-            searchrooted = path + '/*/*/' + 'estimated_gene_trees.tree'# + '.rerooted'
-            searchthrrooted = path + '/*/*/' + 'estimated_gene_trees.tree.' + str(thresh) #+ '.rerooted'
+            search = path + '/*/' + 'estimated_gene_trees.tree'
+            searchthr = path + '/*/' + 'estimated_gene_trees.tree.' + str(thresh)
+            searchrooted = path + '/*/' + 'estimated_gene_trees.tree'# + '.rerooted'
+            searchthrrooted = path + '/*/' + 'estimated_gene_trees.tree.' + str(thresh) #+ '.rerooted'
         elif mode == 2:
             search = path + '/*/*-alignment-noFilter.fasta'
             searchthr = None
@@ -145,13 +151,13 @@ class Opt(object):
         elif mode == 4:
             search = path + '/*/*-estimated_gene_trees.tree'
             searchthr = None
-            searchrooted = path + '/*/*-estimated_gene_trees.tree.rerooted'
+            searchrooted = path + '/*/*-estimated_gene_trees.tree'
             searchthrrooted = None
-	elif mode == 5:
-	    search = None
-	    searchthr = None
-	    searchrooted = None
-	    searchthrrooted = None
+        elif mode == 5:
+            search = None
+            searchthr = None
+            searchrooted = None
+            searchthrrooted = None
         return (search, searchthr, searchrooted, searchthrrooted)
     def createNames(self, annotation, names):
         f = open(names, 'w')

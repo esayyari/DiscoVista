@@ -73,21 +73,15 @@ if (opt$mode == 0 || opt$mode == 1 ) {
   }
   data = read.data(file.all="clades.txt.res", file.hs="clades.hs.txt.res", clade.order=clade.order, new.clades = new.clades, new.models = new.models)
   if (mode == 0) {
-    figuresizes = c(10.5,12)
-    metatable(data$y,data$y.colors,data$countes,pages=c(1),raw.all=data$raw.all,figuresizes=figuresizes)
+    speciesgraphfiguresizes = c(10.5,12)
+    metatable(data$y,data$y.colors,data$countes,pages=c(1),raw.all=data$raw.all,figuresizes=metatablefiguresize)
   } else if (mode == 1) {
-    sizes = c(6.5,10)
-    metabargraph(data$countes.melted,data$y,sizes=sizes)
-    metabargraph2(data$countes.melted,data$y,sizes=sizes)
-    metahistograms2(data$raw.all)
-    pdf("Monophyletic_Bargraph2.pdf",width=sizes[1],height=sizes[2])
-    p<-ggplot(data$countes.melted, aes(x = DS, y = value)) + 
-       geom_bar(stat="identity") + 
-      aes(fill = Classification)+facet_wrap(~CLADE)
-    theme(axis.text.x = element_text(angle = 45))+theme_classic()
-    print(p)
-    dev.off()
-  }
+    
+    gtcountbargraphfiguresizes = c(6.5,10)
+    gtratiobargraphfiguresizes = c(6.5,10)
+    
+    metabargraph(data$countes.melted,data$y,sizes=gtcountbargraphfiguresizes)
+    metabargraph2(data$countes.melted,data$y,sizes=gtratiobargraphfiguresizes)
 } else if (opt$mode == 2) {
   gcplot = paste(opt$WS_HOME,"/DiscoVista/src/R/plot.gc.R", sep="")
   source(gcplot)
