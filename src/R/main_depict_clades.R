@@ -1,7 +1,9 @@
 require(reshape)
+require(reshape2)
 require(plyr)
 require(ggplot2)
 require(scales)
+
 print(getwd())
 if (ST) {
   
@@ -283,16 +285,16 @@ metahistograms2<- function (d.boot,sizes) {
   print(p1)
   dev.off()	
 }
-metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.all){
+metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.all, fontsize=10,colours=c(),vals=c()){
   print(levels(y$DS))
   # Draw the block driagram
   for ( ds in levels(y$DS)) {
     
-    pdf(paste(ds,"block","pdf",sep="."),width=figuresizes[1],height=figuresizes[2])
+    pdf("species-tree-analysis-grouped.pdf",width=figuresizes[1],height=figuresizes[2])
     #png(paste(ds,"block","png",sep="."),width=2000,height=2000)#,width=figuresizes[1],height=figuresizes[2])
     
-    op <- theme(axis.text.x = element_text(size=10,angle = 90,hjust=1,colour="black"),
-                legend.position="bottom",legend.text = element_text(size=9,colour="black"), axis.text.y = element_text(size=10,colour="black",hjust=1))
+    op <- theme(axis.text.x = element_text(size=fontsize,angle = 90,hjust=1,colour="black"),
+                legend.position="bottom",legend.text = element_text(size=fontsize,colour="black"), axis.text.y = element_text(size=fontsize,colour="black",hjust=1))
     if (1 %in% pages) {			
       p1 <- qplot(ID,CLADE,data=y,fill=Classification,geom="tile",xlab="",ylab="")+ 
         scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE) +
@@ -329,9 +331,9 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.al
     }
     dev.off()
     if (MS) {
-	db = raw.all[raw.all$MONO %in% c("IS_MONO","IS_MONO_INCOMPLETE"),]
+	     db = raw.all[raw.all$MONO %in% c("IS_MONO","IS_MONO_INCOMPLETE"),]
     } else {
-	db=raw.all[raw.all$MONO=="IS_MONO",]
+	     db=raw.all[raw.all$MONO=="IS_MONO",]
     }
     dbc=y[which(y$Classification=="Compatible (Weak Rejection)"),c(1:3)]
     dbn=y[which(y$Classification=="Strong Rejection"),c(1:3)]
@@ -342,22 +344,41 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.al
     print(db2$BOOT)
     #db2$CLADE <- factor(db2$CLADE, levels=rev(clade.order))
     nrow(db2)
-    pdf(paste(ds,"block-shades","pdf",sep="."),width=figuresizes[1],height=figuresizes[2]) 
+    if (length(colorDataFrame)!=0){
+        colorDataFrame<-colorDataFrame[with(colorDataFrame,order(support,decreasing=TRUE)),]
+        colours <- as.character(colorDataFrame$color)
+        vals <- as.character(colorDataFrame$support)
+    }
+    pdf("species-tree-analysis-support-shades.pdf",width=figuresizes[1],height=figuresizes[2]) 
     if(nrow(dbn) == 0 && nrow(dbc)!= 0) {
-	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98"),values=rescale((c(100,99,90,50,0,-50))))
+      if (length(colorDataFrame) == 0){
+      colours = c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98")
+      vals = c(100,99,90,50,0,-50)
+    }
+	    c<-scale_fill_gradientn(na.value="white",colours=colours,values=rescale(vals))
     } else if(nrow(dbn) == 0 && nrow(dbc) == 0) {
-	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF"),values=rescale((c(100,99,90,50,0))))
+      if (length(colorDataFrame)== 0 ){
+        colours = c("#257070","#459090","#599590","#69a1a0","#DDEEFF")
+        vals = c(100,99,90,50,0)
+      }
+	    c<-scale_fill_gradientn(na.value="white",colours=colours,values=rescale(vals))
     } else if(nrow(dbn) != 0 && nrow(dbc) !=0 ) {
-    	c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69A1A0","#DDEEFF","#EC7F98","#C84060"),values=rescale((c(100,99,90,50,0,-50,-100))))
+      if (length(colorDataFrame) == 0){
+        colours = c("#257070","#459090","#599590","#69A1A0","#DDEEFF","#EC7F98","#C84060")
+        vals = c(100,99,90,50,0,-50,-100)
+      }
+    	c<-scale_fill_gradientn(na.value="white",colours=colours,values=rescale(vals))
     } else {
-       c<-scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#c84060"),values=rescale((c(100,99,90,50,0,-100))))
+      if (length(colorDataFrame) == 0){
+        colours = c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#c84060")
+        vals=  c(100,99,90,50,0,-100)
+      }
+      c<-scale_fill_gradientn(na.value="white",colours=colours,values = rescale(vals))
     }
     p1 <- qplot(ID,CLADE,data=db2,fill=BOOT,geom="tile",xlab="",ylab="")+
       scale_x_discrete(drop=FALSE) + scale_y_discrete(drop=FALSE)+c+
-      #scale_fill_gradientn(na.value="white",colours=c("#257070","#459090","#599590","#69a1a0","#DDEEFF","#ec7f98","#c84060")),values=rescale(rev(c(100,99,90,50,0,-50,-100))))+ 
-      #scale_fill_gradientn(limits = c(-100,100), colours=c("#c84060","#ec7f98","#DDEEFF","#69a1a0","#257070"),na.value="white")+
-      theme_classic() + theme(axis.text.x = element_text(size=10,angle = 90,hjust=1,colour="black"),
-                         axis.text.y = element_text(hjust=1,size=10,colour="black"), legend.text = element_text(size=9,colour="black"))+theme(legend.position="bottom")
+      theme_classic() + theme(axis.text.x = element_text(size=fontsize,angle = 90,hjust=1,colour="black"),
+                         axis.text.y = element_text(hjust=1,size=fontsize,colour="black"), legend.text = element_text(size=fontsize,colour="black"))+theme(legend.position="bottom")
     print(p1)
     dev.off()
     write.csv(file=paste(ds,"metatable.results","csv",sep="."),cast(y,ID~CLADE))		
@@ -365,17 +386,206 @@ metatable <- function (y,y.colors,c.counts,pages=1:3, figuresizes=c(5,15),raw.al
 }
 
 
-metabargraph1 <- function (d.c.m, y,sizes=c(15,19)){
+metabargraph1 <- function (d.c.m, y,sizes=c(15,19),fontsize=10){
   
   pdf("Monophyletic_Bargraphs.pdf",width=sizes[1],height=sizes[2])
   d.c.m.colors <- array(clade.colors[levels(droplevels(d.c.m$Classification))])
   p1 <- ggplot(d.c.m, aes(x=DS, fill=Classification) , main="Support for each clade") + xlab("") + ylab("Clade") + 
     geom_tile(aes(y = as.factor(CLADE)),stat="identity",colour="black") + facet_wrap(~CLADE,scales="free_y",ncol=1) + theme_bw()+ 
     theme(strip.background = element_blank(),strip.text.y = element_blank(),axis.ticks.x=element_blank(),axis.ticks.y=element_blank(),
-          strip.text.x = element_blank(),axis.text.x = element_text(size=10,angle = 90,hjust=1),legend.position="left", legend.direction="vertical") + 
+          strip.text.x = element_blank(),axis.text.x = element_text(size=fontsize,angle = 90,hjust=1),legend.position="left", legend.direction="vertical") + 
     scale_fill_manual(name=element_blank(), values=d.c.m.colors,na.value="transparent")  + scale_x_discrete(drop=FALSE)
   
   print(p1)
   dev.off()
   
+}
+
+
+gccontent <- function (outlierSize = 0.3, outlierAlpha = 0.1, sizes=c(12,5),stripBackgroud = "#f0ac86f8", panelBackground = "#fbe4d8ff",plt="RdBu") {
+f = read.csv("gc-stat.csv",sep=" ")
+fall=f[,c(1,2,3,10,11,12,13)]
+fall$GC<-fall[,5]+fall[,6]
+fdall = melt(fall,id=c("GENE","SEQUENCE","TAXON"))
+levels(fdall$variable)<-c("A","C","G","T","GC")
+
+dir.create('figures', showWarnings = F)
+
+fcg<-f[,c(1,2,3)]
+fcg$ALL<-f[,11]+f[,12]
+fcg$C1<-f[,21]+f[,22]
+fcg$C2<-f[,31]+f[,32]
+fcg$C3<-f[,41]+f[,42]
+fcg=melt(fcg,id=c("GENE","SEQUENCE","TAXON"))
+
+tc=dcast(data=fcg[],formula=SEQUENCE+variable~.,fun.aggregate=mean)
+
+names(tc)<-c("SEQUENCE","variable","value")
+
+pdf("figures/pTpP_GC_point.pdf",width=sizes[1],height=sizes[2])
+p <- ggplot(aes(reorder(SEQUENCE,value),value,color=variable,group=variable),data=tc)+geom_point()+xlab("")+
+  theme_bw()+theme(axis.text.x = element_text(angle = 90,hjust=1))+scale_color_brewer(name="",palette = plt)
+print(p)
+dev.off()
+
+pdf("figures/pTpP_GC_boxplot.pdf",width=sizes[1],height=sizes[2])
+
+p<-ggplot(aes(as.factor(reorder(SEQUENCE,value)),value),data=fcg)+
+  geom_boxplot(outlier.size=outlierSize,outlier.alpha = outlierAlpha)+xlab("")+ylab("GC content")+ 
+  theme(axis.text.x = element_text(angle = 90,hjust=1),
+        panel.background = element_rect(fill =panelBackground),
+        strip.background = element_rect(fill=stripBackgroud))+
+  facet_grid(variable~., scales = "free")
+
+print(p)
+dev.off()
+}
+
+
+occupancy <- function (mapfiguresize=c(24,10),occSpeciesFigureSize=c(12,5),occCladesFigureSize=c(5.5,3.5),
+                       occCladeFigureFontSize=10,occSpeciesFigureFontSize=16,mapFigureFontSizex=3,mapFigureFontSizey=16,
+                       pallete="Paired",occMapFigureColorLow="white",occMapFigureColorHigh="#00740bff"){
+
+
+clades<-read.csv(opt$annotation,sep='\t',header=F)
+names(clades) <- c("Names","Clade")
+dir.create('figures/')
+oc <- read.csv('occupancy.csv',header=F,sep=' ')
+oc$V5 <- as.numeric(as.character(oc$V5))
+oc <- oc[oc$V5 != 0, ]
+names(oc)<-c("Seq","GENE_ID","model_condition", "Taxon","Len")
+maxG = length(levels(as.factor(oc$GENE_ID)))
+
+oc$ID <- apply( oc[ , c(1,3) ] , 1 , paste0 , collapse = "-" )
+oc <- oc[,c(6,2,4,5)]
+ocs <- ddply(oc, .(ID,GENE_ID), transform, rescale= scale(Len,center=F))
+ocs$Taxon <- with(ocs, reorder(Taxon, Len, FUN = function(x) {return(length(which(x>0)))}))
+ocs$ID <- with(ocs, reorder(ID, Len,FUN = length))
+
+tc=recast(ocs[,c(1,2,3)],ID+Taxon~.); 
+names(tc)[3]<-"occupancy"
+tc$occupancy_prob <-tc$occupancy/maxG
+tc$miss_prob <-1-tc$occupancy_prob
+
+ocs3<-merge(ocs,clades,by.x="Taxon",by.y="Names")
+tc_clades3<-dcast(data=ocs3,formula=GENE_ID+ID+Clade~.)
+names(tc_clades3)[4]<-"num_clade_present"
+tc_clades4<-dcast(tc_clades3[ ,2:4], 
+                  ID+Clade~., fun.aggregate = 
+                    function(x) (sum(x>0)/length(levels(as.factor(tc_clades3$GENE_ID)))))
+names(tc_clades4)[3]<-c("clade_occupancy")
+
+
+
+
+ocs <- ddply(oc, .(ID,GENE_ID), transform, rescale= scale(Len,center=F))
+ocs$Taxon <- with(ocs, reorder(Taxon, Len, FUN = function(x) {return(length(which(x>0)))}))
+ocs$ID <- with(ocs, reorder(ID, Len,FUN = length))
+
+tc=recast(ocs[,c(1,3,4)],ID+Taxon~.); names(tc)[3]<-"occupancy"
+tc2<-tc
+
+if (! is.null(opt$modelCond)) {
+  model = opt$modelCond 
+  print(model)
+  ocs2<-oc[oc$ID %in% c(model),]
+  ocs2 <- dcast(ocs2,GENE_ID+Taxon~.,fun.aggregate=sum,value.var="Len")
+  names(ocs2) <- c("GENE_ID","Taxon", "Len")
+
+
+  ocs2 <- ddply(ocs2, .(GENE_ID), transform, rescale= scale(Len,center=F))
+  ocs2$Taxon <- with(ocs2, reorder(Taxon, Len, FUN = function(x) {return(length(which(x>0)))}))
+  ocs2$GENE_ID <- with(ocs2, reorder(GENE_ID, Len,FUN = length))
+
+  pdf('figures/occupancy_map.pdf',width=mapfiguresize[1],height=mapfiguresize]2],compress=F)
+  p1 <- ggplot(ocs2, aes(GENE_ID,Taxon)) + 
+    geom_tile(aes(fill = rescale),colour = "white")+
+    scale_fill_gradient(low = occMapFigureColorLow,high = occMapFigureColorHigh)+
+    scale_x_discrete(expand = c(0, 0)) +
+    scale_y_discrete(expand = c(0, 0) )+theme_bw()+
+    theme(legend.position = "none",axis.ticks = element_blank(),
+        axis.text.x = element_text(size=mapFigureFontSizex,angle = 90, hjust = 1, colour = "black"),
+        axis.text.y = element_text(size=mapFigureFontSizey,angle = 0, hjust = 1, colour = "black"))
+  print(p1)
+  
+  dev.off()
+}
+
+
+write.csv(tc, file="figures/occupancy-species.csv", row.names = FALSE, sep="\t")
+pdf('figures/occupancy-species.pdf',width=occSpeciesFigureSize[1], height=occSpeciesFigureSize[2],compress=F)
+p1 <- ggplot(data=tc,aes(
+      x=reorder(Taxon,occupancy/maxG,FUN=median),y=occupancy/maxG,group=ID,color=ID))+geom_line(size=1)+
+      theme_bw()+theme(legend.position = "bottom",axis.ticks = element_blank(),
+      axis.text.x = element_text(size=occSpeciesFigureFontSize,angle = 90, hjust = 1, colour = "black"),
+      legend.text=element_text(size=occSpeciesFigureFontSize,color='black'),axis.text.y=element_text(size=24,color="black"),text = element_text(size=16,color="black"))+
+  scale_y_continuous(labels = percent)+
+  ylab('Occupancy')+xlab('Taxon')+scale_color_brewer(name="",palette = pallete)
+print(p1)
+dev.off()
+write.csv(tc_clades4, file="figures/occupancy-clades-final.csv", row.names = FALSE, sep="\t")
+pdf('figures/occupancy-clades.pdf',width=occCladesFigureSize[1], height=occCladesFigureSize[2],compress=F)
+p1 <- qplot(data=tc_clades4,reorder(Clade,clade_occupancy),clade_occupancy,
+      geom="line",color=ID,group=ID)+theme_bw()+theme(legend.position = "bottom",
+      axis.text.x = element_text(angle = 90, size=occCladeFigureFontSize,hjust = 1, vjust=0.5, colour = "black"),
+      axis.text.y = element_text( size=occCladeFigureFontSize,hjust = 1, vjust=0.5, colour = "black"))+
+      xlab('Clades')+ylab('Percent')+scale_y_continuous(labels = scales::percent)+
+      scale_color_brewer(name="",palette=pallete)
+print(p1)
+
+dev.off()
+}
+
+branchStat <- function(width=7,height=4.5,font=12,pointsize=4,pallete='Paired') {
+
+dir.create('figures/')
+
+d<-read.csv('branchStats.csv',sep=" ",header=T)
+
+cdat <- ddply(d, c("DS","model_condition"), summarise, mean_bl=mean(avgtaxonToTaxonBrLen),max_bl=mean(maxtaxonToTaxonBrLen),support=mean(avgBrSupp))
+
+
+d1<-read.csv('branchSupport.csv',sep=' ',header=F)
+cdat2 <- ddply(d1, c("V1","V2"), summarise, rating.mean=mean(V3))
+
+
+pdf('figures/histogram_MLBS_distribution.pdf',width=30,height=15,compress=F)
+p1 <- ggplot(d1, aes(V3,fill = V2))+
+  geom_histogram(alpha=1,color = "black",size=0.05,binwidth=10,position="dodge",aes(y=..count../sum(..count..)))+facet_wrap(~V1)+
+  theme_bw()+theme(legend.position="bottom",text = element_text(size=24),
+                   axis.text.x = element_text(size=24,angle = 0),
+                   axis.text.y = element_text(size=24,angle = 0),
+                   legend.text=element_text(size=24))+ylab('percent')+
+  scale_y_continuous(labels = percent)+
+  scale_fill_brewer(name="",palette=palette)+xlab('MLBS')+
+  geom_vline(data=cdat2, aes(xintercept=rating.mean, colour=interaction(V2)),size=1,linetype="dashed")+
+  scale_color_brewer(name="",palette = pallete)
+print(p1)
+dev.off()
+
+
+
+pdf('figures/average_taxa_distance_vs_MLBS.pdf',width=width,height=height,compress=F)
+p1 <- qplot(data=cdat,mean_bl,support,color=model_condition)+facet_wrap(~DS)+geom_point(size=geomsize)+
+  theme_bw()+xlab('average taxa distance')+
+  theme(legend.position="bottom",text = element_text(size=font),
+        axis.text.x = element_text(size=font,angle = 0),
+        axis.text.y = element_text(size=font,angle = 0),
+        legend.text=element_text(size=font))+
+  ylab('average bootstrap support (percent)')+
+  scale_color_brewer(name='',palette=palette)
+print(p1)
+dev.off()
+
+
+pdf('figures/maximum_taxa_distance_vs_MLBS.pdf',width=width,height=height,compress=F)
+p1 <- qplot(data=cdat,max_bl,support,color=model_condition)+facet_wrap(~DS)+geom_point(size=geomsize)+
+  theme_bw()+  theme(legend.position="bottom",text = element_text(size=font),
+                     axis.text.x = element_text(size=font,angle = 0),
+                     axis.text.y = element_text(size=font,angle = 0),
+                     legend.text=element_text(size=font))+
+  xlab('average maximum taxa distance')+ylab('average bootstrap support (percent)')+
+  scale_color_brewer(name='',palette=palette)+theme(legend.position="bottom")
+print(p1)
+dev.off()
 }

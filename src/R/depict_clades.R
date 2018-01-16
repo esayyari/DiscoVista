@@ -73,24 +73,21 @@ if (opt$mode == 0 || opt$mode == 1 ) {
   }
   data = read.data(file.all="clades.txt.res", file.hs="clades.hs.txt.res", clade.order=clade.order, new.clades = new.clades, new.models = new.models)
   if (mode == 0) {
-    speciesgraphfiguresizes = c(10.5,12)
-    metatable(data$y,data$y.colors,data$countes,pages=c(1),raw.all=data$raw.all,figuresizes=metatablefiguresize)
+    figuresize = c(10.5,12)
+    metatable(data$y,data$y.colors,data$countes,pages=c(1),raw.all=data$raw.all,figuresizes=figuresize)
   } else if (mode == 1) {
     
-    gtcountbargraphfiguresizes = c(6.5,10)
-    gtratiobargraphfiguresizes = c(6.5,10)
+    figuresize = c(6.5,10)
     
-    metabargraph(data$countes.melted,data$y,sizes=gtcountbargraphfiguresizes)
-    metabargraph2(data$countes.melted,data$y,sizes=gtratiobargraphfiguresizes)
+    metabargraph(data$countes.melted,data$y,sizes=figuresize)
+    metabargraph2(data$countes.melted,data$y,sizes=figuresize)
 } else if (opt$mode == 2) {
-  gcplot = paste(opt$WS_HOME,"/DiscoVista/src/R/plot.gc.R", sep="")
+  gccontent()
   source(gcplot)
 } else if (opt$mode == 3) {
-  occupancy = paste(opt$WS_HOME,"/DiscoVista/src/R/occupancy.R", sep="")
-  source(occupancy)
+  ooccupancy()
 } else if (opt$mode == 4) {
-  branchStat = paste(opt$WS_HOME,"/DiscoVista/src/R/branchStat.R", sep="")
-  source(branchStat)
+  branchStat()
 }
 
 
