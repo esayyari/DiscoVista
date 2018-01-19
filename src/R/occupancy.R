@@ -54,7 +54,7 @@ if (! is.null(opt$modelCond)) {
   ocs2$Taxon <- with(ocs2, reorder(Taxon, Len, FUN = function(x) {return(length(which(x>0)))}))
   ocs2$GENE_ID <- with(ocs2, reorder(GENE_ID, Len,FUN = length))
 
-  pdf('figures/occupancy_map.pdf',width=21,height=6,compress=F)
+  pdf('figures/occupancy_map.pdf',width=28,height=14,compress=F)
   p1 <- ggplot(ocs2, aes(GENE_ID,Taxon)) + 
     geom_tile(aes(fill = rescale),colour = "white")+
     scale_fill_gradient(low = "white",high = "#00740bff")+

@@ -404,6 +404,7 @@ metabargraph1 <- function (d.c.m, y,sizes=c(15,19),fontsize=10){
 
 gccontent <- function (outlierSize = 0.3, outlierAlpha = 0.1, sizes=c(12,5),stripBackgroud = "#f0ac86f8", panelBackground = "#fbe4d8ff",plt="RdBu") {
 f = read.csv("gc-stat.csv",sep=" ")
+print("here")
 fall=f[,c(1,2,3,10,11,12,13)]
 fall$GC<-fall[,5]+fall[,6]
 fdall = melt(fall,id=c("GENE","SEQUENCE","TAXON"))
@@ -497,7 +498,7 @@ if (! is.null(opt$modelCond)) {
   ocs2$Taxon <- with(ocs2, reorder(Taxon, Len, FUN = function(x) {return(length(which(x>0)))}))
   ocs2$GENE_ID <- with(ocs2, reorder(GENE_ID, Len,FUN = length))
 
-  pdf('figures/occupancy_map.pdf',width=mapfiguresize[1],height=mapfiguresize]2],compress=F)
+  pdf('figures/occupancy_map.pdf',width=mapfiguresize[1],height=mapfiguresize[2],compress=F)
   p1 <- ggplot(ocs2, aes(GENE_ID,Taxon)) + 
     geom_tile(aes(fill = rescale),colour = "white")+
     scale_fill_gradient(low = occMapFigureColorLow,high = occMapFigureColorHigh)+

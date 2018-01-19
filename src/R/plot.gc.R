@@ -38,3 +38,4 @@ p<-ggplot(aes(as.factor(reorder(SEQUENCE,value)),value),data=fcg)+
 
 print(p)
 dev.off()
+

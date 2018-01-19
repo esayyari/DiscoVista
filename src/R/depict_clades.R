@@ -55,13 +55,15 @@ if(!is.null(opt$modelCondOrder)){
 }
 mode = opt$mode
 print(mode)
+MS = opt$missing
+ST = opt$ST
+depict = paste(WS_HOME,"/DiscoVista/src/R/main_depict_clades.R", sep="")
+source(depict)
 if (opt$mode == 0 || opt$mode == 1 ) {
-  MS = opt$missing
-  ST = opt$ST
+
   cl=read.csv(opt$clade,header=T,sep="\t")
   names(cl)<-c("V1","V2","V3",names(cl)[4:length(cl)])
-  depict = paste(WS_HOME,"/DiscoVista/src/R/main_depict_clades.R", sep="")
-  source(depict)
+
   clade.order=c()
   
   for (x in levels(cl$V3)) {
@@ -81,9 +83,10 @@ if (opt$mode == 0 || opt$mode == 1 ) {
     
     metabargraph(data$countes.melted,data$y,sizes=figuresize)
     metabargraph2(data$countes.melted,data$y,sizes=figuresize)
+  }
 } else if (opt$mode == 2) {
+  print("gc content analysis!")
   gccontent()
-  source(gcplot)
 } else if (opt$mode == 3) {
   ooccupancy()
 } else if (opt$mode == 4) {
