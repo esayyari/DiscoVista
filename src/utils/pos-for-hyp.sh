@@ -45,7 +45,7 @@ cat $annot >> $annot.with.header.txt
 
 ant=$(find $annot.with.header.txt)
 
-python $WS_HOME/DiscoVista/src/utils//check-anot-if-mono.py $species $annot
+python $WS_HOME/DiscoVista/src/utils//check-anot-if-mono.py $species $annot $outgroup
 [ $? -eq 0 ] || exit $?
 python $WS_HOME/DiscoVista/src/utils/spit-hypo-trees.py $species  $ant contract
 [ $? -eq 0 ] || exit $?

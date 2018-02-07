@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import sys
 import os
@@ -60,7 +60,7 @@ for line in src:
     else:
         clades[clade].append(taxa.replace("_"," "))
 with open(destfile, 'w') as dest_file:
-    dest_file.write("Clade Name\tClade Definition\tSection Letter\tComponents\tShow\tComments\n")
+    dest_file.write("Clade Name\tClade Definition\tSection Letter\tComponents\tShow\tComments\tOther\n")
     allTaxa = set()
     for clade in clades:
         if clade != "Outgroup":

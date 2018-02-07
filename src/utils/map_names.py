@@ -48,8 +48,8 @@ class generateNewQuartFreq(object):
                 if set(self.clades[self.taxaDict[y]]).issubset(quadSet):
                     quadSet = quadSet.difference(set(self.clades[self.taxaDict[y]]))
                     h.append(self.taxaDict[y])
-		else:
-		    sys.exit("Couldn't map bipartition to clades defined in annotation file. please check your annotation file!")
+                else:
+                    sys.exit("Couldn't map bipartition to clades defined in annotation file. please check your annotation file!")
 
             topology.append(h)
         return topology
@@ -109,8 +109,8 @@ class generateNewQuartFreq(object):
         allTaxa = {l.taxon.label.replace("'","") for l in tree.leaf_nodes()}
 	
         for nd in tree.postorder_internal_node_iter():
-	    if nd.parent_node == tree.seed_node:
-		continue
+            if nd.parent_node == tree.seed_node:
+                continue
             edge = nd.edge
             taxa = edge.bipartition.leafset_taxa(tree.taxon_namespace)
             mainTaxaLabels = {l.label.replace("'","") for l in taxa}
@@ -143,7 +143,7 @@ class generateNewQuartFreq(object):
                     bipart1.append(str(int(self.edgeMap[bipart])))
                 elif set(otherSide).issubset(mainotherSide):
                     bipart = ",".join(otherSide)
-            	    bipart2.append(str(int(self.edgeMap[bipart])))
+                    bipart2.append(str(int(self.edgeMap[bipart])))
             if bipart1[0]<bipart1[1]:
                 bipart1String = bipart1[0]+","+bipart1[1]
             else:
@@ -196,7 +196,7 @@ class generateNewQuartFreq(object):
             print >> self.g, "\t".join(Linet[1]) + "\t" + "t3"
 if __name__ == "__main__":
     if (len(sys.argv)<6):
-        print "USAGE: " + sys.argv[0] + " NameFiles Anotation freqStat Outfile Tree"
+        print("USAGE: " + sys.argv[0] + " NameFiles Anotation freqStat Outfile Tree")
         exit(1)
     namesFile = sys.argv[1]
     anotFile = sys.argv[2]
