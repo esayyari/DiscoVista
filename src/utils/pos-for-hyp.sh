@@ -55,7 +55,7 @@ d=`pwd`;
 cp $species-hypo.tre $d/$name-hypo.tre
 
 
-astral=$WS_HOME/DiscoVista/bin/astral.4.10.12.jar
+astral=$WS_HOME/DiscoVista/bin/astral.5.6.1.jar
 java -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.tre
 [ $? -eq 0 ] || exit $?
 
