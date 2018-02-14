@@ -193,12 +193,17 @@ def getTaxa(cladeFiles):
 	
 	f = open(cladeFiles, 'r')
 	lines = f.readlines()
+	flag = 0
 	for line in lines:
 		tmp = line.split('\t')[0]
 		if (tmp == "All"):
+			flag = 1
 			line = line.strip('\n')
 			listLine = line.split('\t')[1]
 			taxa = set(listLine.replace('""+""','\t').replace('""','\t').replace('"','\t').replace('+','\t').strip('\t').replace('\t\t','\t').split('\t'))
+	if flag == 0:
+		print("Please define a clade with name All in your clade definition file, which includes all species in your dataset!")
+		exit(1)
 	return taxa
 	f.close()
 

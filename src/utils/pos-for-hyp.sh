@@ -56,7 +56,7 @@ cp $species-hypo.tre $d/$name-hypo.tre
 
 
 astral=$WS_HOME/DiscoVista/bin/astral.5.6.1.jar
-java -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.tre > $d/astral-job.log 2>&1
+java -Xmx8000m -jar $astral -i $genes -q $d/$name-hypo.tre -t 16 -o  $d/$name-uncollapsed.tre > $d/astral-job.log 2>&1
 [ $? -eq 0 ] || exit $?
 
 sed -i "s/)N\([0-9][0-9]*\)'/)'N\1/g" $d/$name-uncollapsed.tre
