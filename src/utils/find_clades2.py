@@ -104,9 +104,13 @@ class Mono(object):
 	otherTaxaLabel = {t.label for t in otherSideTaxa}
         if comps:
             for comp in comps:
-                if not set(self.allclades[comp]) & taxaLabel:
-                    self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
-                    return
+		if comp in self.allclades:
+	                if not set(self.allclades[comp]) & taxaLabel:
+        	            self.print_result(treeName, "COMP_MISSING", None, name, tree, ofile, mult, clade)
+                	    return
+		else:
+			print("clade comp is not defined previousely! please check your clade definition, 4th column for clade: " + name)
+			exit(1)
 	if othercomps and len(othercomps) != 0:
 	    #print "othercomps", othercomps
 	    for comp in othercomps:
@@ -167,7 +171,7 @@ class Mono(object):
             else:
                 components=[]
             if len(r)>=5:
-                show = int(r[4].strip()) if r[4] != "" else 1
+                show = int(r[4].strip()) if r[4].strip() != "" else 1
             else:
                 show = 1
 
