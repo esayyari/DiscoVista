@@ -3,6 +3,12 @@ import dendropy
 import sys
 import re
 from types import ListType
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 #is_compatible_with_bipartition(bipartition, is_bipartitions_updated=False)
 def get_present_taxa(tree, labels):
@@ -171,7 +177,17 @@ class Mono(object):
             else:
                 components=[]
             if len(r)>=5:
-                show = int(r[4].strip()) if r[4].strip() != "" else 1
+		if r[4].strip() == "":
+			print("column 5 of clade definition file takes 0/1, but provided nothing! 0: don't show clade, 1: show the clade. Error occured in line: " + line)
+			exit(1)
+		if RepresentsInt(r[4].strip()):
+			if int(r[4].strip()) != 0 and int(r[4].strip())!= 1:
+				print("column 5 of clade definition file takes 0/1! The number provided is " + r[4].strip() + " please check! Error occured in line: "+ line)
+				exit(1)
+		else:
+			print("column 5 of clade definition file takes 0/1, but provided a string instead! please check line: " + line)
+			exit(1)
+                show = int(r[4].strip())
             else:
                 show = 1
 
