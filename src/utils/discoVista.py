@@ -55,5 +55,10 @@ if "__main__" == __name__:
     opt = Opt(parser)
 
     analyzer = Analyze(opt)
-    analyzer.analyze()
+    try:
+    	analyzer.analyze()
+    except ValueError:
+    	print("analysis failed!")
+    	raise
+    	sys.exit(1)
 

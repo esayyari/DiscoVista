@@ -107,19 +107,29 @@ class generateNewQuartFreq(object):
         cladeToEdge = dict()
         tree.encode_bipartitions()
         allTaxa = {l.taxon.label.replace("'","") for l in tree.leaf_nodes()}
-	
-        for nd in tree.postorder_internal_node_iter():
-	    if nd.parent_node == tree.seed_node:
-		continue
-            edge = nd.edge
+	flag = 0
+        for edge in tree.postorder_internal_edge_iter():
+	    #if nd.parent_node == tree.seed_node:
+	#	continue
+#            edge = nd.edge
             taxa = edge.bipartition.leafset_taxa(tree.taxon_namespace)
             mainTaxaLabels = {l.label.replace("'","") for l in taxa}
             mainotherSide = (allTaxa - mainTaxaLabels)
 
-            if nd == tree.seed_node:
-                continue
-            neighbors = edge.get_adjacent_edges()
-
+ #           if nd == tree.seed_node:
+  #              continue
+	    if edge.head_node == tree.seed_node or edge.tail_node == tree.seed_node:
+		children = tree.seed_node.child_nodes()
+		if children[0].is_leaf() or children[1].is_leaf() or flag == 1:
+			continue
+		else:
+			neighbors = list()
+			e0 = [i for i in children[0].incident_edges() if (i.head_node is not tree.seed_node or i.tail_node is not tree.seed_node)]
+			e1 = [i for i in children[1].incident_edges() if (i.head_node is not tree.seed_node or i.tail_node is not tree.seed_node)]
+			neighbors = e0 + e1
+			flag = 1
+	    else:
+	            neighbors = edge.get_adjacent_edges()
             if len(neighbors) < 4:
                 continue
             h = list()
@@ -144,10 +154,14 @@ class generateNewQuartFreq(object):
                 elif set(otherSide).issubset(mainotherSide):
                     bipart = ",".join(otherSide)
             	    bipart2.append(str(int(self.edgeMap[bipart])))
+	    if len(bipart1)<2:
+		continue
             if bipart1[0]<bipart1[1]:
                 bipart1String = bipart1[0]+","+bipart1[1]
             else:
                 bipart1String = bipart1[1]+","+bipart1[0]
+	    if len(bipart2)<2:
+		continue
             if bipart2[0]<bipart2[1]:
                 bipart2String = bipart2[0]+","+bipart2[1]
             else:
@@ -158,7 +172,7 @@ class generateNewQuartFreq(object):
                 bipartString = bipart2String + " | " + bipart1String
             edge.label = bipartString
             cladeToEdge[edge.label] = edge
-
+	
         self.cladeToEdge = cladeToEdge
 
 

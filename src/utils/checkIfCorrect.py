@@ -37,7 +37,7 @@ for key in concAlign:
 	lt = len(concAlign[key])
 	if lt != l:
 		print "something is wrong " + str(l) + " " + str(lt) + ' ' + key + ' ' + sp
-		exit(1)
+		sys.exit(1)
 	print key + ' ' + concAlign[key]
  
 	 

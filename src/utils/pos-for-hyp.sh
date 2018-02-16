@@ -10,12 +10,29 @@ fi
 name=main
 pth=$1
 
+
+
 species=$pth/estimated_species_tree.tree
 genes=$pth/estimated_gene_trees.tree
 annot=$2
 names=$3
 out=$4
 name="main"
+if [ ! -s "$genes" ]; then
+	echo "your gene trees file does not exist. Please check your gene tree file"
+	exit 1
+fi
+if [ ! -s "$species" ]; then
+	echo "your species tree file does not exist. Please check your species tree file"
+	exit 1
+fi
+
+if [ ! -s "$annot" ]; then
+	echo "your annotation file does not exist. Please check your annotation file."
+	exit 1
+fi
+
+
 if [ "$#" -ne "5" ]; then
 	
 	outgroup=""
@@ -75,8 +92,10 @@ printf "$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre\n"
 
 if [ "$outgroup" != "" ]; then
 	$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre $outgroup
+	[ $? -eq 0 ] || exit $?
 else
 	$WS_HOME/DiscoVista/src/utils/display.py $d/$name.tre
+	[ $? -eq 0 ] || exit $?
 fi
 
 

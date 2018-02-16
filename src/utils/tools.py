@@ -13,7 +13,17 @@ def is_number(s):
 def remove_edges_from_tree(*arg):
 
     treeName = arg[0]
-    t = 75 if len(arg) < 2 else float(arg[1])
+    if not os.path.exists(treeName):
+	print("treeName: " + treeName + " is not found!")
+	sys.exit(1)
+    if len(arg) < 2:
+	t = 75
+    elif is_number(arg[1]):
+	t = float(arg[1])
+    else:
+	print("Highly supported branch threshold is not a number! please provide a number")
+	eixt(1)
+	 
     if (t>1):
 	t = int(t)
     resultsFile="%s.%s" % (treeName,t) if len(arg) < 4 or arg[3]=="-" else arg[2]
@@ -47,6 +57,9 @@ def remove_edges_from_tree(*arg):
 
 def concatenateFiles(outFile, search):
     searchFiles = " ".join(glob.glob(search))
+    if searchFiles == None or searchFiles == "":
+	print("no file found to concatenate!")
+	sys.exit(1)
     with open(outFile, 'a') as outfile:
         for fname in searchFiles.split(" "):
             with open(fname) as infile:
@@ -154,6 +167,9 @@ def simplifyfasta(filename):
 def occupancy(search, outFile): 
     searchFiles = glob.glob(search)
     g = open(outFile, 'w')
+    if searchFiles is None or searchFiles == "":
+	print("no alignment found! please provide your alignment files as specified in the examples!")
+	sys.exit(1)
     for fname in searchFiles:
         fname = os.path.abspath(fname)
         base = os.path.basename(fname)

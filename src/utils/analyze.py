@@ -6,6 +6,7 @@ import subprocess
 import find_clades2
 import gc_stats
 import tools
+import sys
 class Analyze(object): 
     def __init__(self,opt):
         self.opt = opt
@@ -14,6 +15,10 @@ class Analyze(object):
         outFile = opt.label + "/gc-stat.csv"
         f = open(outFile, 'w')
         searchFile = " ".join(glob.glob(opt.search))
+	if searchFile is "":
+		print("no alignment file found! please provide your aligments with the structure specified in the examples")
+		sys.exit(1)
+	print("number of alignments found is " + str(len(searchFile.split(" "))))
         for align in searchFile.split(" "):
             gc_stats.main(align)	
         print "All GC stat files have been generated"
@@ -26,6 +31,10 @@ class Analyze(object):
         print "Concatenated GC stats are written to %s" % (outFile)
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
+	if WS_HOME is None or WS_HOME == "":
+		print("Please set up WS_HOME as specified in the installation guide!")
+		sys.exit(1)
+
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
         args = ["-p", WS_HOME, "-s", str(opt.mode),  "-i", opt.label]
@@ -50,6 +59,9 @@ class Analyze(object):
         print "All the occupancy stats have written on file %s" % (outFile)  
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
+	if WS_HOME is None or WS_HOME == "":
+                print("Please set up WS_HOME as specified in the installation guide!")
+                sys.exit(1)
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
         if (opt.modelCond is None):
@@ -74,42 +86,86 @@ class Analyze(object):
     def treesAnalyses(self):
         opt = self.opt
         outFile = opt.label + "/clades.txt"
-        f = open(outFile,'w')
-        f.close()
+	try:
+	        f = open(outFile,'w')
+        	f.close()
+	except IOError:
+		print("The result directory does not exist!")
+		sys.exit(1)
+		
 
         outFilethr = opt.label + "/clades.hs.txt"
-        f = open(outFilethr,'w')
-        f.close()
+	try:
+	        f = open(outFilethr,'w')
+        	f.close()
+	except IOError:
+		print("The result directory does not exist!")
+		sys.exit(1)
         finegrained = opt.label + "/finegrained"	
         if not os.path.exists(finegrained):
-            os.makedirs(finegrained)
+	    try:
+	    	os.makedirs(finegrained)
+	    except IOError:
+	    	print("The result directory does not exist!")
+	    	sys.exit(1)
 	searchFiles = " ".join(glob.glob(opt.search))
+	if searchFiles == "" or searchFiles is None:
+		print("No tree found! please follow the structure specified in the examples!")
+		sys.exit(1)
+	print("Number of trees found is: " + str(len(searchFiles.split(" ")))) 
 	for tree in searchFiles.split(" "):
  #          tools.reroot(tree, opt.root, opt.annotation, 1)
-           tools.remove_edges_from_tree(tree, opt.threshold)
+	   try:
+	   	tools.remove_edges_from_tree(tree, opt.threshold)
+	   except ValueError:
+	   	print("an error occurred in contracting low support branches")
+		raise
+	   	sys.exit(1)	
 
         searchFilesthr = " ".join(glob.glob(opt.searchthr))
+	if searchFilesthr == "" or searchFilesthr is None:
+		print("No contracted tree found!")
+		sys.exit(1)
 #        for tree in searchFilesthr.split(" "):
 #            tools.reroot(tree, opt.root, opt.annotation, 1)
 
         searchFiles = " ".join(glob.glob(opt.searchrooted))
+	print("number of contracted trees is :" + str(len(searchFilesthr.split(" "))))
         searchFilesthr = " ".join(glob.glob(opt.searchthrrooted))
         if float(opt.threshold)<= 1.0:
             multiplier = 100.
         else:
             multiplier = 1.0
-	
-        find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
-	
-        find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
-
-        f = open(outFile,'r')
+	try:		
+		find_clades2.main(opt.names, opt.clades, outFile, multiplier, searchFiles) 
+	except ValueError:
+		print("An error occured during tree analysis process!")
+		raise
+		sys.exit(1)
+	try:
+		find_clades2.main(opt.names, opt.clades, outFilethr, multiplier, searchFilesthr)
+	except ValueError:
+		print("An error occured during tree analysis process!")
+		raise
+		sys.exit(1)
+	try:
+	        f = open(outFile,'r')
+	except IOError:
+		print("could not open outfile: " + outFile)
+		sys.exit(1)
         outRes = outFile + ".res"
+	try:
+	        oRes = open(outRes, 'w')
+	except IOError:
+		print("could not open result file: " + outRes)
+		sys.exit(1)
 
-        oRes = open(outRes, 'w')
         outResthr = outFilethr + ".res"
-
-        oResThr = open(outResthr, 'w')
+	try:
+	        oResThr = open(outResthr, 'w')
+	except IOError:
+		print("could not open result file: " + oResThr )
+		sys.exit(1)
         oRes.write("ID\tDS\tMONO\tBOOT\tCLADE\tBRANCHLEN\n")
 
         for line in f:
@@ -155,6 +211,9 @@ class Analyze(object):
         oResThr.close()
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
+	if WS_HOME is None or WS_HOME == "":
+                print("Please set up WS_HOME as specified in the installation guide!")
+                sys.exit(1)
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 	if opt.newModel is not None and opt.newOrder is not None:
@@ -172,7 +231,7 @@ class Analyze(object):
         print cmd
         fi = open(stderrFile,'w')
         fi.close()
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = proc.communicate()
     #	x = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
         err = open(stderrFile,'a')
@@ -191,6 +250,9 @@ class Analyze(object):
         print "The branch Length and support values are written on file %s" % (outFile)
         currPath = os.path.dirname(os.path.abspath(__file__))
         WS_HOME = os.environ['WS_HOME']
+	if WS_HOME is None or WS_HOME == "":
+                print("Please set up WS_HOME as specified in the installation guide!")
+                sys.exit(1)
         command = 'Rscript'
         path2script = WS_HOME  + "/DiscoVista/src/R/depict_clades.R"
 	if opt.newModel is not None and opt.newOrder is not None:
@@ -216,6 +278,9 @@ class Analyze(object):
         err.close()
     def relFreq(self):
 	WS_HOME = os.environ['WS_HOME']
+	if WS_HOME is None or WS_HOME == "":
+                print("Please set up WS_HOME as specified in the installation guide!")
+                sys.exit(1)
 	opt = self.opt
 	command = WS_HOME + "/" + "DiscoVista/src/utils/pos-for-hyp.sh"
 	args = [opt.path, opt.annotation, opt.names, opt.label, opt.outg ]
