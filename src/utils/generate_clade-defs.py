@@ -56,9 +56,9 @@ for line in src:
     clade = r[1]
     if clade not in clades:
         clades[clade] = list()
-        clades[clade].append(taxa.replace("_"," "))
+        clades[clade].append(taxa)
     else:
-        clades[clade].append(taxa.replace("_"," "))
+        clades[clade].append(taxa)
 with open(destfile, 'w') as dest_file:
     dest_file.write("Clade Name\tClade Definition\tSection Letter\tComponents\tShow\tComments\n")
     allTaxa = set()
