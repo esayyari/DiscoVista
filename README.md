@@ -133,6 +133,8 @@ generate_clade-defs.py [annotation file] [outputfile] [Other clades file]
 This will create one clade for every value in the second column of the annotation file.
 Using `other clades file`, you could define other important branches of the expected tree. Let's say that in your annotation file you have two clades **A**, and **B**, and you are interested in a clade that unites **A** and **B**. Then you would define it with **A+B** in this file.
 
+* __Note__: In the clade definition file, you should provide a clade with the name *All*, which indicates all the species names you are considering in your analysis (with *Show=0*). 
+
 ## Using DiscoVista
 Throughout the descriptions below, we assume that you are using bash, and your current directory is `$WS_HOME/DiscoVista/`.
 
