@@ -8,7 +8,10 @@
 (base) bash-3.2$ ls
 GC.tar.gz             README                branchAnalysis.tar.gz genetrees.tar.gz      occupancy.tar.gz      parameters            parameters.tar.gz     relativeFreq.tar.gz   species.tar.gz
 ~~~
-
+3. Unzip files:
+~~~bash
+ bash-3.2$ tar xvfj species.tar.gz
+~~~
 
 ## parameters
 
