@@ -1,5 +1,14 @@
 # Structure of example data folder
 
+## Prepare
+
+1. Make sure you have [this folder](.) available on your machine. You can get it using git or by downloading [the zip file](https://github.com/esayyari/DiscoVista/archive/master.zip).
+2. `cd` into this `example` directory. In the rest of the tutorial, we assume you are inside this example directory. To make sure, use `ls` and you should see:
+~~~bash
+(base) bash-3.2$ ls
+1KP            README.md      figures        results.tar.gz
+~~~
+
 ## parameters
 
 Under the __parameters__ folder, we have all the parameter files: 
