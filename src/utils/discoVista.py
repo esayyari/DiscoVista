@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import sys; sys.setrecursionlimit(50000)
 import glob
 import os
 import re
