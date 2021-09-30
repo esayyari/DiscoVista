@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import sys; 
 import glob
 import os
 import re
@@ -15,6 +15,7 @@ from analyze import Analyze
 
 if "__main__" == __name__:
 
+    sys.setrecursionlimit(50000);
     parser = OptionParser()
 
     parser.add_option("-a", "--annotation", dest="annotation",
