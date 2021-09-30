@@ -8,7 +8,7 @@ def RepresentsInt(s):
     try: 
         float(s)
         return True
-    except ValueError:
+    except (TypeError, ValueError):
         return False
 
 #is_compatible_with_bipartition(bipartition, is_bipartitions_updated=False)
