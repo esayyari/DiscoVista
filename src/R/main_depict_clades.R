@@ -91,8 +91,8 @@ if (ST) {
 cols <- c( "ID" , "CLADE", "BOOT")
 #Read Raw files
  read.data <- function (file.all=paste(input, "/clades.txt.res", sep=""), file.hs=paste(input, "clades.hs.txt.res", sep=""), clade.order = NULL, new.clades = NULL, new.models = NULL, techs.order = NULL) {
-  raw.all = read.csv(file.all,sep="\t", header=T)
-  raw.highsupport = read.csv(file.hs,sep="\t", header=T)
+  raw.all = read.csv(file.all,sep="\t", header=T, as.is=F)
+  raw.highsupport = read.csv(file.hs,sep="\t", header=T, as.is=F)
   if (! is.null(techs.order)) {
     print("tech renaming...")
     raw.all$ID=factor(raw.all$ID,levels=techs.order)
