@@ -102,8 +102,8 @@ class Mono(object):
                 self.analyze_clade(k, v, clade_comp, tree, treeName, mult)
 
     def read_clades(self,filename):
-        for line in open(filename):
-            line = line.replace("\n","")
+        for line in open(filename, 'r'):
+            line = line.strip()
             sign = "+"
             r = line.split('\t')
             if r[0] == 'Clade Name':
