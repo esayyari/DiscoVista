@@ -238,6 +238,7 @@ class Mono(object):
 	    elif len(r)<6:
 		self.othercomps[name] = othercomponents
             self.show[name] = show
+
 def getTaxa(cladeFiles):
 	try:	
 		f = open(cladeFiles, 'r')
@@ -252,7 +253,7 @@ def getTaxa(cladeFiles):
 			flag = 1
 			line = line.strip('\n')
 			listLine = line.split('\t')[1]
-			taxa = set(listLine.replace('""+""','\t').replace('""','\t').replace('"','\t').replace('+','\t').strip('\t').replace('\t\t','\t').split('\t'))
+			taxa = set(re.split(r'""\+""|""|"|\+', listLine))
 	if flag == 0:
 		print("Please define a clade with name All in your clade definition file, which includes all species in your dataset!")
 		sys.exit(1)
